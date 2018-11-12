@@ -11,9 +11,17 @@
 |
 */
 
+/**
+ * Do not use the default welcome page. Instead let HomeController@index
+ * control the / of this app.
+ */
+
+/*
 Route::get('/', function () {
     return view('welcome');
 });
+*/
+Route::get('/', 'HomeController@index')->name('home');
 
 Auth::routes();
 
