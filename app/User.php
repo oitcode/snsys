@@ -26,4 +26,11 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    /**
+     * The user table name.
+     *
+     * @var array
+     */
+    protected $table = 'user';
 }
