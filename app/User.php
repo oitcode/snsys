@@ -33,4 +33,10 @@ class User extends Authenticatable
      * @var array
      */
     protected $table = 'user';
+
+    /**
+     * Use different name for timestamps.
+     */
+    const CREATED_AT = 'created_time';
+    const UPDATED_AT = 'updated_time';
 }

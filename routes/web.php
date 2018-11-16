@@ -26,3 +26,8 @@ Route::get('/', 'HomeController@index')->name('home');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+/* Remittance */
+Route::get('/rmt/create', 'RemittanceController@create');
+Route::get('/rmt/search', 'RemittanceController@search');
+
