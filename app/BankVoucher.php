@@ -48,4 +48,22 @@ class BankVoucher extends Model
 	 */
         return $this->hasMany('App\Remittance', 'bank_voucher_id', 'bank_voucher_id');
     }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Relationship with user table.
+    |--------------------------------------------------------------------------
+    |
+    | Has many-to-one relationship with user table.
+    |
+    */
+
+    public function creator()
+    {
+	/**
+	 * 2nd arg: name of foreign key column in bank_voucher table
+	 * 3rd arg: name of primary key column in user table
+	 */
+        return $this->belongsTo('App\User', 'creator_id', 'id');
+    }
 }
