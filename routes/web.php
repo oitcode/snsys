@@ -31,3 +31,5 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/rmt/create', 'RemittanceController@create');
 Route::get('/rmt/search', 'RemittanceController@search');
 
+/* Sangh */
+Route::get('/sangh/family', 'SanghController@search');

@@ -101,6 +101,17 @@
                               <li><a href="">Search</a></li>
                           </ul>
                       </li>
+
+                      <!-- Sangh -->
+                      <li class="dropdown">
+                          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" v-pre>
+                              Sangh <span class="caret"></span>
+                          </a>
+
+                          <ul class="dropdown-menu">
+                              <li><a href="{{ url('/sangh/family') }}">Family</a></li>
+                          </ul>
+                      </li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
