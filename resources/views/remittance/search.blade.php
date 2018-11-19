@@ -13,11 +13,14 @@
 
 
           <p>
-            <form class="form-inline">
+            <form class="form-inline" method="post" action="{{ url('/rmt/search/process') }}">
+	      {{ csrf_field() }}
+
               <div class="form-group">
                 <label for="familyCode">Family code</label><br />
-                <input type="text" class="form-control" id="familyCode" placeholder="Family code">
+                <input type="text" class="form-control" id="familyCode" name="family-Code" placeholder="Family code">
               </div>
+	      <!--
               <div class="form-group">
                 <label for="oblateName">Name</label><br />
                 <input type="text" class="form-control" id="oblateName" placeholder="Name">
@@ -32,6 +35,7 @@
                   <input type="checkbox"> Check me out
                 </label>
               </div>
+	      -->
 	      <br />
 	      <br />
               <button type="submit" class="btn btn-primary">Submit</button>

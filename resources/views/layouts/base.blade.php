@@ -12,6 +12,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <!--
     <style>
       .nwo-padding-0 {
         padding-right: 0;
@@ -41,6 +42,7 @@
           border-collapse: collapse !important;
       }
     </style>
+    -->
 </head>
 <body>
     <div id="app">
