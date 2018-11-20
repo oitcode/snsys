@@ -11,24 +11,43 @@
               </div>
           @endif
 
+	  <!-- Display any error messages -->
+	  @if ($errors->any())
+	    <div class="alert alert-danger">
+              <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+              </ul>
+	    </div>
+	  @endif
 
+	  <!-- Display search form -->
           <p>
             <form class="form-inline" method="post" action="{{ url('/rmt/search/process') }}">
 	      {{ csrf_field() }}
 
               <div class="form-group">
-                <label for="familyCode">Family code</label><br />
-                <input type="text" class="form-control" id="familyCode" name="family-Code" placeholder="Family code">
+                <label for="family-code">Family code</label><br />
+                <input type="text" class="form-control" id="family-code" name="family-code" placeholder="Family code">
+              </div>
+              <div class="form-group">
+                <label for="family-code">Name</label><br />
+                <input type="text" class="form-control" id="submitter-name" name="submitter-name" placeholder="Name">
+              </div>
+              <div class="form-group">
+                <label for="serial-num">Serial num</label><br />
+                <input type="text" class="form-control" id="serial-num" name="serial-num" placeholder="Serial num">
+              </div>
+              <div class="form-group">
+                <label for="submit-date">Submit date</label><br />
+                <input type="text" class="form-control" id="submit-date" name="submit-date" placeholder="Submit Date">
+              </div>
+              <div class="form-group">
+                <label for="submit-date">Delivered by</label><br />
+                <input type="text" class="form-control" id="delivered-by" name="delivered-by" placeholder="Delivered by">
               </div>
 	      <!--
-              <div class="form-group">
-                <label for="oblateName">Name</label><br />
-                <input type="text" class="form-control" id="oblateName" placeholder="Name">
-              </div>
-              <div class="form-group">
-                <label for="remitDate">Date</label><br />
-                <input type="text" class="form-control" id="remitDate" placeholder="Date">
-              </div>
               <div class="checkbox">
                 <label>
 		  <br />
@@ -41,9 +60,6 @@
               <button type="submit" class="btn btn-primary">Submit</button>
             </form>
           <p>
-
-
-
       </div>
   </div>
 </div>

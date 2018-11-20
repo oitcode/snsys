@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\SearchFamilyCode;
 
 class RemittanceController extends Controller
 {
@@ -33,7 +34,7 @@ class RemittanceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function search()
+    public function search(Request $request)
     {
         return view('remittance.search');
     }
@@ -43,9 +44,22 @@ class RemittanceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function searchProcess(Request $request)
+    public function searchProcess(SearchFamilyCode $request)
     {
-	$familyCode = $request->input('family-Code');
+	/*
+	$validatedData = $request->validate([
+	    'family-code' => 'required',
+	]);
+	*/
+
+	/*
+	foreach ($validatedData as $key => $value ) {
+	  echo $key . ': ' . $value . '<br />';
+	}
+	*/
+
+	$familyCode = $request->input('family-code');
+
 	if (! $familyCode) {
 	    echo 'Input Error: Family Code not given ' . '<br />';
 	    die();
