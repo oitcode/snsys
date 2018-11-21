@@ -12,37 +12,83 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <!--
     <style>
-      .nwo-padding-0 {
-        padding-right: 0;
-        padding-left: 0;
-
-	width: 100px !important;
+      .nwo-std-frminp {
+          width: 100px;
+          background-color: #ddd;
+      }
+      
+      .nwo-std-frminp-lx {
+        width: 200px;
       }
 
-      input {
-        display: block !important;
-        padding: 0 !important;
-	margin: 0 !important;
-	border: 0 !important;
-	width: 100% !important;
+      .nwo-form-table thead {
+        background-color: #678;
+        color: #fafafa;
+        padding-top: 20px;
+        padding-bottom: 20px;
       }
-
-      td {
-        margin: 0 !important;
-	padding: 0 !important;
-	background-color: gray !important;
+      
+      .nwo-form-table thead th, 
+      .nwo-form-table tfoot th {
+        font-family: 'Rock Salt', cursive;
       }
-
-      td, tr, th {
-          border: 1px solid black !important;
+      
+      .nwo-form-table th {
+        /*letter-spacing: 2px; */
+        padding:5px;
       }
-      table {
-          border-collapse: collapse !important;
+      
+      .nwo-form-table td {
+        /* letter-spacing: 1px; */
       }
+      
+      .nwo-form-table tbody td {
+        text-align: left;
+      }
+      
+      .nwo-form-table tfoot th {
+        text-align: right;
+      }
+      
+      .nwo-form-table thead {
+        /*background: url(leopardskin.jpg);*/
+        color: white;
+        /* text-shadow: 1px 1px 1px black; */
+      }
+      .nwo-form-table tfoot {
+        /*background: url(leopardskin.jpg);*/
+        color: black;
+        /* text-shadow: 1px 1px 1px black; */
+      }
+      
+      .nwo-form-table thead th,
+      .nwo-form-table tfoot th,
+      .nwo-form-table tfoot td {
+        background: linear-gradient(to bottom, rgba(0,0,0,0.0), rgba(0,0,0,0.0));
+        border: 0.5px solid #000;
+      }
+      
+      .nwo-form-table tbody tr:nth-child(odd) {
+        background-color: #fafafa;
+      }
+      
+      .nwo-form-table tbody tr:nth-child(even) {
+        background-color: #eaeaea;
+      }
+      
+      .nwo-form-table tbody tr {
+        background-image: url(noise.png);
+      }
+      
+      table.nwo-form-table {
+        font-size: 12px;
+        /*background-color: #ff33cc;*/
+        /*width: 1000px;*/
+        border-collapse: collapse;
+      }
+      */
     </style>
-    -->
 </head>
 <body>
     <div id="app">
