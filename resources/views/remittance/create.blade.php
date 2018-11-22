@@ -11,11 +11,21 @@
               </div>
           @endif
 
-          <h5>Bank Voucher info</h5>
           <form action="{{ url('/rmt/create/store') }}" method="post">
 	    {{ csrf_field() }}
 
+	    <!-- Currency info -->
+            <p>Currency</p>
+            <div>
+              <input type="radio" id="currency-nc" name="currency" value="nc">
+              <label for="currency-nc">NRs</label>
+              <input type="radio" id="currency-ic" name="currency" value="ic">
+              <label for="contactChoice2">IRs</label>
+            </div>
+	    <hr />
+
             <!-- Bank Voucher Info -->
+            <h5>Bank Voucher info</h5>
             <table class="nwo-form-table">
               <thead>
                 <tr>

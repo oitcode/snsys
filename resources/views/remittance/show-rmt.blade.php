@@ -13,6 +13,7 @@
 
 	  <p>
 	    Family Code: <strong>{{ $remittance->family->family_code }}</strong><br/>
+	    Serial num: <strong>{{ $remittance->remittance_id }}</strong><br/>
 	    Submitter: 
 	      {{ $remittance->submitter->person->first_name }} &nbsp;&nbsp;
 	      {{ $remittance->submitter->person->last_name }}<br/>

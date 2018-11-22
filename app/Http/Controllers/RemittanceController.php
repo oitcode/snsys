@@ -346,6 +346,37 @@ class RemittanceController extends Controller
 	return $remittance;
     }
 
+    /**
+     * Convert currency of remittance lines.
+     *
+     * @param array remitLines
+     *
+     * @return array
+     */
+    public function currencyConvert($remitLines)
+    {
+	$i = 0;
+        foreach ($remitLines['rlPersonFullNames'] as $rlPersonFullName) {
+	    $remitLines['rlSwastyayanis'][$i] *= 1.6;
+	    $remitLines['rlIstavritys'][$i] *= 1.6;
+	    $remitLines['rlAcharyavritys'][$i] *= 1.6;
+	    $remitLines['rlDakshinas'][$i] *= 1.6;
+	    $remitLines['rlSangathanis'][$i] *= 1.6;
+	    $remitLines['rlAnandaBazars'][$i] *= 1.6;
+	    $remitLines['rlPranamis'][$i] *= 1.6;
+	    $remitLines['rlSwastyayaniAwasistas'][$i] *= 1.6;
+	    $remitLines['rlRitwikis'][$i] *= 1.6;
+	    $remitLines['rlUtsavs'][$i] *= 1.6;
+	    $remitLines['rlDikshaPranamis'][$i] *= 1.6;
+	    $remitLines['rlAcharyaPranamis'][$i] *= 1.6;
+	    $remitLines['rlParivritys'][$i] *= 1.6;
+	    $remitLines['rlMiscs'][$i] *= 1.6;
+
+	    $i++;
+	}
+
+	return $remitLines;
+    }
 
     /**
      * Process remittance lines.
@@ -361,6 +392,10 @@ class RemittanceController extends Controller
 
 	$i = 0;
         foreach ($remitLines['rlPersonFullNames'] as $rlPersonFullName) {
+	    /* Todo: Handle blank rows more appropriately */
+	    if ($rlPersonFullName === null) {
+	        continue;
+	    }
 	    /* Check if oblate present in family. Else add one. */
 	    $oblate = $this->oblateInFamily($rlPersonFullName, $family);
 	    if ($oblate === null) {
@@ -398,6 +433,7 @@ class RemittanceController extends Controller
 	}
     }
 
+
     /**
      * Store the new remittance submitted.
      *
@@ -433,6 +469,9 @@ class RemittanceController extends Controller
 
 	/* Todo: Validate input data */
 
+
+	/* Get currency info */
+	$currency = $request->input('currency');
 
 	/* Get bank voucher input from form */
 	$bvInfo = [
@@ -494,6 +533,9 @@ class RemittanceController extends Controller
 	 * Process remittance lines
 	 *=========================
 	 */
+	if ($currency === 'ic') {
+	    $remitLineInfos = $this->currencyConvert($remitLineInfos);
+	}
 	$this->processRemitLines($remitLineInfos, $remittance);
 
 	/* Todo: Correctly show success messsage. */
