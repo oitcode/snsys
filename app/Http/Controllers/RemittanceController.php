@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 
 use App\Http\Requests\SearchFamilyCode;
+use App\Http\Requests\StoreRemit;
+
 use App\Family;
 use App\Person;
 use App\Oblate;
@@ -75,9 +78,6 @@ class RemittanceController extends Controller
      */
     public function createFamilyInDb($familyInfo, $request)
     {
-	echo $familyInfo['familyCode'] 
-	     . ': Family does NOT Exist in DB. Creating a family in DB<br />';
-
         $newFamily = new Family;
         if ($familyInfo['familyCode'] === 'new') {
             /*
@@ -99,8 +99,6 @@ class RemittanceController extends Controller
             die('Could not insert new family to db.');
         }
         
-        echo 'Success: Family inesrted in DB. Family code: '
-	     . $newFamily->family_code . '<br />';
 	return $newFamily;
     }
 
@@ -356,21 +354,25 @@ class RemittanceController extends Controller
     public function currencyConvert($remitLines)
     {
 	$i = 0;
-        foreach ($remitLines['rlPersonFullNames'] as $rlPersonFullName) {
-	    $remitLines['rlSwastyayanis'][$i] *= 1.6;
-	    $remitLines['rlIstavritys'][$i] *= 1.6;
-	    $remitLines['rlAcharyavritys'][$i] *= 1.6;
-	    $remitLines['rlDakshinas'][$i] *= 1.6;
-	    $remitLines['rlSangathanis'][$i] *= 1.6;
-	    $remitLines['rlAnandaBazars'][$i] *= 1.6;
-	    $remitLines['rlPranamis'][$i] *= 1.6;
-	    $remitLines['rlSwastyayaniAwasistas'][$i] *= 1.6;
-	    $remitLines['rlRitwikis'][$i] *= 1.6;
-	    $remitLines['rlUtsavs'][$i] *= 1.6;
-	    $remitLines['rlDikshaPranamis'][$i] *= 1.6;
-	    $remitLines['rlAcharyaPranamis'][$i] *= 1.6;
-	    $remitLines['rlParivritys'][$i] *= 1.6;
-	    $remitLines['rlMiscs'][$i] *= 1.6;
+        foreach ($remitLines as $remitLine) {
+	    /**
+	     * Todo: using of $i in the loop condition itself would look more
+	     *       natural. 
+             */
+	    $remitLines[$i]['swastyayani'] *= 1.6;
+	    $remitLines[$i]['istavrity'] *= 1.6;
+	    $remitLines[$i]['acharyavrity'] *= 1.6;
+	    $remitLines[$i]['dakshina'] *= 1.6;
+	    $remitLines[$i]['sangathani'] *= 1.6;
+	    $remitLines[$i]['ananda-bazar'] *= 1.6;
+	    $remitLines[$i]['pranami'] *= 1.6;
+	    $remitLines[$i]['swastyayani-awasista'] *= 1.6;
+	    $remitLines[$i]['ritwiki'] *= 1.6;
+	    $remitLines[$i]['utsav'] *= 1.6;
+	    $remitLines[$i]['diksha-pranami'] *= 1.6;
+	    $remitLines[$i]['acharya-pranami'] *= 1.6;
+	    $remitLines[$i]['parivrity'] *= 1.6;
+	    $remitLines[$i]['misc'] *= 1.6;
 
 	    $i++;
 	}
@@ -390,35 +392,34 @@ class RemittanceController extends Controller
     {
 	$family = $remittance->family;
 
-	$i = 0;
-        foreach ($remitLines['rlPersonFullNames'] as $rlPersonFullName) {
+        foreach ($remitLines as $remitLine) {
 	    /* Todo: Handle blank rows more appropriately */
-	    if ($rlPersonFullName === null) {
+	    if ($remitLine['name'] === null) {
 	        continue;
 	    }
 	    /* Check if oblate present in family. Else add one. */
-	    $oblate = $this->oblateInFamily($rlPersonFullName, $family);
+	    $oblate = $this->oblateInFamily($remitLine['name'], $family);
 	    if ($oblate === null) {
-	        $oblate = $this->addOblateToFamily($rlPersonFullName, $family);
+	        $oblate = $this->addOblateToFamily($remitLine['name'], $family);
 	    }
 
 	    /* Create the remittance line with given details. */
             $newRemittanceLine = new RemittanceLine;
 
-	    $newRemittanceLine->swastyayani = $remitLines['rlSwastyayanis'][$i];
-	    $newRemittanceLine->istavrity = $remitLines['rlIstavritys'][$i];
-	    $newRemittanceLine->acharyavrity = $remitLines['rlAcharyavritys'][$i];
-	    $newRemittanceLine->dakshina = $remitLines['rlDakshinas'][$i];
-	    $newRemittanceLine->sangathani = $remitLines['rlSangathanis'][$i];
-	    $newRemittanceLine->ananda_bazar = $remitLines['rlAnandaBazars'][$i];
-	    $newRemittanceLine->pranami = $remitLines['rlPranamis'][$i];
-	    $newRemittanceLine->swastyayani_awasista = $remitLines['rlSwastyayaniAwasistas'][$i];
-	    $newRemittanceLine->ritwiki = $remitLines['rlRitwikis'][$i];
-	    $newRemittanceLine->utsav = $remitLines['rlUtsavs'][$i];
-	    $newRemittanceLine->diksha_pranami = $remitLines['rlDikshaPranamis'][$i];
-	    $newRemittanceLine->acharya_pranami = $remitLines['rlAcharyaPranamis'][$i];
-	    $newRemittanceLine->parivrity = $remitLines['rlParivritys'][$i];
-	    $newRemittanceLine->misc = $remitLines['rlMiscs'][$i];
+	    $newRemittanceLine->swastyayani = $remitLine['swastyayani'];
+	    $newRemittanceLine->istavrity = $remitLine['istavrity'];
+	    $newRemittanceLine->acharyavrity = $remitLine['acharyavrity'];
+	    $newRemittanceLine->dakshina = $remitLine['dakshina'];
+	    $newRemittanceLine->sangathani = $remitLine['sangathani'];
+	    $newRemittanceLine->ananda_bazar = $remitLine['ananda-bazar'];
+	    $newRemittanceLine->pranami = $remitLine['pranami'];
+	    $newRemittanceLine->swastyayani_awasista = $remitLine['swastyayani-awasista'];
+	    $newRemittanceLine->ritwiki = $remitLine['ritwiki'];
+	    $newRemittanceLine->utsav = $remitLine['utsav'];
+	    $newRemittanceLine->diksha_pranami = $remitLine['diksha-pranami'];
+	    $newRemittanceLine->acharya_pranami = $remitLine['acharya-pranami'];
+	    $newRemittanceLine->parivrity = $remitLine['parivrity'];
+	    $newRemittanceLine->misc = $remitLine['misc'];
 
 	    $newRemittanceLine->remittance_id = $remittance->remittance_id;
 	    $newRemittanceLine->oblate_id = $oblate->oblate_id;
@@ -428,17 +429,106 @@ class RemittanceController extends Controller
 	    /* Todo: Recover from error in someway rather than dryiing */
 	        die('Could not insert new remittance line to db.');
 	    }
-
-	    $i++;
 	}
     }
 
+
+    /**
+     * Verify total amount.
+     *
+     * @param decimal submittedTotal
+     * @param array remitLines
+     *
+     * @return bool
+     */
+    public function verifyTotal($submittedTotal, $remitLines)
+    {
+	echo 'Verifying total:' . $submittedTotal . '<br />';
+
+	$retval = false;
+
+	$actualTotal = 0;
+
+	$i = 0;
+        foreach ($remitLines['rlPersonFullNames'] as $rlPersonFullName) {
+	    /* Todo: Handle blank rows more appropriately */
+	    if ($rlPersonFullName === null) {
+	        continue;
+	    }
+
+	    $actualTotal += $remitLines['rlSwastyayanis'][$i];
+	    $actualTotal += $remitLines['rlIstavritys'][$i];
+	    $actualTotal += $remitLines['rlAcharyavritys'][$i];
+	    $actualTotal += $remitLines['rlDakshinas'][$i];
+	    $actualTotal += $remitLines['rlSangathanis'][$i];
+	    $actualTotal += $remitLines['rlAnandaBazars'][$i];
+	    $actualTotal += $remitLines['rlPranamis'][$i];
+	    $actualTotal += $remitLines['rlSwastyayaniAwasistas'][$i];
+	    $actualTotal += $remitLines['rlRitwikis'][$i];
+	    $actualTotal += $remitLines['rlUtsavs'][$i];
+	    $actualTotal += $remitLines['rlDikshaPranamis'][$i];
+	    $actualTotal += $remitLines['rlAcharyaPranamis'][$i];
+	    $actualTotal += $remitLines['rlParivritys'][$i];
+	    $actualTotal += $remitLines['rlMiscs'][$i];
+
+	    $i++;
+	}
+
+	if ($actualTotal == $submittedTotal) {
+	    echo 'Actual equal total';
+	    $retval = true;
+	} else if ($actualTotal > $submittedTotal) { 
+	    // Todo: Set appropriate error message in session
+	    echo 'Actual more than total';
+	    //return Redirect::back() ->withInput() ->withErrors('Actual more than total');
+	} else {
+	    // Todo: Set appropriate error message in session
+	    echo 'Actual less than total';
+	    //return Redirect::back() ->withInput() ->withErrors('Actual less than total');
+	}
+
+	return $retval;
+    }
+
+    /**
+     * Validate data received in remittance creation form.
+     *
+     * @param Request request
+     *
+     * @return array
+     */
+    public function validateRemitCreateData(Request $request)
+    {
+	$validatedData = $request->validate([
+	    /* Currency */
+	    'currency' => 'required',
+
+	    /* Bank voucher */
+	    'bv-num' => 'required',
+	    'bv-deposit-date' => 'required',
+            'bv-depositor' => 'required',
+            'bv-amount' => 'required',
+
+	    /* Main info */
+            'family-code' => 'required',
+            'submitter-name' => 'required',
+            'submitter-address' => 'required',
+            'submitted-date' => 'required',
+            'submitted-total' => 'required',
+            'delivered-by' => 'required',
+
+	    /* Remit lines */
+	]);
+
+	return $validatedData;
+    }
 
     /**
      * Store the new remittance submitted.
      *
      * @return \Illuminate\Http\Response
      */
+    //public function storeRemittance(StoreRemit $request)
     public function storeRemittance(Request $request)
     {
 	/*
@@ -468,7 +558,14 @@ class RemittanceController extends Controller
 	*/
 
 	/* Todo: Validate input data */
+	//$validatedData = $this->validateRemitCreateData($request);
 
+
+	/*
+	return redirect('/rmt/create')
+	    ->withErrors(['Foo Error', 'Bar Error'])
+	    ->withInput();
+	*/
 
 	/* Get currency info */
 	$currency = $request->input('currency');
@@ -487,28 +584,29 @@ class RemittanceController extends Controller
             'submitterName' => $request->input('submitter-name'),
             'submitterAddress' => $request->input('submitter-address'),
             'submittedDate' => $request->input('submitted-date'),
+            'submittedTotal' => $request->input('submitted-total'),
             'deliveredBy' => $request->input('delivered-by'),
 	];
 
 	/* Get individual input from form */
-	$remitLineInfos = [
-	    'rlPersonFullNames' => $request->input('person-full-name.*'),
-	    'rlRitwikFullNames' => $request->input('ritwik-full-name.*'),
-            'rlSwastyayanis' => $request->input('swastyayani.*'),
-            'rlIstavritys' => $request->input('istavrity.*'),
-            'rlAcharyavritys' => $request->input('acharyavrity.*'),
-            'rlDakshinas' => $request->input('dakshina.*'),
-            'rlSangathanis' => $request->input('sangathani.*'),
-	    'rlAnandaBazars' => $request->input('ananda-bazar.*'),
-	    'rlPranamis' => $request->input('pranami.*'),
-	    'rlSwastyayaniAwasistas' => $request->input('swastyayani-awasista.*'),
-	    'rlRitwikis' => $request->input('ritwiki.*'),
-	    'rlUtsavs' => $request->input('utsav.*'),
-	    'rlDikshaPranamis' => $request->input('diksha-pranami.*'),
-	    'rlAcharyaPranamis' => $request->input('acharya-pranami.*'),
-	    'rlParivritys' => $request->input('parivrity.*'),
-	    'rlMiscs' => $request->input('misc.*'),
-	];
+	$remitLines = $request->input('remit-row');
+
+
+	/**
+	 * =====================
+	 * Verify Total.
+	 * =====================
+	 */
+	/*
+	$totalOk =
+	    $this->verifyTotal($mainInfo['submittedTotal'], $remitLineInfos);
+	if (! $totalOk) {
+	    // Todo: Go back with input intact.
+	    echo 'Total not Ok';
+	    return Redirect::back()->withInput()->withErrors('Total mismatch');
+	}
+	die();
+	*/
 
 
 	/**
@@ -534,9 +632,9 @@ class RemittanceController extends Controller
 	 *=========================
 	 */
 	if ($currency === 'ic') {
-	    $remitLineInfos = $this->currencyConvert($remitLineInfos);
+	    $remitLines = $this->currencyConvert($remitLines);
 	}
-	$this->processRemitLines($remitLineInfos, $remittance);
+	$this->processRemitLines($remitLines, $remittance);
 
 	/* Todo: Correctly show success messsage. */
 	$request->session()->flash('status', 'Success: Remittance created!');
@@ -560,13 +658,11 @@ class RemittanceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function searchProcess(SearchFamilyCode $request)
+    public function searchProcess(Request $request)
     {
-	/*
 	$validatedData = $request->validate([
-	    'family-code' => 'required',
+	    'family-code' => 'required|integer',
 	]);
-	*/
 
 	/*
 	foreach ($validatedData as $key => $value ) {
