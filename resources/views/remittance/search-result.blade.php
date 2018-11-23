@@ -23,7 +23,9 @@
 	    <table class="table table-striped table-bordered">
 	      <thead>
 	        <tr class="info">
-                  <th>Family Code</th>
+		  @isset($familyCode)
+                    <th>Family Code</th>
+		  @endisset
                   <th>Serial number</th>
                   <th>Date</th>
                   <th>Action</th>
@@ -32,7 +34,9 @@
 	      <tbody>
 	        @foreach ($remittances as $remittance)
 		  <tr>
-		    <td>{{ $familyCode }}</td>
+		    @isset($familyCode)
+		      <td>{{ $familyCode }}</td>
+		    @endisset
 		    <td>{{  $remittance->remittance_id  }}</td>
 		    <td>{{  $remittance->submitted_date  }}</td>
 		    <td>

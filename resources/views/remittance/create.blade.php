@@ -36,26 +36,28 @@
 	    <hr />
 
             <!-- Bank Voucher Info -->
-            <h5>Bank Voucher info</h5>
-            <table class="nwo-form-table">
-              <thead>
-                <tr>
-                  <th>Voucher num</th>
-                  <th>Deposit Date</th>
-                  <th>Depositor</th>
-                  <th>Amount</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><input type="text" class="nwo-std-frminp" name="bv-num" id="" value="{{ old('bv-num') }}"/></td>
-                  <td><input type="text" class="nwo-std-frminp" name="bv-deposit-date" id="" value="{{ old('bv-deposit-date') }}" /></td>
-                  <td><input type="text" class="nwo-std-frminp" name="bv-depositor" id="" value="{{ old('bv-depositor') }}" /></td>
-                  <td><input type="text" class="nwo-std-frminp" name="bv-amount" id="" value="{{ old('bv-amount') }}" /></td>
-                </tr>
-              </tbody>
-            </table>
-	    <hr />
+            @if (! session('lot'))
+              <h5>Bank Voucher info</h5>
+              <table class="nwo-form-table">
+                <thead>
+                  <tr>
+                    <th>Voucher num</th>
+                    <th>Deposit Date</th>
+                    <th>Depositor</th>
+                    <th>Amount</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><input type="text" class="nwo-std-frminp" name="bv-num" id="" value="{{ old('bv-num') }}"/></td>
+                    <td><input type="text" class="nwo-std-frminp" name="bv-deposit-date" id="" value="{{ old('bv-deposit-date') }}" /></td>
+                    <td><input type="text" class="nwo-std-frminp" name="bv-depositor" id="" value="{{ old('bv-depositor') }}" /></td>
+                    <td><input type="text" class="nwo-std-frminp" name="bv-amount" id="" value="{{ old('bv-amount') }}" /></td>
+                  </tr>
+                </tbody>
+              </table>
+	      <hr />
+            @endif
 
             <!-- Main Remittance Info -->
             <h5>Main info</h5>

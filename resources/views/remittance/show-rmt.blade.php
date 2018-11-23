@@ -18,6 +18,7 @@
 	      {{ $remittance->submitter->person->first_name }} &nbsp;&nbsp;
 	      {{ $remittance->submitter->person->last_name }}<br/>
 	    Date: {{ $remittance->submitted_date }}<br/>
+	    Bank Voucher num: {{ $remittance->remittance_lot->voucher_number }}<br/>
 	  </p>
 	  <p>
 	    <table class="table">

@@ -126,6 +126,21 @@
                           </ul>
                       </li>
 
+                      <!-- Lot -->
+                      <li class="dropdown">
+                          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" v-pre>
+                              Lot <span class="caret"></span>
+                          </a>
+
+                          <ul class="dropdown-menu">
+                              <li><a href="{{ url('/rmt/lot/start') }}">Start Lot</a></li>
+                              @if (session('lot'))
+                                <li><a href="{{ url('/rmt/lot/exit') }}">Exit Lot</a></li>
+                              @endif
+                              <li><a href="">Resume Lot</a></li>
+                          </ul>
+                      </li>
+
                       <!-- Worker -->
                       <li class="dropdown">
                           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" v-pre>
@@ -194,6 +209,13 @@
                 </div>
             </div>
         </nav>
+
+	<!-- Display Lot information if any -->
+        @if (session('lot'))
+            <div class="alert alert-danger">
+                Lot num: {{ session('lot') }}
+            </div>
+        @endif
 
         @yield('content')
     </div>

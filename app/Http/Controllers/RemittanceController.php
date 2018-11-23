@@ -14,8 +14,8 @@ use App\Person;
 use App\Oblate;
 use App\Worker;
 
-use App\BankVoucher;
 use App\Remittance;
+use App\RemittanceLot;
 use App\RemittanceLine;
 
 class RemittanceController extends Controller
@@ -51,7 +51,7 @@ class RemittanceController extends Controller
      */
     public function createBankVoucher($bvInfo, $request)
     {
-        $newBv = new BankVoucher;
+        $newBv = new RemittanceLot;
 
 	$newBv->voucher_number = $bvInfo['bvNum'];
 	$newBv->deposit_date = $bvInfo['bvDepositDate'];
@@ -65,6 +65,41 @@ class RemittanceController extends Controller
 	}
 
 	return $newBv;
+    }
+
+    /**
+     * Create remittance lot.
+     *
+     * @param array remitLotInfo
+     *
+     * @return object
+     */
+    public function createRemitLot($remitLotInfo)
+    {
+        $newRemitLot = new RemittanceLot;
+
+	$newRemitLot->voucher_number = $remitLotInfo['bankVoucherNumber'];
+	$newRemitLot->deposit_date = $remitLotInfo['bankDepositDate'];
+	$newRemitLot->deposited_by = $remitLotInfo['bankDepositedBy'];
+	$newRemitLot->amount = $remitLotInfo['bankDepositAmount'];
+
+	/* Todo: Ignoring these two for now. Need to do db migration first. */
+	/*
+	$newRemitLot->ph_deposit_date = $remitLotInfo['phDepositDate'];
+	$newRemitLot->ph_deposited_by = $remitLotInfo['phDepositedBy'];
+	*/
+
+	$newRemitLot->creator_id = Auth::user()->id;
+
+	/* Todo: Lock table before doing this. */
+	$newRemitLot->lot_code = RemittanceLot::max('lot_code') + 1;
+
+	if (! $newRemitLot->save()) {
+	/* Todo: Recover from error in someway rather than dryiing */
+	    die('Err: Could not insert bank voucher info.');
+	}
+
+	return $newRemitLot;
     }
 
 
@@ -291,7 +326,7 @@ class RemittanceController extends Controller
 
 	$newRemittance->family_id = $remitInfo['family']->family_id;
 	$newRemittance->submitter_id = $remitInfo['submitter']->oblate_id;
-	$newRemittance->bank_voucher_id = $remitInfo['bv']->bank_voucher_id;
+	$newRemittance->remittance_lot_id = $remitInfo['bv']->remittance_lot_id;
 
 	$newRemittance->submitted_date = $remitInfo['submittedDate'];
 	$newRemittance->delivered_by = $remitInfo['deliveredBy'];
@@ -571,12 +606,14 @@ class RemittanceController extends Controller
 	$currency = $request->input('currency');
 
 	/* Get bank voucher input from form */
-	$bvInfo = [
-	    'bvNum' => $request->input('bv-num'),
-	    'bvDepositDate' => $request->input('bv-deposit-date'),
-            'bvDepositor' => $request->input('bv-depositor'),
-            'bvAmount' => $request->input('bv-amount'),
-	];
+	if (! session()->has('lot')) {
+	    $bvInfo = [
+	        'bvNum' => $request->input('bv-num'),
+	        'bvDepositDate' => $request->input('bv-deposit-date'),
+                'bvDepositor' => $request->input('bv-depositor'),
+                'bvAmount' => $request->input('bv-amount'),
+	    ];
+	}
 
 	/* Get main input from form */
 	$mainInfo = [
@@ -614,7 +651,12 @@ class RemittanceController extends Controller
 	 * Process bank voucher.
 	 * =====================
 	 */
-	$bv = $this->createBankVoucher($bvInfo, $request);
+	if (session()->has('lot')) {
+	  $lotCode = session()->get('lot');
+	  $bv = RemittanceLot::where('lot_code', $lotCode)->first();
+	} else {
+	  $bv = $this->createBankVoucher($bvInfo, $request);
+	}
 	$mainInfo['bv'] = $bv;
 
 
@@ -660,9 +702,11 @@ class RemittanceController extends Controller
      */
     public function searchProcess(Request $request)
     {
+	/*
 	$validatedData = $request->validate([
 	    'family-code' => 'required|integer',
 	]);
+	*/
 
 	/*
 	foreach ($validatedData as $key => $value ) {
@@ -673,9 +717,11 @@ class RemittanceController extends Controller
 	$familyCode = $request->input('family-code');
 
 	if (! $familyCode) {
-	    echo 'Input Error: Family Code not given ' . '<br />';
-	    die();
-	    /* Todo: Redirect to some page where the error message is shown */
+	    /* Todo */
+	    die('Whops! Give family code');
+            $remittances = \App\Remittance::order_by('created_time', 'desc')->take(10);
+            return view('remittance.search-result')
+	        ->with('remittances', $remittances);
 	}
 
 	$families = \App\Family::all()->where('family_code', $familyCode);
@@ -711,6 +757,89 @@ class RemittanceController extends Controller
 	$remittance = \App\Remittance::find($remittance_id);
         return view('remittance.show-rmt')
 	    ->with('remittance', $remittance);
+    }
+
+    /**
+     * Create a new lot.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function createLot(Request $request)
+    {
+	/* Todo: Validate data */
+
+	/* Get the input data */
+
+	$remitLotInfo = [
+	    'bankDepositDate' => $request->input('bank-deposit-date'),
+	    'bankVoucherNumber' => $request->input('bank-voucher-number'),
+	    'bankDepositedBy' => $request->input('bank-deposited-by'),
+	    'bankDepositAmount' => $request->input('bank-deposit-amount'),
+
+	    'phDepositDate' => $request->input('philanthrophy-deposit-date'),
+	    'phDepositedBy' => $request->input('philanthrophy-deposited-by'),
+	];
+
+	/* Todo: Create lot in DB */
+	//$remitLot = $this->createBankVoucher($bvInfo, $request);
+	$remitLot = $this->createRemitLot($remitLotInfo);
+	//
+
+	/* Put lot info into session */
+	$request->session()->put('lot', $remitLot->lot_code);
+
+        return redirect('/');
+    }
+
+    /**
+     * Start a new lot.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function startLot(Request $request)
+    {
+	/*
+	$currentLot = $request->session()->get('curLotNum', 'None');
+	$currentName = session('currentName', 'Tester Bester');
+
+	$request->session()->put('qbar', 'Just QBAR');
+	session()->put('qCup', 'Just QCUP');
+
+	$request->session()->push('sn.mandirs', 'Baisabadi');
+	$request->session()->push('sn.mandirs', 'Biratnagar');
+
+	$request->session()->push('operators', 'Utsav Nepal');
+	$request->session()->push('operators', 'Ram Rai');
+
+	$temp = $request->session()->pull('qbar', 'None');
+	$temp = $request->session()->pull('qCup', 'None');
+	$temp = $request->session()->pull('operators', 'None');
+	$temp = $request->session()->pull('sn.mandirs', 'None');
+	$temp = $request->session()->pull('sn', 'None');
+
+	$sesData = $request->session()->all();
+	*/
+
+        return view('remittance.start-lot');
+    }
+
+    /**
+     * End current lot.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function exitLot(Request $request)
+    {
+	/**
+	 * Todo: This method should be callable only when 
+	 *       there is current lot. Else should take an
+         *       appropriate action.
+         */
+
+	$request->session()->forget('lot');
+	$request->session()->flash('status', 'Success: Lot exited.');
+
+        return redirect('/');
     }
 }
 

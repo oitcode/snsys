@@ -32,7 +32,11 @@ Route::get('/rmt/create', 'RemittanceController@create');
 Route::post('/rmt/create/store', 'RemittanceController@storeRemittance');
 Route::get('/rmt/search', 'RemittanceController@search');
 Route::post('/rmt/search/process', 'RemittanceController@searchProcess');
+Route::get('/rmt/lot/start', 'RemittanceController@startLot');
+Route::post('/rmt/lot/create', 'RemittanceController@createLot');
+Route::get('/rmt/lot/exit', 'RemittanceController@exitLot');
 Route::get('/rmt/{remittance_id}', 'RemittanceController@showRmt');
+
 
 /* Sangh */
 Route::get('/sangh/family', 'SanghController@search');

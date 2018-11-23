@@ -40,13 +40,13 @@ class Remittance extends Model
     |
     */
 
-    public function bank_voucher()
+    public function remittance_lot()
     {
 	/**
 	 * 2nd arg: name of foreign key column in remittance table
 	 * 3rd arg: name of primary key column in bank_voucher table
 	 */
-        return $this->belongsTo('App\BankVoucher', 'bank_voucher_id', 'bank_voucher_id');
+        return $this->belongsTo('App\RemittanceLot', 'remittance_lot_id', 'remittance_lot_id');
     }
 
     /*

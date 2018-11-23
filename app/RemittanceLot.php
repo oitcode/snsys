@@ -4,14 +4,14 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class BankVoucher extends Model
+class RemittanceLot extends Model
 {
     /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'bank_voucher';
+    protected $table = 'remittance_lot';
 
 
     /**
@@ -19,7 +19,7 @@ class BankVoucher extends Model
      *
      * @var string
      */
-    protected $primaryKey = 'bank_voucher_id';
+    protected $primaryKey = 'remittance_lot_id';
 
 
     /**
