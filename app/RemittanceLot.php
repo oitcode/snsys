@@ -46,7 +46,7 @@ class RemittanceLot extends Model
 	 * 2nd arg: name of foreign key column in remittance table
 	 * 3rd arg: name of primary key column in bank_voucher table
 	 */
-        return $this->hasMany('App\Remittance', 'bank_voucher_id', 'bank_voucher_id');
+        return $this->hasMany('App\Remittance', 'remittance_lot_id', 'remittance_lot_id');
     }
 
     /*

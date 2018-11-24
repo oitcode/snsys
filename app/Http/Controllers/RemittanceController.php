@@ -333,10 +333,6 @@ class RemittanceController extends Controller
 
 	$newRemittance->creator_id = Auth::user()->id;
 
-	/**
-	 * Todo: Do not create main remittance now, because, there mayby amount
-	 *       mismatch. Just keep the object without saving to db.
-	 */
 	if (! $newRemittance->save()) {
 	    die('Could not insert new remittance to db.');
 	}
@@ -526,37 +522,157 @@ class RemittanceController extends Controller
     }
 
     /**
+     * Validate remit lines.
+     *
+     * @param array remitLines
+     *
+     * @return array
+     */
+    public function validateRemitLines($remitLines)
+    {
+        $amountPattern = '/^[0-9]+(\.[0-9]{1,2})?$/';
+	$namePattern = '/^[a-zA-Z]+[\s]+[a-zA-Z]+([\s]+[a-zA-Z]+){0,}$/';
+
+        foreach ($remitLines as $remitLine) {
+	   /* Todo: Handle blank rows more appropriately */
+	   if ($remitLine['name'] === null) {
+	       continue;
+	   }
+
+	   /* Validate name */
+	   if (! preg_match($namePattern, $remitLine['name'])) {
+	     return false;
+	   }
+
+	   /* Validate ritwik name */
+	   if (! preg_match($namePattern, $remitLine['ritwik-name'])) {
+	     return false;
+	   }
+
+	   /* Validate each data */
+	   if ($remitLine['swastyayani'] &&
+	       ! preg_match($amountPattern, $remitLine['swastyayani'])) {
+	     return false;
+	   }
+	   if (! preg_match($amountPattern, $remitLine['istavrity'])) {
+	       return false;
+	   }
+	   if ($remitLine['acharyavrity'] &&
+	       ! preg_match($amountPattern, $remitLine['acharyavrity'])) {
+	       return false;
+	   }
+	   if ($remitLine['dakshina'] &&
+	       ! preg_match($amountPattern, $remitLine['dakshina'])) {
+	       return false;
+	   }
+	   if ($remitLine['sangathani'] &&
+	       ! preg_match($amountPattern, $remitLine['sangathani'])) {
+	       return false;
+	   }
+	   if ($remitLine['ananda-bazar'] &&
+	       ! preg_match($amountPattern, $remitLine['ananda-bazar'])) {
+	       return false;
+	   }
+	   if ($remitLine['pranami'] &&
+	       ! preg_match($amountPattern, $remitLine['pranami'])) {
+	       return false;
+	   }
+	   if ($remitLine['swastyayani-awasista'] &&
+	       ! preg_match($amountPattern, $remitLine['swastyayani-awasista'])) {
+	       return false;
+	   }
+	   if ($remitLine['ritwiki'] &&
+	       ! preg_match($amountPattern, $remitLine['ritwiki'])) {
+	       return false;
+	   }
+	   if ($remitLine['utsav'] &&
+	       ! preg_match($amountPattern, $remitLine['utsav'])) {
+	       return false;
+	   }
+	   if ($remitLine['diksha-pranami'] &&
+	       ! preg_match($amountPattern, $remitLine['diksha-pranami'])) {
+	       return false;
+	   }
+	   if ($remitLine['acharya-pranami'] &&
+	       ! preg_match($amountPattern, $remitLine['acharya-pranami'])) {
+	       return false;
+	   }
+	   if ($remitLine['parivrity'] &&
+	       ! preg_match($amountPattern, $remitLine['parivrity'])) {
+	       return false;
+	   }
+	   if ($remitLine['misc'] &&
+	       ! preg_match($amountPattern, $remitLine['misc'])) {
+	       return false;
+	   }
+	}
+
+	return true;
+    }
+
+    /**
      * Validate data received in remittance creation form.
      *
      * @param Request request
      *
-     * @return array
+     * @return bool
      */
     public function validateRemitCreateData(Request $request)
     {
-	$validatedData = $request->validate([
-	    /* Currency */
-	    'currency' => 'required',
+	$currencyPattern = '/^(nc|ic)$/';
 
-	    /* Bank voucher */
-	    'bv-num' => 'required',
-	    'bv-deposit-date' => 'required',
-            'bv-depositor' => 'required',
-            'bv-amount' => 'required',
+	$namePattern = '/^[a-zA-Z]+[\s]+[a-zA-Z]+([\s]+[a-zA-Z]+){0,}$/';
 
-	    /* Main info */
-            'family-code' => 'required',
-            'submitter-name' => 'required',
-            'submitter-address' => 'required',
-            'submitted-date' => 'required',
-            'submitted-total' => 'required',
-            'delivered-by' => 'required',
+	$familyCodePattern = '/^(new|[0-9]+)$/';
 
-	    /* Remit lines */
+	/* Validate currency */
+	$validatedCurrencyData = $request->validate([
+	    'currency' => array('required',  'regex:' . $currencyPattern),
 	]);
 
-	return $validatedData;
+	/* Validate bank voucher data */
+	if (! session()->has('lot')) {
+	    echo 'Validating BV data<br />';
+	    $validatedBvData = $request->validate([
+	        'bv-num' => 'required|integer',
+	        'bv-deposit-date' => 'required|date',
+	        'bv-depositor' => array('required', 'regex:' . $namePattern),
+	        'bv-amount' => 'required|integer',
+	    ]);
+	}
+
+	echo('BV validation done<br/>');
+
+	/* Validate main info data */
+	echo 'Validating MI data<br />';
+	$validatedMainData = $request->validate([
+	    'family-code' => array('required', 'regex:' . $familyCodePattern),
+	    'submitter-name' => array('required', 'regex:' . $namePattern),
+	    /* Todo: Validate it is in correct address format*/
+	    'submitter-address' => 'required',
+	    'submitted-date' => 'required|date',
+	    'submitted-total' => 'required|integer',
+	    'delivered-by' => array('required', 'regex:' . $namePattern),
+	]);
+	echo('MI validation done<br/>');
+
+
+	/* Validate remit lines info data */
+	echo 'Validating RL data<br />';
+	$remitLines = $request->input('remit-row');
+	if (! $this->validateRemitLines($remitLines)) {
+	    /* Todo: Put appropriate error message */
+	    return false;
+	}
+	echo('RL validation done<br/>');
+
+	/**
+	 * If this statement is executed that means all validations were
+	 * passed.
+	 */
+	return true;
     }
+
 
     /**
      * Store the new remittance submitted.
@@ -592,15 +708,15 @@ class RemittanceController extends Controller
 	|
 	*/
 
-	/* Todo: Validate input data */
-	//$validatedData = $this->validateRemitCreateData($request);
 
-
-	/*
-	return redirect('/rmt/create')
-	    ->withErrors(['Foo Error', 'Bar Error'])
-	    ->withInput();
-	*/
+        if (! $this->validateRemitCreateData($request)) {
+	    /**
+	     * Todo: If this statement executed then it means that remittance
+	     *       line validation failed.
+             */
+	    return redirect()->back()->withInput()
+	        ->withErrors('Non valid line data');
+	}
 
 	/* Get currency info */
 	$currency = $request->input('currency');
@@ -615,6 +731,7 @@ class RemittanceController extends Controller
 	    ];
 	}
 
+
 	/* Get main input from form */
 	$mainInfo = [
             'familyCode' => $request->input('family-code'),
@@ -624,6 +741,7 @@ class RemittanceController extends Controller
             'submittedTotal' => $request->input('submitted-total'),
             'deliveredBy' => $request->input('delivered-by'),
 	];
+
 
 	/* Get individual input from form */
 	$remitLines = $request->input('remit-row');
@@ -678,10 +796,11 @@ class RemittanceController extends Controller
 	}
 	$this->processRemitLines($remitLines, $remittance);
 
-	/* Todo: Correctly show success messsage. */
 	$request->session()->flash('status', 'Success: Remittance created!');
+	$request->session()->flash('serialNum', $remittance->remittance_id);
+	$request->session()->flash('familyCode', $remittance->family->family_code);
 
-        return view('remittance.store-temp');
+        return redirect('/rmt/create/success');
     }
 
 
@@ -696,18 +815,46 @@ class RemittanceController extends Controller
     }
 
     /**
+     * Search by lot number.
+     *
+     * @param string lotNumber
+     *
+     * @return array
+     */
+    public function searchByLot($lotNumber)
+    {
+	$lot = RemittanceLot::where('lot_code', $lotNumber)->first();
+
+	if (!$lot) {
+	    /* Todo: redirect back with error message */
+	    die("Lot: $lotNumber not found");;
+	}
+
+	$remittances = $lot->remittances;
+
+        return $remittances;
+    }
+
+    /**
      * Process the search request.
      *
      * @return \Illuminate\Http\Response
      */
     public function searchProcess(Request $request)
     {
-	/*
 	$validatedData = $request->validate([
-	    'family-code' => 'required|integer',
+	    'family-code' => 'nullable|integer',
+	    /* Todo: Validate it is in correct name format*/
+	    //'submitter-name' => 'nullable|alpha'
+	    'serial-num' => 'nullable|integer',
+	    'submit-date' => 'nullable|date',
+	    /* Todo: Validate it is in correct name format*/
+	    //'delivered-by' => 'nullable|alpha'
+	    'lot-num' => 'nullable|integer',
 	]);
-	*/
 
+
+	/* Todo: Use data from $validatedData or $request->input ? */
 	/*
 	foreach ($validatedData as $key => $value ) {
 	  echo $key . ': ' . $value . '<br />';
@@ -715,6 +862,14 @@ class RemittanceController extends Controller
 	*/
 
 	$familyCode = $request->input('family-code');
+	$lotNumber = $request->input('lot-num');
+
+	/* Todo: Switch between different cases nicely! */
+	if ($lotNumber) {
+	    $remittances = $this->searchByLot($lotNumber);
+            return view('remittance.search-result')
+	        ->with('remittances', $remittances);
+	}
 
 	if (! $familyCode) {
 	    /* Todo */
@@ -840,6 +995,17 @@ class RemittanceController extends Controller
 	$request->session()->flash('status', 'Success: Lot exited.');
 
         return redirect('/');
+    }
+
+
+    /**
+     * Show remittance creation success page.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function storeSuccess()
+    {
+        return view('remittance.store-temp');
     }
 }
 
