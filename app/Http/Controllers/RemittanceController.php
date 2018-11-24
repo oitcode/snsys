@@ -244,7 +244,7 @@ class RemittanceController extends Controller
 	     */
 	    $newOblate->ritwik_id = 3;
 	} else {
-	    $newOblate->ritwik_id = $ritwik_id;
+	    $newOblate->ritwik_id = $ritwikId;
 	}
 
 	$newOblate->creator_id = Auth::user()->id;
@@ -412,6 +412,43 @@ class RemittanceController extends Controller
     }
 
     /**
+     * Create a new ritwik.
+     *
+     * @param array ritwikName
+     *
+     * @return object
+     */
+    public function createRitwik($ritwikName)
+    {
+        $newPerson = new Person;
+
+	$newPerson->first_name = $ritwikName['first_name'];
+	$newPerson->last_name = $ritwikName['last_name'];
+	$newPerson->creator_id = Auth::user()->id;
+	$newPerson->save();
+
+
+	$newRitwik = new Worker;
+
+	$newRitwik->person_id = $newPerson->person_id;
+	$newRitwik->worker_code = 'N00001';
+	$newRitwik->type = 'R';
+	$newRitwik->creator_id = Auth::user()->id;
+	$newRitwik->save();
+
+	$newOblate = new Oblate;
+        /* Todo: 49? Need a constant? */
+	$newOblate->family_id = 49;
+	$newOblate->person_id = $newPerson->person_id;
+        /* Todo: 3? Need a constant? */
+	$newOblate->ritwik_id = 3;
+	$newOblate->creator_id = Auth::user()->id;
+	$newOblate->save();
+
+	return $newRitwik;
+    }
+
+    /**
      * Process remittance lines.
      *
      * @param array remitLines
@@ -428,11 +465,108 @@ class RemittanceController extends Controller
 	    if ($remitLine['name'] === null) {
 	        continue;
 	    }
+
+	    /**
+	     * Fetch ritwik from DB, if not found, create one.
+	     */
+	    $ritwikName = $this->extractNames($remitLine['ritwik-name']);
+	    $ritwiks = Worker::all()->where('type', 'R');
+	    
+	    $match = false;
+	    $ritwikId = -1;
+	    foreach ($ritwiks as $ritwik) {
+		$person = Person::all()
+		          ->where('person_id', $ritwik->person_id)
+			  ->first();
+
+		if ($person->first_name == $ritwikName['first_name']
+		  &&
+		  $person->last_name == $ritwikName['last_name']) {
+		    $match = true;
+	            echo 'Match found<br />';
+		    $ritwikId = $ritwik->worker_id;
+		    /* Todo: If multiple ritwiks with same name? */
+		    break;
+		}
+	    }
+
+	    /* Ritwik with given name not found */
+	    if (! $match) {
+	        echo 'Creating new ritwik<br />';
+	        $newRitwik= $this->createRitwik($ritwikName);
+		$ritwikId = $newRitwik->worker_id;
+	    }
+
+            
+	    /* Check if oblate present in family. Else add one. */
+	    $oblate = $this->oblateInFamily($remitLine['name'], $family);
+	    if ($oblate === null) {
+	        $oblate = $this->addOblateToFamily($remitLine['name'],
+		                                   $family,
+					           $ritwikId);
+	    } else {
+	        /**
+	         * Oblate present in family. But still check if it has a 
+	         *  dummy ritwik
+	         */
+		 if ($oblate->ritwik_id == 3) {
+		     $oblate->ritwik_id = $ritwikId;
+		     $oblate->save();
+		 }
+	    }
+
+	    /* Create the remittance line with given details. */
+            $newRemittanceLine = new RemittanceLine;
+
+	    $newRemittanceLine->swastyayani = $remitLine['swastyayani'];
+	    $newRemittanceLine->istavrity = $remitLine['istavrity'];
+	    $newRemittanceLine->acharyavrity = $remitLine['acharyavrity'];
+	    $newRemittanceLine->dakshina = $remitLine['dakshina'];
+	    $newRemittanceLine->sangathani = $remitLine['sangathani'];
+	    $newRemittanceLine->ananda_bazar = $remitLine['ananda-bazar'];
+	    $newRemittanceLine->pranami = $remitLine['pranami'];
+	    $newRemittanceLine->swastyayani_awasista = $remitLine['swastyayani-awasista'];
+	    $newRemittanceLine->ritwiki = $remitLine['ritwiki'];
+	    $newRemittanceLine->utsav = $remitLine['utsav'];
+	    $newRemittanceLine->diksha_pranami = $remitLine['diksha-pranami'];
+	    $newRemittanceLine->acharya_pranami = $remitLine['acharya-pranami'];
+	    $newRemittanceLine->parivrity = $remitLine['parivrity'];
+	    $newRemittanceLine->misc = $remitLine['misc'];
+
+	    $newRemittanceLine->remittance_id = $remittance->remittance_id;
+	    $newRemittanceLine->oblate_id = $oblate->oblate_id;
+	    $newRemittanceLine->creator_id = Auth::user()->id;
+
+	    if (! $newRemittanceLine->save()) {
+	    /* Todo: Recover from error in someway rather than dryiing */
+	        die('Could not insert new remittance line to db.');
+	    }
+	}
+    }
+
+    /**
+     * Process remittance lines.
+     *
+     * @param array remitLines
+     * @param object remittance
+     *
+     * Note: This method does not return anything.
+     */
+    public function processRemitLinesBak($remitLines, $remittance)
+    {
+	$family = $remittance->family;
+
+        foreach ($remitLines as $remitLine) {
+	    /* Todo: Handle blank rows more appropriately */
+	    if ($remitLine['name'] === null) {
+	        continue;
+	    }
+
 	    /* Check if oblate present in family. Else add one. */
 	    $oblate = $this->oblateInFamily($remitLine['name'], $family);
 	    if ($oblate === null) {
 	        $oblate = $this->addOblateToFamily($remitLine['name'], $family);
-	    }
+	    } 
 
 	    /* Create the remittance line with given details. */
             $newRemittanceLine = new RemittanceLine;
