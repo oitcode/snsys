@@ -2,8 +2,8 @@
 
 @section('content')
 <div class="container-fluid">
-  <div class="panel panel-default">
-      <div class="panel-heading"><strong>Search Result</strong></div>
+  <div class="panel panel-info">
+      <div class="panel-heading"><h3><strong>Search Result</strong></h3></div>
       <div class="panel-body">
           @if (session('status'))
               <div class="alert alert-success">
@@ -14,7 +14,7 @@
 	  <p>
 	    @if (count($remittances) === 0)
 	      <span class="alert">
-	        No remittances for given family.
+	        No remittances found for given search.
 	      </span>
 	    @endif
 	  </p>
@@ -23,10 +23,9 @@
 	    <table class="table table-striped table-bordered">
 	      <thead>
 	        <tr class="info">
-		  @isset($familyCode)
-                    <th>Family Code</th>
-		  @endisset
                   <th>Serial number</th>
+                  <th>Family Code</th>
+                  <th>Submitted by</th>
                   <th>Date</th>
                   <th>Action</th>
 	        </tr>
@@ -34,10 +33,12 @@
 	      <tbody>
 	        @foreach ($remittances as $remittance)
 		  <tr>
-		    @isset($familyCode)
-		      <td>{{ $familyCode }}</td>
-		    @endisset
 		    <td>{{  $remittance->remittance_id  }}</td>
+		    <td>{{ $remittance->family->family_code }}</td>
+		    <td>
+		      {{ $remittance->submitter->person->first_name }}
+		      {{ $remittance->submitter->person->last_name }}
+		    </td>
 		    <td>{{  $remittance->submitted_date  }}</td>
 		    <td>
 		      <a href="/rmt/{{ $remittance->remittance_id }}">View</a> &nbsp;&nbsp;

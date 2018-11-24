@@ -2,8 +2,8 @@
 
 @section('content')
 <div class="container-fluid">
-  <div class="panel panel-default">
-      <div class="panel-heading"><strong>Remittance Detail</strong></div>
+  <div class="panel panel-info">
+      <div class="panel-heading"><h3><strong>Istavrity Detail</strong></h3></div>
       <div class="panel-body">
           @if (session('status'))
               <div class="alert alert-success">
@@ -25,6 +25,7 @@
 	      <thead>
 	        <tr class="info">
 	        <th>Name</th>
+	        <th>Ritwik name</th>
 	        <th>Swastyayani</th>
 	        <th>Istavrity</th>
 	        <th>Acharyavrity</th>
@@ -32,7 +33,7 @@
 	        <th>Sangathani</th>
 	        <th>Ananda bazar</th>
 	        <th>Pranami</th>
-	        <th>Swastyayani Awasista</th>
+	        <th>Swa Awa</th>
 	        <th>Ritwiki</th>
 	        <th>Utsav</th>
 	        <th>Diksha Pranami</th>
@@ -48,6 +49,7 @@
 		      {{ $remittance_line->oblate->person->first_name }}&nbsp;&nbsp;
 		      {{ $remittance_line->oblate->person->last_name }}&nbsp;&nbsp;
 		    </td>
+		    <td> </td>
 		    <td>{{ $remittance_line->swastyayani }}</td>
 		    <td>{{ $remittance_line->istavrity }}</td>
 		    <td>{{ $remittance_line->acharyavrity }}</td>

@@ -2,8 +2,8 @@
 
 @section('content')
 <div class="container-fluid">
-  <div class="panel panel-default">
-      <div class="panel-heading"><strong>Search</strong></div>
+  <div class="panel panel-info">
+      <div class="panel-heading"><h3><strong>Search</strong></h3></div>
       <div class="panel-body">
           @if (session('status'))
               <div class="alert alert-success">
@@ -46,6 +46,10 @@
               <div class="form-group">
                 <label for="submit-date">Delivered by</label><br />
                 <input type="text" class="form-control" id="delivered-by" name="delivered-by" placeholder="Delivered by">
+              </div>
+              <div class="form-group">
+                <label for="lot-num">Lot number</label><br />
+                <input type="text" class="form-control" id="lot-num" name="lot-num" placeholder="Lot Number">
               </div>
 	      <!--
               <div class="checkbox">

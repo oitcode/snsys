@@ -105,7 +105,9 @@
                     </button>
 
                     <!-- Branding Image -->
+		    <!-- Todo: brand image final -->
                     <a class="navbar-brand" href="{{ url('/') }}">
+		        <img src="/ap1-logo.png" style="max-width: 30px; display: inline; margin-top: -10px;" />
                         {{ config('app.name', 'Laravel') }}
                     </a>
                 </div>

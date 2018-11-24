@@ -5,12 +5,6 @@
   <div class="panel panel-default">
     <div class="panel-heading"><strong>Done! Istavrity saved.</strong></div>
     <div class="panel-body">
-        @if (session('status'))
-            <div class="alert alert-success">
-                {{ session('status') }}
-            </div>
-        @endif
-
         <!-- Display any error messages -->
         @if ($errors->any())
           <div class="alert alert-danger">
@@ -21,6 +15,26 @@
             </ul>
           </div>
         @endif
+
+	<!-- Show status message -->
+        @if (session('status'))
+            <div class="alert alert-success">
+                {{ session('status') }}
+            </div>
+        @endif
+
+	<!-- Show status message -->
+        @if (session('serialNum'))
+            <div class="alert alert-info">
+		<p>
+                  Serial number: {{ session('serialNum') }}
+		</p>
+		<p>
+                  Family Code: {{ session('familyCode') }}
+		</p>
+            </div>
+        @endif
+
     </div>
   </div>
 </div>
