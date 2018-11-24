@@ -49,7 +49,10 @@
 		      {{ $remittance_line->oblate->person->first_name }}&nbsp;&nbsp;
 		      {{ $remittance_line->oblate->person->last_name }}&nbsp;&nbsp;
 		    </td>
-		    <td> </td>
+		    <td>
+		      {{ $remittance_line->oblate->worker->person->first_name }}&nbsp;&nbsp;
+		      {{ $remittance_line->oblate->worker->person->last_name }}&nbsp;&nbsp;
+		    </td>
 		    <td>{{ $remittance_line->swastyayani }}</td>
 		    <td>{{ $remittance_line->istavrity }}</td>
 		    <td>{{ $remittance_line->acharyavrity }}</td>
