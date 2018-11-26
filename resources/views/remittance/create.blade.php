@@ -94,22 +94,22 @@
             <table class="nwo-form-table">
               <thead>
                 <tr>
-                  <th class="nwo-std-10pc">Person</th>
-                  <th class="nwo-std-10pc">Ritwik</th>
-                  <th class="nwo-std-5pc">Swastyni</th>
-                  <th class="nwo-std-5pc">Istavrity</th>
-                  <th class="nwo-std-5pc">Achryvrty</th>
-                  <th class="nwo-std-5pc">Dkshna</th>
-                  <th class="nwo-std-5pc">Sngthni</th>
-                  <th class="nwo-std-5pc">Ananda Bazar</th>
-                  <th class="nwo-std-5pc">Pranami</th>
-                  <th class="nwo-std-5pc">Swst aws</th>
-                  <th class="nwo-std-5pc">Ritwiki</th>
-                  <th class="nwo-std-5pc">Utsav</th>
-                  <th class="nwo-std-5pc">Diksha Pr</th>
-                  <th class="nwo-std-5pc">Acharya Pr</th>
-                  <th class="nwo-std-5pc">Parivrity</th>
-                  <th class="nwo-std-5pc">Misc</th>
+                  <th class="nwo-std-10pc nwo-std-smf">Person</th>
+                  <th class="nwo-std-10pc nwo-std-smf">Ritwik Name</th>
+                  <th class="nwo-std-5pc nwo-std-smf">Swastyayani</th>
+                  <th class="nwo-std-5pc nwo-std-smf">Istavrity</th>
+                  <th class="nwo-std-5pc nwo-std-smf">Acharyavrity</th>
+                  <th class="nwo-std-5pc nwo-std-smf">Dakshina</th>
+                  <th class="nwo-std-5pc nwo-std-smf">Sangathani</th>
+                  <th class="nwo-std-5pc nwo-std-smf">Ananda Bazar</th>
+                  <th class="nwo-std-5pc nwo-std-smf">Pranami</th>
+                  <th class="nwo-std-5pc nwo-std-smf">Swst aws</th>
+                  <th class="nwo-std-5pc nwo-std-smf">Ritwiki</th>
+                  <th class="nwo-std-5pc nwo-std-smf">Utsav</th>
+                  <th class="nwo-std-5pc nwo-std-smf">Diksha Pr</th>
+                  <th class="nwo-std-5pc nwo-std-smf">Acharya Pr</th>
+                  <th class="nwo-std-5pc nwo-std-smf">Parivrity</th>
+                  <th class="nwo-std-5pc nwo-std-smf">Misc</th>
                 </tr>
               </thead>
               <tbody id="remit_row_body">
