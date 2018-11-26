@@ -96,20 +96,20 @@
                 <tr>
                   <th class="nwo-std-10pc">Person</th>
                   <th class="nwo-std-10pc">Ritwik</th>
-                  <th class="nwo-std-10pc">Swastyayani</th>
-                  <th class="nwo-std-10pc">Istavrity</th>
-                  <th class="nwo-std-10pc">Acharyavriti</th>
-                  <th class="nwo-std-10pc">Dakshina</th>
-                  <th class="nwo-std-10pc">Sangathani</th>
-                  <th class="nwo-std-10pc">Ananda Bazar</th>
-                  <th class="nwo-std-10pc">Pranami</th>
-                  <th class="nwo-std-10pc">Swst aws</th>
-                  <th class="nwo-std-10pc">Ritwiki</th>
-                  <th class="nwo-std-10pc">Utsav</th>
-                  <th class="nwo-std-10pc">Diksha Pr</th>
-                  <th class="nwo-std-10pc">Acharya Pr</th>
-                  <th class="nwo-std-10pc">Parivrity</th>
-                  <th class="nwo-std-10pc">Misc</th>
+                  <th class="nwo-std-5pc">Swastyayani</th>
+                  <th class="nwo-std-5pc">Istavrity</th>
+                  <th class="nwo-std-5pc">Acharyavriti</th>
+                  <th class="nwo-std-5pc">Dakshina</th>
+                  <th class="nwo-std-5pc">Sangathani</th>
+                  <th class="nwo-std-5pc">Ananda Bazar</th>
+                  <th class="nwo-std-5pc">Pranami</th>
+                  <th class="nwo-std-5pc">Swst aws</th>
+                  <th class="nwo-std-5pc">Ritwiki</th>
+                  <th class="nwo-std-5pc">Utsav</th>
+                  <th class="nwo-std-5pc">Diksha Pr</th>
+                  <th class="nwo-std-5pc">Acharya Pr</th>
+                  <th class="nwo-std-5pc">Parivrity</th>
+                  <th class="nwo-std-5pc">Misc</th>
                 </tr>
               </thead>
               <tbody id="remit_row_body">
