@@ -291,7 +291,7 @@ $( document ).ready(function() {
 	 if (diff > 0) {
             e.preventDefault();
 	    alert("ADD: " + diff);
-	} else {
+	} else if (diff < 0) {
             e.preventDefault();
 	    alert("SUBTRACT: " + diff * -1);
 	}
