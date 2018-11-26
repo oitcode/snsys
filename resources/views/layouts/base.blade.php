@@ -15,12 +15,12 @@
     <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
     <style>
       .nwo-std-frminp {
-          width: 100px;
+          /*width: 100px;*/
           background-color: #ddd;
       }
       
       .nwo-std-frminp-lx {
-        width: 200px;
+        /*width: 200px;*/
       }
 
       .nwo-form-table thead {
