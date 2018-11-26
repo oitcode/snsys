@@ -96,11 +96,11 @@
                 <tr>
                   <th class="nwo-std-10pc">Person</th>
                   <th class="nwo-std-10pc">Ritwik</th>
-                  <th class="nwo-std-5pc">Swastyayani</th>
+                  <th class="nwo-std-5pc">Swastyni</th>
                   <th class="nwo-std-5pc">Istavrity</th>
-                  <th class="nwo-std-5pc">Acharyavriti</th>
-                  <th class="nwo-std-5pc">Dakshina</th>
-                  <th class="nwo-std-5pc">Sangathani</th>
+                  <th class="nwo-std-5pc">Achryvrty</th>
+                  <th class="nwo-std-5pc">Dkshna</th>
+                  <th class="nwo-std-5pc">Sngthni</th>
                   <th class="nwo-std-5pc">Ananda Bazar</th>
                   <th class="nwo-std-5pc">Pranami</th>
                   <th class="nwo-std-5pc">Swst aws</th>
