@@ -23,7 +23,7 @@
 	  @endif
 
 	  <!-- Main part -->
-	  <div>
+	  <div class="col-md-6 bg-info">
             <form action="{{ url('/rmt/lot/create') }}" method="post">
 	      {{ csrf_field() }}
 

@@ -36,6 +36,9 @@ Route::post('/rmt/search/process', 'RemittanceController@searchProcess');
 Route::get('/rmt/lot/start', 'RemittanceController@startLot');
 Route::post('/rmt/lot/create', 'RemittanceController@createLot');
 Route::get('/rmt/lot/exit', 'RemittanceController@exitLot');
+Route::get('/rmt/lot/resume', 'RemittanceController@resumeLot');
+Route::post('/rmt/lot/resume/process', 'RemittanceController@resumeLotProcess');
+
 Route::get('/rmt/{remittance_id}', 'RemittanceController@showRmt');
 
 

@@ -12,6 +12,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
     <style>
       .nwo-std-frminp {
           width: 100px;
@@ -135,14 +136,30 @@
                           </a>
 
                           <ul class="dropdown-menu">
-                              <li><a href="{{ url('/rmt/lot/start') }}">Start Lot</a></li>
                               @if (session('lot'))
                                 <li><a href="{{ url('/rmt/lot/exit') }}">Exit Lot</a></li>
+                              @else
+                              <li><a href="{{ url('/rmt/lot/start') }}">Start Lot</a></li>
+                              <li><a href="{{ url('/rmt/lot/resume') }}">Resume Lot</a></li>
                               @endif
-                              <li><a href="">Resume Lot</a></li>
                           </ul>
                       </li>
 
+		      <!-- Print -->
+                      <li class="dropdown">
+                          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" v-pre>
+                              Print <span class="caret"></span>
+                          </a>
+                      </li>
+
+		      <!-- Other -->
+                      <li class="dropdown">
+                          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" v-pre>
+                              Other <span class="caret"></span>
+                          </a>
+                      </li>
+
+		      {{-- DO NOT SHOW WOKER, OBLATE AND SANGH
                       <!-- Worker -->
                       <li class="dropdown">
                           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" v-pre>
@@ -177,6 +194,8 @@
                               <li><a href="{{ url('/sangh/family') }}">Family</a></li>
                           </ul>
                       </li>
+		    --}}
+
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -224,5 +243,6 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('js/rem-create.js') }}"></script>
 </body>
 </html>

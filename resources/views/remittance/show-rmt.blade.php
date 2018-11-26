@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container-fluid">
-  <div class="panel panel-info">
+  <div class="panel panel-primary">
       <div class="panel-heading"><h3><strong>Istavrity Detail</strong></h3></div>
       <div class="panel-body">
           @if (session('status'))

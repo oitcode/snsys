@@ -82,7 +82,7 @@
                   <td><input type="text" class="nwo-std-frminp nwo-std-frminp-lx" name="submitter-name" id="" value="{{ old('submitter-name') }}"/></td>
                   <td><input type="text" class="nwo-std-frminp nwo-std-frminp-lx" name="submitter-address" id="" value="{{ old('submitter-address') }}"/></td>
                   <td><input type="text" class="nwo-std-frminp" name="submitted-date" id="" value="{{ old('submitted-date') }}"/></td>
-                  <td><input type="text" class="nwo-std-frminp" name="submitted-total" id="" value="{{ old('submitted-total') }}"/></td>
+                  <td><input type="text" class="nwo-std-frminp" name="submitted-total" id="head_total" value="{{ old('submitted-total') }}"/></td>
                   <td><input type="text" class="nwo-std-frminp nwo-std-frminp-lx" name="delivered-by" id="" value="{{ old('delivered-by') }}"/></td>
                 </tr>
               </tbody>
@@ -117,140 +117,29 @@
 		<tr>
                   <td><input type="text" class="nwo-std-frminp nwo-std-frminp-lx"  name="remit-row[0][name]" id="" /></td>
                   <td><input type="text" class="nwo-std-frminp nwo-std-frminp-lx"  name="remit-row[0][ritwik-name]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp"  name="remit-row[0][swastyayani]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp"  name="remit-row[0][istavrity]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp"  name="remit-row[0][acharyavrity]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp"  name="remit-row[0][dakshina]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp"  name="remit-row[0][sangathani]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp"  name="remit-row[0][ananda-bazar]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp"  name="remit-row[0][pranami]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp"  name="remit-row[0][swastyayani-awasista]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp"  name="remit-row[0][ritwiki]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp"  name="remit-row[0][utsav]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp"  name="remit-row[0][diksha-pranami]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp"  name="remit-row[0][acharya-pranami]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp"  name="remit-row[0][parivrity]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp"  name="remit-row[0][misc]" id="" /></td>
+                  <td><input type="text" class="nwo-std-frminp col-val"  name="remit-row[0][swastyayani]" id="" /></td>
+                  <td><input type="text" class="nwo-std-frminp col-val"  name="remit-row[0][istavrity]" id="" /></td>
+                  <td><input type="text" class="nwo-std-frminp col-val"  name="remit-row[0][acharyavrity]" id="" /></td>
+                  <td><input type="text" class="nwo-std-frminp col-val"  name="remit-row[0][dakshina]" id="" /></td>
+                  <td><input type="text" class="nwo-std-frminp col-val"  name="remit-row[0][sangathani]" id="" /></td>
+                  <td><input type="text" class="nwo-std-frminp col-val"  name="remit-row[0][ananda-bazar]" id="" /></td>
+                  <td><input type="text" class="nwo-std-frminp col-val"  name="remit-row[0][pranami]" id="" /></td>
+                  <td><input type="text" class="nwo-std-frminp col-val"  name="remit-row[0][swastyayani-awasista]" id="" /></td>
+                  <td><input type="text" class="nwo-std-frminp col-val"  name="remit-row[0][ritwiki]" id="" /></td>
+                  <td><input type="text" class="nwo-std-frminp col-val"  name="remit-row[0][utsav]" id="" /></td>
+                  <td><input type="text" class="nwo-std-frminp col-val"  name="remit-row[0][diksha-pranami]" id="" /></td>
+                  <td><input type="text" class="nwo-std-frminp col-val"  name="remit-row[0][acharya-pranami]" id="" /></td>
+                  <td><input type="text" class="nwo-std-frminp col-val"  name="remit-row[0][parivrity]" id="" /></td>
+                  <td><input type="text" class="nwo-std-frminp col-val"  name="remit-row[0][misc]" id="" /></td>
 		</tr>
-		<tr>
-                  <td><input type="text" class="nwo-std-frminp nwo-std-frminp-lx"  name="remit-row[1][name]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp nwo-std-frminp-lx"  name="remit-row[1][ritwik-name]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp"  name="remit-row[1][swastyayani]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp"  name="remit-row[1][istavrity]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp"  name="remit-row[1][acharyavrity]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp"  name="remit-row[1][dakshina]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp"  name="remit-row[1][sangathani]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp"  name="remit-row[1][ananda-bazar]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp"  name="remit-row[1][pranami]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp"  name="remit-row[1][swastyayani-awasista]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp"  name="remit-row[1][ritwiki]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp"  name="remit-row[1][utsav]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp"  name="remit-row[1][diksha-pranami]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp"  name="remit-row[1][acharya-pranami]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp"  name="remit-row[1][parivrity]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp"  name="remit-row[1][misc]" id="" /></td>
-		</tr>
-
-		<!--
-		Old way of submitting remit lines
-		This has 1D array for each of the column
-                <tr>
-                  <td><input type="text" class="nwo-std-frminp nwo-std-frminp-lx"  name="person-full-name[]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp nwo-std-frminp-lx"  name="ritwik-full-name[]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp"  name="swastyayani[]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp"  name="istavrity[]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp"  name="acharyavrity[]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp"  name="dakshina[]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp"  name="sangathani[]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp"  name="ananda-bazar[]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp"  name="pranami[]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp"  name="swastyayani-awasista[]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp"  name="ritwiki[]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp"  name="utsav[]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp"  name="diksha-pranami[]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp"  name="acharya-pranami[]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp"  name="parivrity[]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp"  name="misc[]" id="" /></td>
-                </tr>
-                <tr>
-                  <td><input type="text" class="nwo-std-frminp nwo-std-frminp-lx"  name="person-full-name[]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp nwo-std-frminp-lx"  name="ritwik-full-name[]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp"  name="swastyayani[]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp"  name="istavrity[]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp"  name="acharyavrity[]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp"  name="dakshina[]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp"  name="sangathani[]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp"  name="ananda-bazar[]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp"  name="pranami[]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp"  name="swastyayani-awasista[]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp"  name="ritwiki[]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp"  name="utsav[]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp"  name="diksha-pranami[]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp"  name="acharya-pranami[]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp"  name="parivrity[]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp"  name="misc[]" id="" /></td>
-                </tr>
-                <tr>
-                  <td><input type="text" class="nwo-std-frminp nwo-std-frminp-lx"  name="person-full-name[]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp nwo-std-frminp-lx"  name="ritwik-full-name[]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp"  name="swastyayani[]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp"  name="istavrity[]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp"  name="acharyavrity[]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp"  name="dakshina[]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp"  name="sangathani[]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp"  name="ananda-bazar[]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp"  name="pranami[]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp"  name="swastyayani-awasista[]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp"  name="ritwiki[]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp"  name="utsav[]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp"  name="diksha-pranami[]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp"  name="acharya-pranami[]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp"  name="parivrity[]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp"  name="misc[]" id="" /></td>
-                </tr>
-                <tr>
-                  <td><input type="text" class="nwo-std-frminp nwo-std-frminp-lx"  name="person-full-name[]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp nwo-std-frminp-lx"  name="ritwik-full-name[]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp"  name="swastyayani[]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp"  name="istavrity[]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp"  name="acharyavrity[]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp"  name="dakshina[]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp"  name="sangathani[]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp"  name="ananda-bazar[]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp"  name="pranami[]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp"  name="swastyayani-awasista[]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp"  name="ritwiki[]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp"  name="utsav[]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp"  name="diksha-pranami[]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp"  name="acharya-pranami[]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp"  name="parivrity[]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp"  name="misc[]" id="" /></td>
-                </tr>
-                <tr>
-                  <td><input type="text" class="nwo-std-frminp nwo-std-frminp-lx"  name="person-full-name[]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp nwo-std-frminp-lx"  name="ritwik-full-name[]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp"  name="swastyayani[]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp"  name="istavrity[]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp"  name="acharyavrity[]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp"  name="dakshina[]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp"  name="sangathani[]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp"  name="ananda-bazar[]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp"  name="pranami[]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp"  name="swastyayani-awasista[]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp"  name="ritwiki[]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp"  name="utsav[]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp"  name="diksha-pranami[]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp"  name="acharya-pranami[]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp"  name="parivrity[]" id="" /></td>
-                  <td><input type="text" class="nwo-std-frminp"  name="misc[]" id="" /></td>
-                </tr>
-		-->
                 <!-- Additional rows go here -->
               </tbody>
             </table>
             <br />
-            <button type="button" class="btn btn-primary" onclick="addRow()">+Person</button><br /><br />
-            <input type="submit" class="btn btn-success" value="Submit"> <br />
+            <!--<button type="button" id="rem_person" class="btn btn-danger">-Person</button>-->
+            <button type="button" id="add_person" class="btn btn-primary">+Person</button>
+            <button type="button" id="check_total" class="btn btn-danger">Check Total</button>
+            <input type="submit"  id="submit_remit" class="btn btn-success" value="Submit"> <br />
           </form>
       </div>
   </div>

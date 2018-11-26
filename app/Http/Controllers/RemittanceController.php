@@ -1131,6 +1131,37 @@ class RemittanceController extends Controller
         return redirect('/');
     }
 
+    /**
+     * Resume previous lot.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function resumeLot()
+    {
+        return view('remittance.resume-lot');
+    }
+
+    /**
+     * Process resume lot request.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function resumeLotProcess(Request $request)
+    {
+	/* Validate data */
+	$validatedData = $request->validate([
+	    'lot-code' => 'required|integer|exists:remittance_lot,lot_code',
+	]);
+
+	/* Put lot info into session */
+	$lotCode = $request->input('lot-code');
+	$request->session()->put('lot', $lotCode);
+
+	/* Todo: Redirect to more appropriate place. */
+        return redirect('/');
+    }
+
+
 
     /**
      * Show remittance creation success page.

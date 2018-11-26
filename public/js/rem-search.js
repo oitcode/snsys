@@ -1,0 +1,1 @@
+/* Javascript code for remittance search. */
