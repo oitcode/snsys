@@ -852,6 +852,22 @@ class RemittanceController extends Controller
 	        ->withErrors('Non valid line data');
 	}
 
+	/* Validate that given amount is within bank voucher consumption.*/
+	if (session()->has('lot')) {
+	    $rl = RemittanceLot::where('lot_code', session()->get('lot'))
+	          ->first();
+            $rlId = $rl->remittance_lot_id;
+	    echo ("Rmittance lot id: $rlId<br/>");
+
+	    if (! $this->checkBvSpace($rlId,
+	                              $request->input('submitted-total'))) {
+	        return redirect()->back()->withInput()
+	            ->withErrors('Error: Total exceeds amount in Bank Voucher');
+	    }
+	} else {
+	    // Todo: For non-lot remittances
+	}
+
 	/* Get currency info */
 	$currency = $request->input('currency');
 
@@ -1171,6 +1187,114 @@ class RemittanceController extends Controller
     public function storeSuccess()
     {
         return view('remittance.store-temp');
+    }
+
+    /**
+     * Check if given amount is remaining in a given bank voucher.
+     *
+     * @param integer rlId
+     * @param integer amount
+     *
+     * @return bool
+     */
+    public function checkBvSpace($rlId, $amount)
+    {
+	$retval = false;
+
+	$bvAmount = RemittanceLot::find($rlId)->amount;
+
+        $usedAmount = $this->usedBvAmount($rlId);
+
+	if ($amount <= $bvAmount - $usedAmount) {
+	    $retval = true;
+	}
+
+	return $retval;
+    }
+
+    /**
+     * Return used amount for a given remittance lot id.
+     *
+     * @param integer rlId
+     *
+     * @return integer
+     */
+    public function usedBvAmount($rlId)
+    {
+	$usedAmount = 0;
+
+        $remittanceLot = RemittanceLot::find($rlId);
+
+	$remittances = $remittanceLot->remittances;
+
+	foreach ($remittances as $remittance) {
+	    $usedAmount += $this->remTotalAmount($remittance);
+	}
+
+	return $usedAmount;
+    }
+
+    /**
+     * Return total amount for a given remittance.
+     *
+     * @param object remittance
+     *
+     * @return integer
+     */
+    public function remTotalAmount($remittance)
+    {
+        $total = 0;
+
+	$remittanceLines = $remittance->remittance_lines;
+
+	foreach ($remittanceLines as $remittanceLine) {
+	    $total += $this->remLineTotalAmount($remittanceLine);
+	}
+
+	return $total;
+    }
+
+    /**
+     * Return total amount for a given remittance line.
+     *
+     * @param object remittanceLine
+     *
+     * @return integer
+     */
+    public function remLineTotalAmount($remittanceLine)
+    {
+        $total = 0;
+
+        $total += $remittanceLine->swastyayani;
+        $total += $remittanceLine->istavrity;
+        $total += $remittanceLine->acharyavrity;
+        $total += $remittanceLine->dakshina;
+        $total += $remittanceLine->sangathani;
+        $total += $remittanceLine->ananda_bazar;
+        $total += $remittanceLine->pranami;
+        $total += $remittanceLine->swastyayani_awasista;
+        $total += $remittanceLine->ritwiki;
+        $total += $remittanceLine->utsav;
+        $total += $remittanceLine->diksha_pranami;
+        $total += $remittanceLine->acharya_pranami;
+        $total += $remittanceLine->parivrity;
+        $total += $remittanceLine->misc;
+
+	return $total;
+    }
+
+    /**
+     * Return remaining usable amount for a given lot.
+     *
+     * @param integer lotCode
+     *
+     * @return integer
+     */
+    public function lotRemainingBal($lotCode)
+    {
+        $remittanceLot = RemittanceLot::where('lot_code', $lotCode)->first();
+
+        return $remittanceLot->amount - $this->usedBvAmount($lotCode);
     }
 }
 
