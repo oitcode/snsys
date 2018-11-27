@@ -4,6 +4,10 @@
   padding: 10px;
 }
 
+.nwo-std-errul li:last {
+  margin-bottom: 10px;
+}
+
 .nwo-std-10pc {
   width: 10vw;
 }

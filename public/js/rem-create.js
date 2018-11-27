@@ -242,7 +242,7 @@ $( document ).ready(function() {
 
     checkTotalBtn.click(function(){
         /* Get Head Total amount */    
-        var headTotal = $("#head_total").val();
+        var headTotal = $("#id_mi_total").val();
 
 	/* Calculate total by adding all the sum */
 	var sumTotal = 0;
@@ -269,34 +269,34 @@ $( document ).ready(function() {
  * Submit button
  * ----------------------------------------------------------------------------
  */
-$( document ).ready(function() {
-    var submitFormBtn = $("#submit_remit");
-
-    submitFormBtn.click(function(e){
-        var elem = $(this);
-
-        /* Get Head Total amount */    
-        var headTotal = $("#head_total").val();
-
-	/* Calculate total by adding all the sum */
-	var sumTotal = 0;
-	$(".col-val").each(function(){
-            sumTotal += +$(this).val();
-        });
-
-	/* See the difference */
-	var diff = headTotal - sumTotal;
-
-	/* Alert a message */
-	 if (diff > 0) {
-            e.preventDefault();
-	    alert("ADD: " + diff);
-	} else if (diff < 0) {
-            e.preventDefault();
-	    alert("SUBTRACT: " + diff * -1);
-	}
-    });
-});
+// $( document ).ready(function() {
+//     var submitFormBtn = $("#submit_remit");
+// 
+//     submitFormBtn.click(function(e){
+//         var elem = $(this);
+// 
+//         /* Get Head Total amount */    
+//         var headTotal = $("#id_mi_total").val();
+// 
+// 	/* Calculate total by adding all the sum */
+// 	var sumTotal = 0;
+// 	$(".col-val").each(function(){
+//             sumTotal += +$(this).val();
+//         });
+// 
+// 	/* See the difference */
+// 	var diff = headTotal - sumTotal;
+// 
+// 	/* Alert a message */
+// 	 if (diff > 0) {
+//             e.preventDefault();
+// 	    alert("ADD: " + diff);
+// 	} else if (diff < 0) {
+//             e.preventDefault();
+// 	    alert("SUBTRACT: " + diff * -1);
+// 	}
+//     });
+// });
 
 /**
  * ----------------------------------------------------------------------------
@@ -311,5 +311,458 @@ $( document ).ready(function() {
     for (i = 0; i < 5; i++) {
         addRemitRow(remLineBody);
     }
+});
+
+
+
+/**
+ * ============================================================================
+ * Validation helper functions
+ * ============================================================================
+ */
+
+/*
+|------------------------------------------------------------------------------
+| Currency validation
+|------------------------------------------------------------------------------
+*/
+
+/* Verify currency is checked */
+function currencyChecked()
+{
+    var curRadioName = 'currency';
+
+    if ($('input[name='+ curRadioName +']:checked').length) {
+        return true;
+      }
+    else {
+        return false;
+    }
+}
+
+
+/* Verify currency is either `ic' or `nc' */
+function currencyValid()
+{
+    var curRadioName = 'currency';
+
+    if ($('input[name='+ curRadioName +']').val() == 'ic') {
+        return true;
+    } else if ($('input[name='+ curRadioName +']').val() == 'nc') {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+/*
+|------------------------------------------------------------------------------
+| Bank voucher validation
+|------------------------------------------------------------------------------
+*/
+
+/* Check if bank voucher number is blank */
+function bvNumBlank()
+{
+    var retval = true;
+
+    var bvNum = $("#id_bv_num");
+
+    /* TODO: Use regexp to match */
+    if (bvNum.val()) {
+        retval = false;
+    }
+
+    return retval;
+}
+
+/* Check if bank voucher date is valid */
+function bvDateValid()
+{
+    var retval = false;
+
+    var bvDate = $("#id_bv_date");
+
+    /* TODO: Use regexp to match */
+    if (bvDate.val()) {
+        retval = true;
+    }
+
+    return retval;
+}
+
+/* Check if bank voucher depositor is valid */
+function bvDepositorValid()
+{
+    var retval = false;
+
+    var bvDepositor = $("#id_bv_depositor");
+
+    if (validName(bvDepositor.val())) {
+        retval = true;
+    }
+
+    return retval;
+}
+
+/* Check if bank voucher amount is valid */
+function bvAmountValid()
+{
+    var retval = false;
+
+    var bvAmount = $("#id_bv_amount");
+
+    /* TODO: Use regexp to match */
+    if (bvAmount.val()) {
+        retval = true;
+    }
+
+    return retval;
+}
+
+
+/*
+|------------------------------------------------------------------------------
+| Main info validation
+|------------------------------------------------------------------------------
+*/
+
+function miFamilyCodeValid()
+{
+    var retval = false;
+
+    var miFamilyCode = $("#id_mi_fcode");
+
+    /* TODO: Use regexp to match */
+    if (miFamilyCode.val()) {
+        retval = true;
+    }
+
+    return retval;
+}
+
+function miSubmitterNameValid()
+{
+    var retval = false;
+
+    var miSubmitterName = $("#id_mi_sname");
+
+    if (validName(miSubmitterName.val())) {
+        retval = true;
+    }
+
+    return retval;
+}
+
+function miSubmitterAddressValid()
+{
+    var retval = false;
+
+    var miSubmitterAddress= $("#id_mi_saddress");
+
+    /* TODO: Use regexp to match */
+    if (miSubmitterAddress.val()) {
+        retval = true;
+    }
+
+    return retval;
+}
+
+function miSubmitDateValid()
+{
+    var retval = false;
+
+    var miSubmitDate= $("#id_mi_sdate");
+
+    /* TODO: Use regexp to match */
+    if (miSubmitDate.val()) {
+        retval = true;
+    }
+
+    return retval;
+}
+
+function miTotalValid()
+{
+    var retval = false;
+
+    var miTotal= $("#id_mi_total");
+
+    if (validPosInt(miTotal.val())) {
+        retval = true;
+    }
+
+    return retval;
+}
+
+function miDeliveredByValid()
+{
+    var retval = false;
+
+    var miDeliveredBy= $("#id_mi_dname");
+
+    if (validName(miDeliveredBy.val())) {
+        retval = true;
+    }
+
+    return retval;
+}
+
+/*
+|------------------------------------------------------------------------------
+| Remittance line validation
+|------------------------------------------------------------------------------
+*/
+function rlValid()
+{
+    var retval = true;
+    var curRetval = true;
+
+    var rlErrList = $("#fe_rl_err_list");
+
+    /* Get all remit rows first */
+    var remitRows = $("#remit_row_body tr");
+
+    // Validate each row
+    remitRows.each(function(i, obj){
+        var name = $(this).children(":first").children(":first");
+	/* TODO: Trim whitespaces in name, else causes false negative. */
+
+	/* Only check for rows which have person name. */
+	if (name.val() != '') {
+	    curRetVal = remitLineValid(i, $(this));
+	    if (curRetVal == false) {
+	        retval = false;
+	    }
+	}
+    });
+
+    return retval;
+}
+
+/* Validate a single remittance line */
+function remitLineValid(i, row)
+{
+    var retval = true;
+
+    var rlErrList = $("#fe_rl_err_list");
+
+    var cols = $(row).children().children();
+
+    // Validate each column
+    cols.each(function(j, obj){
+        if (j == 0) {
+	    // Person Name
+            if (!validName($(this).val())) {
+                rlErrList.append("<li>Row: " + (i+1) + " => Person Name not valid</li>");
+		retval = false;
+	    }
+        } else if (j == 1) {
+	    // Ritwik Name
+            if (!validName($(this).val())) {
+                rlErrList.append("<li>Row: " + (i+1) + " => Ritwik Name not valid</li>");
+		retval = false;
+	    }
+        } else if (j == 2) {
+	    // Swastyayani
+	    if ($(this).val() != '' && !validPosNumber($(this).val())) {
+                rlErrList.append("<li>Row: " + (i+1) + " => Swastyayani not valid</li>");
+		retval = false;
+	    }
+	} else if (j == 3) {
+	    // Istavrity
+	    if (!validPosNumber($(this).val())) {
+                rlErrList.append("<li>Row: " + (i+1) + " => Istavrity not valid</li>");
+		retval = false;
+	    }
+	} else {
+	    // Others
+	    if ($(this).val() != '' && !validPosNumber($(this).val())) {
+                rlErrList.append("<li>Row: " + (i+1) + " => Col: " + j + " => number not valid</li>");
+		retval = false;
+	    }
+	}
+    });
+
+    return retval;
+}
+
+function validPosNumber(value)
+{
+    var retval = false;
+
+    var posNumRegex = /^\d+(\.\d{1,2})?$/; 
+
+    if(posNumRegex.test(value)) {
+        retval = true;
+    }
+
+    return retval;
+}
+
+function validPosInt(value)
+{
+    var retval = false;
+
+    var posIntRegex = /^[1-9]\d{0,}$/; 
+
+    if(posIntRegex.test(value)) {
+        retval = true;
+    }
+
+    return retval;
+
+}
+
+function validName(name)
+{
+    /* Todo: Fix regexp */
+    var namePattern = new RegExp('^[a-zA-Z]+ +[a-zA-Z]+( +[a-zA-Z]+){0,}$');
+
+    if (namePattern.test(name)) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+/**
+ * ============================================================================
+ * Validate Create form when submit button is clicked.
+ * ============================================================================
+ */
+$( document ).ready(function() {
+    console.log('Just SUBMISSION check');
+
+
+    var submitFormBtn = $("#submit_remit");
+
+    submitFormBtn.click(function(e){
+        /* Issue flag */
+        var formIssue = false;
+        formIssue = false;
+        if (formIssue == false) {
+            console.log("Form issue reset to false");
+        }
+
+	/* Get the error lists */
+	var curErrList = $("#fe_cur_err_list");
+	var bvErrList = $("#fe_bv_err_list");
+	var miErrList = $("#fe_mi_err_list");
+	var rlErrList = $("#fe_rl_err_list");
+	var totalErrList = $("#total_err_list");
+
+	/* Clear all error lists from screen */
+	curErrList.empty();
+	bvErrList.empty();
+	miErrList.empty();
+	rlErrList.empty();
+	totalErrList.empty();
+
+
+        /**
+	 * Verify currency
+	 */
+        if (! currencyChecked()) {
+            formIssue = true;
+            curErrList.append("<li>Currency Not Checked</li>")
+        }
+	if (! currencyValid()) {
+            formIssue = true;
+            curErrList.append("<li>Currency Not Valid</li>");
+	}
+
+	/**
+	 * Verify bank voucher info (if present)
+	 */
+	var bvTable = $("#bv_table");
+	if (bvTable.length) {
+	    if (bvNumBlank()) {
+                formIssue = true;
+                bvErrList.append("<li>Bank Voucher: Voucher number cannot be blank</li>");
+	    }
+	    if (!bvDateValid()){
+                formIssue = true;
+                bvErrList.append("<li>Bank Voucher: Deposit date not valid</li>");
+	    }
+	    if (!bvDepositorValid()){
+                formIssue = true;
+                bvErrList.append("<li>Bank Voucher: Depositor not valid</li>");
+	    }
+	    if (!bvAmountValid()){
+                formIssue = true;
+                bvErrList.append("<li>Bank Voucher: Amount not valid</li>");
+	    }
+	}
+
+	/**
+	 * Verify main info
+	 */
+        if (!miFamilyCodeValid()) {
+            formIssue = true;
+            miErrList.append("<li>MAIN: Family code not valid</li>");
+	}
+        if (!miSubmitterNameValid()) {
+            formIssue = true;
+            miErrList.append("<li>MAIN: Submitter name not valid</li>");
+	}
+        if (!miSubmitterAddressValid()) {
+            formIssue = true;
+            miErrList.append("<li>MAIN: Submitter address not valid</li>");
+	}
+        if (!miSubmitDateValid()) {
+            formIssue = true;
+            miErrList.append("<li>MAIN: Submit date not valid</li>");
+	}
+        if (!miTotalValid()) {
+            formIssue = true;
+            miErrList.append("<li>MAIN: Total not valid</li>");
+	}
+        if (!miDeliveredByValid()) {
+            formIssue = true;
+            miErrList.append("<li>MAIN: Delivered by not valid</li>");
+	}
+
+	/**
+	 * Verify Remit Lines
+	 */
+	if (!rlValid()) {
+            formIssue = true;
+	}
+
+	/* Check total is not exceeded by sum of individuals */
+	/* TODO: Is this elem needed? */
+        var elem = $(this);
+	if (miTotalValid()) {
+            /* Get Head Total amount */    
+            var headTotal = $("#id_mi_total").val();
+	    /* Calculate total by adding all the sum */
+	    var sumTotal = 0;
+	    $(".col-val").each(function(){
+                sumTotal += +$(this).val();
+            });
+
+	    /* See the difference */
+	    var diff = headTotal - sumTotal;
+
+	    /* Alert a message */
+	     if (diff > 0) {
+		formIssue = true;
+                totalErrList.append("<li>TOTAL => ADD: " + diff + "</li>");
+	    } else if (diff < 0) {
+		formIssue = true;
+                totalErrList.append("<li>TOTAL => SUBTRACT: " + (diff * -1) + "</li>");
+	    }
+	}
+
+
+	/* If any issues with form do not submit */
+	if (formIssue == true) {
+	    console.log("Form Issue true");
+            e.preventDefault();
+	    $("html, body").animate({ scrollTop: 0 }, "slow");
+	}
+    });
+
 });
 

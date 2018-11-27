@@ -22,6 +22,23 @@
              </div>
          @endif
 
+	 <!-- Display front end validaton messages -->
+	 <div class="alert alert-warning">
+	     <ul id="fe_cur_err_list" class="nwo-std-padding">
+	     </ul>
+	     <ul id="fe_bv_err_list" class="nwo-std-padding">
+	     </ul>
+	     <ul id="fe_mi_err_list" class="nwo-std-padding">
+	     </ul>
+	     <ul id="fe_rl_err_list" class="nwo-std-padding">
+	     </ul>
+	     <ul id="total_err_list" class="nwo-std-padding">
+	     </ul>
+	 </div>
+	 <hr />
+
+
+	  <!-- Form -->
           <form action="{{ url('/rmt/create/store') }}" method="post">
 	    {{ csrf_field() }}
 
@@ -38,7 +55,7 @@
             <!-- Bank Voucher Info -->
             @if (! session('lot'))
               <h5>Bank Voucher info</h5>
-              <table class="nwo-form-table">
+              <table class="nwo-form-table" id="bv_table">
                 <thead>
                   <tr>
                     <th>Voucher num</th>
@@ -49,10 +66,10 @@
                 </thead>
                 <tbody>
                   <tr>
-                    <td><input type="text" class="nwo-std-frminp" name="bv-num" id="" value="{{ old('bv-num') }}"/></td>
-                    <td><input type="text" class="nwo-std-frminp" name="bv-deposit-date" id="" value="{{ old('bv-deposit-date') }}" /></td>
-                    <td><input type="text" class="nwo-std-frminp" name="bv-depositor" id="" value="{{ old('bv-depositor') }}" /></td>
-                    <td><input type="text" class="nwo-std-frminp" name="bv-amount" id="" value="{{ old('bv-amount') }}" /></td>
+                    <td><input type="text" class="nwo-std-frminp" name="bv-num" id="id_bv_num" value="{{ old('bv-num') }}"/></td>
+                    <td><input type="text" class="nwo-std-frminp" name="bv-deposit-date" id="id_bv_date" value="{{ old('bv-deposit-date') }}" /></td>
+                    <td><input type="text" class="nwo-std-frminp" name="bv-depositor" id="id_bv_depositor" value="{{ old('bv-depositor') }}" /></td>
+                    <td><input type="text" class="nwo-std-frminp" name="bv-amount" id="id_bv_amount" value="{{ old('bv-amount') }}" /></td>
                   </tr>
                 </tbody>
               </table>
@@ -78,12 +95,12 @@
                   <td> 
                     <span style="font-size: 12px;"><strong style="font-size: 11px;"><?php echo date('Y-m-d') . "&nbsp;&nbsp;&nbsp;&nbsp;";  ?></strong></span>
                   </td>
-                  <td><input type="text" class="nwo-std-frminp" name="family-code" id="" value="{{ old('family-code') }}"/></td>
-                  <td><input type="text" class="nwo-std-frminp nwo-std-frminp-lx" name="submitter-name" id="" value="{{ old('submitter-name') }}"/></td>
-                  <td><input type="text" class="nwo-std-frminp nwo-std-frminp-lx" name="submitter-address" id="" value="{{ old('submitter-address') }}"/></td>
-                  <td><input type="text" class="nwo-std-frminp" name="submitted-date" id="" value="{{ old('submitted-date') }}"/></td>
-                  <td><input type="text" class="nwo-std-frminp" name="submitted-total" id="head_total" value="{{ old('submitted-total') }}"/></td>
-                  <td><input type="text" class="nwo-std-frminp nwo-std-frminp-lx" name="delivered-by" id="" value="{{ old('delivered-by') }}"/></td>
+                  <td><input type="text" class="nwo-std-frminp" name="family-code" id="id_mi_fcode" value="{{ old('family-code') }}"/></td>
+                  <td><input type="text" class="nwo-std-frminp nwo-std-frminp-lx" name="submitter-name" id="id_mi_sname" value="{{ old('submitter-name') }}"/></td>
+                  <td><input type="text" class="nwo-std-frminp nwo-std-frminp-lx" name="submitter-address" id="id_mi_saddress" value="{{ old('submitter-address') }}"/></td>
+                  <td><input type="text" class="nwo-std-frminp" name="submitted-date" id="id_mi_sdate" value="{{ old('submitted-date') }}"/></td>
+                  <td><input type="text" class="nwo-std-frminp" name="submitted-total" id="id_mi_total" value="{{ old('submitted-total') }}"/></td>
+                  <td><input type="text" class="nwo-std-frminp nwo-std-frminp-lx" name="delivered-by" id="id_mi_dname" value="{{ old('delivered-by') }}"/></td>
                 </tr>
               </tbody>
             </table>
@@ -138,7 +155,7 @@
             <br />
             <!--<button type="button" id="rem_person" class="btn btn-danger">-Person</button>-->
             <button type="button" id="add_person" class="btn btn-primary">+Person</button>
-            <button type="button" id="check_total" class="btn btn-danger">Check Total</button>
+            <!--<button type="button" id="check_total" class="btn btn-danger">Check Total</button>-->
             <input type="submit"  id="submit_remit" class="btn btn-success" value="Submit"> <br />
           </form>
       </div>
