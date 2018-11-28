@@ -18,9 +18,12 @@ function addRemitRow(remLineBody)
     var newNameCol = $("<td></td>");
     var newNameInp = $("<input />", {
         "type": "text",
-        "class": "nwo-std-10pc nwo-std-frminp nwo-std-frminp-lx",
+        "class": "nwo-std-name nwo-std-10pc nwo-std-frminp nwo-std-frminp-lx",
         "name": "remit-row[" + rowCount + "][name]",
         "id": "",
+    });
+    newNameInp.keyup(function(){
+        this.value=this.value.toUpperCase();
     });
     newNameInp.appendTo(newNameCol);
     newNameCol.appendTo(newRow);
@@ -29,9 +32,12 @@ function addRemitRow(remLineBody)
     var newRitwikCol = $("<td></td>");
     var newRitwikInp = $("<input />", {
         "type": "text",
-        "class": "nwo-std-10pc nwo-std-frminp nwo-std-frminp-lx",
+        "class": "nwo-std-name nwo-std-10pc nwo-std-frminp nwo-std-frminp-lx",
         "name": "remit-row[" + rowCount + "][ritwik-name]",
         "id": "",
+    });
+    newRitwikInp.keyup(function(){
+        this.value=this.value.toUpperCase();
     });
     newRitwikInp.appendTo(newRitwikCol);
     newRitwikCol.appendTo(newRow);
@@ -809,3 +815,19 @@ $( document ).ready(function() {
 //     });
 // }
 
+
+
+/**
+ * Change names to uppercase while typing
+ */
+$( document ).ready(function() {
+    $('.nwo-std-name').keyup(function(){
+        this.value=this.value.toUpperCase();
+    });
+});
+
+$( document ).ready(function() {
+    $('.nwo-std-upper').keyup(function(){
+        this.value=this.value.toUpperCase();
+    });
+});
