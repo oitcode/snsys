@@ -23,7 +23,7 @@
 	  @endif
 
 	  <!-- Main part -->
-	  <div class="col-md-6 bg-info">
+	  <div class="col-md-6 bg-info nwo-std-padding">
             <form action="{{ url('/rmt/lot/create') }}" method="post">
 	      {{ csrf_field() }}
 
@@ -32,10 +32,12 @@
                 <input type="text" class="form-control" id="" name="bank-deposit-date" placeholder="Bank Deposit Date">
               </div>
 
+	      {{--
               <div class="form-group">
                 <label for="bank-voucher-number">Bank Voucher number</label>
                 <input type="text" class="form-control" id="" name="bank-voucher-number" placeholder="Bank Voucher Number">
               </div>
+	      --}}
 
               <div class="form-group">
                 <label for="bank-deposited-by">Bank Deposited By</label>

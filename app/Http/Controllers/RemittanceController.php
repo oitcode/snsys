@@ -78,12 +78,13 @@ class RemittanceController extends Controller
     {
         $newRemitLot = new RemittanceLot;
 
-	$newRemitLot->voucher_number = $remitLotInfo['bankVoucherNumber'];
+	/* Todo: Bank voucher number?? */
+	//$newRemitLot->voucher_number = $remitLotInfo['bankVoucherNumber'];
 	$newRemitLot->deposit_date = $remitLotInfo['bankDepositDate'];
 	$newRemitLot->deposited_by = $remitLotInfo['bankDepositedBy'];
 	$newRemitLot->amount = $remitLotInfo['bankDepositAmount'];
 
-	/* Todo: Ignoring these two for now. Need to do db migration first. */
+	/* Todo: URGENT: Ignoring these two for now. Need to do db migration first. */
 	/*
 	$newRemitLot->ph_deposit_date = $remitLotInfo['phDepositDate'];
 	$newRemitLot->ph_deposited_by = $remitLotInfo['phDepositedBy'];
@@ -329,7 +330,6 @@ class RemittanceController extends Controller
 	$newRemittance->remittance_lot_id = $remitInfo['bv']->remittance_lot_id;
 
 	$newRemittance->submitted_date = $remitInfo['submittedDate'];
-	$newRemittance->delivered_by = $remitInfo['deliveredBy'];
 
 	$newRemittance->creator_id = Auth::user()->id;
 
@@ -367,7 +367,6 @@ class RemittanceController extends Controller
 	    'family' => $family,
 	    'submitter' => $submitter,
 	    'submittedDate' => $mainInfo['submittedDate'],
-	    'deliveredBy' => $mainInfo['deliveredBy'],
 	];
 
 	$remittance = $this->createRemittance($remittanceCreationInfo);
@@ -787,7 +786,6 @@ class RemittanceController extends Controller
 	    'submitter-address' => 'required',
 	    'submitted-date' => 'required|date',
 	    'submitted-total' => 'required|integer',
-	    'delivered-by' => array('required', 'regex:' . $namePattern),
 	]);
 	echo('MI validation done<br/>');
 
@@ -1078,7 +1076,8 @@ class RemittanceController extends Controller
 
 	$remitLotInfo = [
 	    'bankDepositDate' => $request->input('bank-deposit-date'),
-	    'bankVoucherNumber' => $request->input('bank-voucher-number'),
+	    /* Todo: Bank voucher number for lot? */
+	    //'bankVoucherNumber' => $request->input('bank-voucher-number'),
 	    'bankDepositedBy' => $request->input('bank-deposited-by'),
 	    'bankDepositAmount' => $request->input('bank-deposit-amount'),
 
@@ -1105,28 +1104,6 @@ class RemittanceController extends Controller
      */
     public function startLot(Request $request)
     {
-	/*
-	$currentLot = $request->session()->get('curLotNum', 'None');
-	$currentName = session('currentName', 'Tester Bester');
-
-	$request->session()->put('qbar', 'Just QBAR');
-	session()->put('qCup', 'Just QCUP');
-
-	$request->session()->push('sn.mandirs', 'Baisabadi');
-	$request->session()->push('sn.mandirs', 'Biratnagar');
-
-	$request->session()->push('operators', 'Utsav Nepal');
-	$request->session()->push('operators', 'Ram Rai');
-
-	$temp = $request->session()->pull('qbar', 'None');
-	$temp = $request->session()->pull('qCup', 'None');
-	$temp = $request->session()->pull('operators', 'None');
-	$temp = $request->session()->pull('sn.mandirs', 'None');
-	$temp = $request->session()->pull('sn', 'None');
-
-	$sesData = $request->session()->all();
-	*/
-
         return view('remittance.start-lot');
     }
 

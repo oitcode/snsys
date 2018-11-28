@@ -87,7 +87,9 @@
                   <th>Person address</th>
                   <th>Submit date</th>
                   <th>Total</th>
+		  {{--
                   <th>Delivered by</th>
+		  --}}
                 </tr>
               </thead>
               <tbody>
@@ -100,7 +102,9 @@
                   <td><input type="text" class="nwo-std-frminp nwo-std-frminp-lx" name="submitter-address" id="id_mi_saddress" value="{{ old('submitter-address') }}"/></td>
                   <td><input type="text" class="nwo-std-frminp" name="submitted-date" id="id_mi_sdate" value="{{ old('submitted-date') }}"/></td>
                   <td><input type="text" class="nwo-std-frminp" name="submitted-total" id="id_mi_total" value="{{ old('submitted-total') }}"/></td>
+		  {{--
                   <td><input type="text" class="nwo-std-frminp nwo-std-frminp-lx" name="delivered-by" id="id_mi_dname" value="{{ old('delivered-by') }}"/></td>
+		  --}}
                 </tr>
               </tbody>
             </table>
