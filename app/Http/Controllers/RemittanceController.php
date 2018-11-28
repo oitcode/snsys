@@ -38,7 +38,14 @@ class RemittanceController extends Controller
      */
     public function create()
     {
-        return view('remittance.create');
+	if (session()->has('lot')) {
+	    $lotCode = session()->get('lot');
+	    $remainingBal = $this->lotRemainingBal($lotCode);
+            return view('remittance.create')
+	        ->with('remainingBal', $remainingBal);
+	} else {
+            return view('remittance.create');
+	}
     }
 
     /**
@@ -858,8 +865,11 @@ class RemittanceController extends Controller
             $rlId = $rl->remittance_lot_id;
 	    echo ("Rmittance lot id: $rlId<br/>");
 
-	    if (! $this->checkBvSpace($rlId,
-	                              $request->input('submitted-total'))) {
+	    $checkAmount = $request->input('submitted-total');
+	    if ($request->input('currency') == 'ic') {
+	        $checkAmount *= 1.6;
+	    }
+	    if (! $this->checkBvSpace($rlId, $checkAmount)) {
 	        return redirect()->back()->withInput()
 	            ->withErrors('Error: Total exceeds amount in Bank Voucher');
 	    }
@@ -1272,8 +1282,9 @@ class RemittanceController extends Controller
     public function lotRemainingBal($lotCode)
     {
         $remittanceLot = RemittanceLot::where('lot_code', $lotCode)->first();
+	$remittanceLotId = $remittanceLot->remittance_lot_id;
 
-        return $remittanceLot->amount - $this->usedBvAmount($lotCode);
+        return $remittanceLot->amount - $this->usedBvAmount($remittanceLotId);
     }
 }
 

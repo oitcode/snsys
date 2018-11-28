@@ -38,6 +38,18 @@
 	 <hr />
 
 
+          @if (session('lot'))
+	      <p>
+	          <strong>
+		    Lot Remaining Amount => NC {{ $remainingBal }}
+		    &nbsp;&nbsp;&nbsp;&nbsp;
+                    ( IC {{ $remainingBal / 1.6 }} )
+		  </strong>
+	      </p>
+	      <hr />
+	  @endif
+
+
 	  <!-- Form -->
           <form action="{{ url('/rmt/create/store') }}" method="post">
 	    {{ csrf_field() }}
