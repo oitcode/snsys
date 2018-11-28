@@ -6,7 +6,6 @@ function addRemitRow(remLineBody)
     /* Get the number of rows */
     var rowCount = $("#remit_row_body tr").length;
 
-    console.log("Phew New RL Js");
     /* Create new row */
     var newRow = $("<tr></tr>");
 
@@ -75,7 +74,6 @@ function addRemitRow(remLineBody)
     newAcharyavrityInp.appendTo(newAcharyavrityCol);
     newAcharyavrityCol.appendTo(newRow);
 
-
     /* Dakshina */
     var newDakshinaCol = $("<td></td>");
     var newDakshinaInp = $("<input />", {
@@ -98,16 +96,16 @@ function addRemitRow(remLineBody)
     newSangathaniInp.appendTo(newSangathaniCol);
     newSangathaniCol.appendTo(newRow);
 
-    /* Ananda bazar */
-    var newAnandaBazarCol = $("<td></td>");
-    var newAnandaBazarInp = $("<input />", {
+    /* Ritwiki */
+    var newRitwikiCol = $("<td></td>");
+    var newRitwikiInp = $("<input />", {
         "type": "text",
         "class": "nwo-std-5pc nwo-std-frminp col-val",
-        "name": "remit-row[" + rowCount + "][ananda-bazar]",
+        "name": "remit-row[" + rowCount + "][ritwiki]",
         "id": "",
     });
-    newAnandaBazarInp.appendTo(newAnandaBazarCol);
-    newAnandaBazarCol.appendTo(newRow);
+    newRitwikiInp.appendTo(newRitwikiCol);
+    newRitwikiCol.appendTo(newRow);
 
     /* Pranami */
     var newPranamiCol = $("<td></td>");
@@ -131,16 +129,38 @@ function addRemitRow(remLineBody)
     newSwaAwaInp.appendTo(newSwaAwaCol);
     newSwaAwaCol.appendTo(newRow);
 
-    /* Ritwiki */
-    var newRitwikiCol = $("<td></td>");
-    var newRitwikiInp = $("<input />", {
+    /* Ananda bazar */
+    var newAnandaBazarCol = $("<td></td>");
+    var newAnandaBazarInp = $("<input />", {
         "type": "text",
         "class": "nwo-std-5pc nwo-std-frminp col-val",
-        "name": "remit-row[" + rowCount + "][ritwiki]",
+        "name": "remit-row[" + rowCount + "][ananda-bazar]",
         "id": "",
     });
-    newRitwikiInp.appendTo(newRitwikiCol);
-    newRitwikiCol.appendTo(newRow);
+    newAnandaBazarInp.appendTo(newAnandaBazarCol);
+    newAnandaBazarCol.appendTo(newRow);
+
+    /* Parivrity  */
+    var newParivrityCol = $("<td></td>");
+    var newParivrityInp = $("<input />", {
+        "type": "text",
+        "class": "nwo-std-5pc nwo-std-frminp col-val",
+        "name": "remit-row[" + rowCount + "][parivrity]",
+        "id": "",
+    });
+    newParivrityInp.appendTo(newParivrityCol);
+    newParivrityCol.appendTo(newRow);
+
+    /* Misc  */
+    var newMiscCol = $("<td></td>");
+    var newMiscInp = $("<input />", {
+        "type": "text",
+        "class": "nwo-std-5pc nwo-std-frminp col-val",
+        "name": "remit-row[" + rowCount + "][misc]",
+        "id": "",
+    });
+    newMiscInp.appendTo(newMiscCol);
+    newMiscCol.appendTo(newRow);
 
     /* Utsav */
     var newUtsavCol = $("<td></td>");
@@ -175,29 +195,10 @@ function addRemitRow(remLineBody)
     newAcharyaPrInp.appendTo(newAcharyaPrCol);
     newAcharyaPrCol.appendTo(newRow);
 
-    /* Parivrity  */
-    var newParivrityCol = $("<td></td>");
-    var newParivrityInp = $("<input />", {
-        "type": "text",
-        "class": "nwo-std-5pc nwo-std-frminp col-val",
-        "name": "remit-row[" + rowCount + "][parivrity]",
-        "id": "",
-    });
-    newParivrityInp.appendTo(newParivrityCol);
-    newParivrityCol.appendTo(newRow);
 
-    /* Misc  */
-    var newMiscCol = $("<td></td>");
-    var newMiscInp = $("<input />", {
-        "type": "text",
-        "class": "nwo-std-5pc nwo-std-frminp col-val",
-        "name": "remit-row[" + rowCount + "][misc]",
-        "id": "",
-    });
-    newMiscInp.appendTo(newMiscCol);
-    newMiscCol.appendTo(newRow);
-
-    /* Append new row to form body */
+    /**
+     * Append new row to form body
+     */
     newRow.appendTo(remLineBody);
 }
 
@@ -215,8 +216,6 @@ $( document ).ready(function() {
     if (! remLineBody.length) {
         /* Todo: Terminate program as there is something wrong. */
         console.log("Error: Remittance line table body NOT found");
-    } else {
-        console.log("Remittance line table body found");
     }
 
     /* Person remove button */
@@ -653,18 +652,12 @@ function validName(name)
  * ============================================================================
  */
 $( document ).ready(function() {
-    console.log('Just SUBMISSION check');
-
-
     var submitFormBtn = $("#submit_remit");
 
     submitFormBtn.click(function(e){
         /* Issue flag */
         var formIssue = false;
         formIssue = false;
-        if (formIssue == false) {
-            console.log("Form issue reset to false");
-        }
 
 	/* Get the error lists */
 	var curErrList = $("#fe_cur_err_list");
@@ -748,7 +741,6 @@ $( document ).ready(function() {
 	/* TODO: Is this elem needed? */
         var elem = $(this);
 	if (miTotalValid()) {
-	    console.log('Checking total diff');
             /* Get Head Total amount */    
             var headTotal = $("#id_mi_total").val();
 	    /* Calculate total by adding all the sum */
@@ -760,7 +752,6 @@ $( document ).ready(function() {
 
 	    /* See the difference */
 	    var diff = headTotal - sumTotal;
-	    console.log ('Diff: ' + diff);
 
 	    /* Alert a message */
 	     if (diff > 0) {

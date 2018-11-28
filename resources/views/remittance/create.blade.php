@@ -129,20 +129,22 @@
                 <tr>
                   <th class="nwo-std-10pc nwo-std-smf">Person</th>
                   <th class="nwo-std-10pc nwo-std-smf">Ritwik Name</th>
+
                   <th class="nwo-std-5pc nwo-std-smf">Swstyani</th>
                   <th class="nwo-std-5pc nwo-std-smf">Istavrity</th>
                   <th class="nwo-std-5pc nwo-std-smf">Acharya vrity</th>
                   <th class="nwo-std-5pc nwo-std-smf">Dkshina</th>
                   <th class="nwo-std-5pc nwo-std-smf">Sngathani</th>
-                  <th class="nwo-std-5pc nwo-std-smf">Ananda Bazar</th>
+                  <th class="nwo-std-5pc nwo-std-smf">Ritwiki</th>
                   <th class="nwo-std-5pc nwo-std-smf">Pranami</th>
                   <th class="nwo-std-5pc nwo-std-smf">Swst aws</th>
-                  <th class="nwo-std-5pc nwo-std-smf">Ritwiki</th>
+                  <th class="nwo-std-5pc nwo-std-smf">Ananda Bazar</th>
+                  <th class="nwo-std-5pc nwo-std-smf">Parivrity</th>
+                  <th class="nwo-std-5pc nwo-std-smf">Misc</th>
+
                   <th class="nwo-std-5pc nwo-std-smf">Utsav</th>
                   <th class="nwo-std-5pc nwo-std-smf">Diksha Pr</th>
                   <th class="nwo-std-5pc nwo-std-smf">Acharya Pr</th>
-                  <th class="nwo-std-5pc nwo-std-smf">Parivrity</th>
-                  <th class="nwo-std-5pc nwo-std-smf">Misc</th>
                 </tr>
               </thead>
               <tbody id="remit_row_body">
@@ -155,15 +157,16 @@
                   <td><input type="text" class="nwo-std-5pc nwo-std-frminp col-val"  name="remit-row[0][acharyavrity]" id="" /></td>
                   <td><input type="text" class="nwo-std-5pc nwo-std-frminp col-val"  name="remit-row[0][dakshina]" id="" /></td>
                   <td><input type="text" class="nwo-std-5pc nwo-std-frminp col-val"  name="remit-row[0][sangathani]" id="" /></td>
-                  <td><input type="text" class="nwo-std-5pc nwo-std-frminp col-val"  name="remit-row[0][ananda-bazar]" id="" /></td>
+                  <td><input type="text" class="nwo-std-5pc nwo-std-frminp col-val"  name="remit-row[0][ritwiki]" id="" /></td>
                   <td><input type="text" class="nwo-std-5pc nwo-std-frminp col-val"  name="remit-row[0][pranami]" id="" /></td>
                   <td><input type="text" class="nwo-std-5pc nwo-std-frminp col-val"  name="remit-row[0][swastyayani-awasista]" id="" /></td>
-                  <td><input type="text" class="nwo-std-5pc nwo-std-frminp col-val"  name="remit-row[0][ritwiki]" id="" /></td>
+                  <td><input type="text" class="nwo-std-5pc nwo-std-frminp col-val"  name="remit-row[0][ananda-bazar]" id="" /></td>
+                  <td><input type="text" class="nwo-std-5pc nwo-std-frminp col-val"  name="remit-row[0][parivrity]" id="" /></td>
+                  <td><input type="text" class="nwo-std-5pc nwo-std-frminp col-val"  name="remit-row[0][misc]" id="" /></td>
+
                   <td><input type="text" class="nwo-std-5pc nwo-std-frminp col-val"  name="remit-row[0][utsav]" id="" /></td>
                   <td><input type="text" class="nwo-std-5pc nwo-std-frminp col-val"  name="remit-row[0][diksha-pranami]" id="" /></td>
                   <td><input type="text" class="nwo-std-5pc nwo-std-frminp col-val"  name="remit-row[0][acharya-pranami]" id="" /></td>
-                  <td><input type="text" class="nwo-std-5pc nwo-std-frminp col-val"  name="remit-row[0][parivrity]" id="" /></td>
-                  <td><input type="text" class="nwo-std-5pc nwo-std-frminp col-val"  name="remit-row[0][misc]" id="" /></td>
 		</tr>
                 <!-- Additional rows go here -->
               </tbody>
