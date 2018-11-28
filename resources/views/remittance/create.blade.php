@@ -23,7 +23,7 @@
          @endif
 
 	 <!-- Display front end validaton messages -->
-	 <div class="alert alert-warning">
+	 <div class="alert alert-warning" id="id_err_div">
 	     <ul id="fe_cur_err_list" class="nwo-std-padding">
 	     </ul>
 	     <ul id="fe_bv_err_list" class="nwo-std-padding">
@@ -58,7 +58,7 @@
               <table class="nwo-form-table" id="bv_table">
                 <thead>
                   <tr>
-                    <th>Voucher num</th>
+                    <!--<th>Voucher num</th>-->
                     <th>Deposit Date</th>
                     <th>Depositor</th>
                     <th>Amount</th>
@@ -66,7 +66,7 @@
                 </thead>
                 <tbody>
                   <tr>
-                    <td><input type="text" class="nwo-std-frminp" name="bv-num" id="id_bv_num" value="{{ old('bv-num') }}"/></td>
+                    <!--<td><input type="text" class="nwo-std-frminp" name="bv-num" id="id_bv_num" value="{{ old('bv-num') }}"/></td>-->
                     <td><input type="text" class="nwo-std-frminp" name="bv-deposit-date" id="id_bv_date" value="{{ old('bv-deposit-date') }}" /></td>
                     <td><input type="text" class="nwo-std-frminp" name="bv-depositor" id="id_bv_depositor" value="{{ old('bv-depositor') }}" /></td>
                     <td><input type="text" class="nwo-std-frminp" name="bv-amount" id="id_bv_amount" value="{{ old('bv-amount') }}" /></td>

@@ -11,6 +11,12 @@
               </div>
           @endif
 
+	  <!-- Print -->
+	  <p>
+	      <button type="button" class="btn btn-primary" id="id_print_page">Print</button>
+	  </p>
+	  <hr />
+
 	  <p>
 	    Family Code: <strong>{{ $remittance->family->family_code }}</strong><br/>
 	    Serial num: <strong>{{ $remittance->remittance_id }}</strong><br/>

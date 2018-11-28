@@ -313,6 +313,14 @@ $( document ).ready(function() {
     }
 });
 
+/**
+ * ----------------------------------------------------------------------------
+ * Show error list div only if needed (at least one error to display).
+ * ----------------------------------------------------------------------------
+ */
+$( document ).ready(function() {
+    // Todo
+});
 
 
 /**
@@ -619,6 +627,13 @@ function validName(name)
     /* Todo: Fix regexp */
     var namePattern = new RegExp('^[a-zA-Z]+ +[a-zA-Z]+( +[a-zA-Z]+){0,}$');
 
+    /* Trim leading and trailing white spaces */
+    /**
+     * TODO: Put trimming somewhere else. Although laravel trims whitespaces
+     *       in the backend, we cannot count on it.
+     */
+    name = $.trim(name);
+
     if (namePattern.test(name)) {
         return true;
     } else {
@@ -677,10 +692,7 @@ $( document ).ready(function() {
 	 */
 	var bvTable = $("#bv_table");
 	if (bvTable.length) {
-	    if (bvNumBlank()) {
-                formIssue = true;
-                bvErrList.append("<li>Bank Voucher: Voucher number cannot be blank</li>");
-	    }
+	    /* Todo: Bank voucher number */
 	    if (!bvDateValid()){
                 formIssue = true;
                 bvErrList.append("<li>Bank Voucher: Deposit date not valid</li>");
@@ -734,16 +746,19 @@ $( document ).ready(function() {
 	/* TODO: Is this elem needed? */
         var elem = $(this);
 	if (miTotalValid()) {
+	    console.log('Checking total diff');
             /* Get Head Total amount */    
             var headTotal = $("#id_mi_total").val();
 	    /* Calculate total by adding all the sum */
 	    var sumTotal = 0;
+	    //sumTotal = rlSumTotal();
 	    $(".col-val").each(function(){
                 sumTotal += +$(this).val();
             });
 
 	    /* See the difference */
 	    var diff = headTotal - sumTotal;
+	    console.log ('Diff: ' + diff);
 
 	    /* Alert a message */
 	     if (diff > 0) {
@@ -765,4 +780,36 @@ $( document ).ready(function() {
     });
 
 });
+
+// function rlSumTotal()
+// {
+//     var sumTotal = 0;
+//     //sumTotal = rlSumTotal();
+//     $(".col-val").each(function(){
+//         sumTotal += +$(this).val();
+//     });
+// 
+//     var retval = true;
+//     var curRetval = true;
+// 
+//     var rlErrList = $("#fe_rl_err_list");
+// 
+//     /* Get all remit rows first */
+//     var remitRows = $("#remit_row_body tr");
+// 
+//     // Validate each row
+//     remitRows.each(function(i, obj){
+//         var name = $(this).children(":first").children(":first");
+// 
+//         var sumTotal = 0;
+// 
+// 	/* Only check for rows which have person name. */
+// 	if ($.trim(name.val()) != '') {
+// 	    curRetVal = remitLineSum(i, $(this));
+// 	    if (curRetVal == false) {
+// 	        retval = false;
+// 	    }
+// 	}
+//     });
+// }
 

@@ -244,5 +244,6 @@
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('js/rem-create.js') }}"></script>
+    <script src="{{ asset('js/rem-print.js') }}"></script>
 </body>
 </html>

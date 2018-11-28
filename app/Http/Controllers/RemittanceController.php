@@ -53,7 +53,7 @@ class RemittanceController extends Controller
     {
         $newBv = new RemittanceLot;
 
-	$newBv->voucher_number = $bvInfo['bvNum'];
+	//$newBv->voucher_number = $bvInfo['bvNum'];
 	$newBv->deposit_date = $bvInfo['bvDepositDate'];
 	$newBv->deposited_by = $bvInfo['bvDepositor'];
 	$newBv->amount = $bvInfo['bvAmount'];
@@ -768,7 +768,8 @@ class RemittanceController extends Controller
 	if (! session()->has('lot')) {
 	    echo 'Validating BV data<br />';
 	    $validatedBvData = $request->validate([
-	        'bv-num' => 'required|integer',
+		/* Todo: What about bank voucher number? */
+	        //'bv-num' => 'nullable|integer',
 	        'bv-deposit-date' => 'required|date',
 	        'bv-depositor' => array('required', 'regex:' . $namePattern),
 	        'bv-amount' => 'required|integer',
@@ -874,7 +875,7 @@ class RemittanceController extends Controller
 	/* Get bank voucher input from form */
 	if (! session()->has('lot')) {
 	    $bvInfo = [
-	        'bvNum' => $request->input('bv-num'),
+	        //'bvNum' => $request->input('bv-num'),
 	        'bvDepositDate' => $request->input('bv-deposit-date'),
                 'bvDepositor' => $request->input('bv-depositor'),
                 'bvAmount' => $request->input('bv-amount'),
@@ -1092,8 +1093,9 @@ class RemittanceController extends Controller
 
 	/* Put lot info into session */
 	$request->session()->put('lot', $remitLot->lot_code);
+	$request->session()->flash('status', 'Starting Lot Num: ' . $remitLot->lot_code);
 
-        return redirect('/');
+        return redirect('/rmt/create');
     }
 
     /**
