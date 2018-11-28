@@ -730,10 +730,6 @@ $( document ).ready(function() {
             formIssue = true;
             miErrList.append("<li>MAIN: Total not valid</li>");
 	}
-        if (!miDeliveredByValid()) {
-            formIssue = true;
-            miErrList.append("<li>MAIN: Delivered by not valid</li>");
-	}
 
 	/**
 	 * Verify Remit Lines
