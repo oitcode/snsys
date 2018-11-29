@@ -425,8 +425,7 @@ function bvAmountValid()
 
     var bvAmount = $("#id_bv_amount");
 
-    /* TODO: Use regexp to match */
-    if (bvAmount.val()) {
+    if (validPosInt(bvAmount.val())) {
         retval = true;
     }
 
@@ -728,6 +727,23 @@ $( document ).ready(function() {
         if (!miTotalValid()) {
             formIssue = true;
             miErrList.append("<li>MAIN: Total not valid</li>");
+	}
+
+	/* For non-lot verify that total within bank voucher amount. */
+	var bvTable = $("#bv_table");
+	if (bvTable.length) {
+            //
+            var bvAmount = $("#id_bv_amount");
+            var miTotal= $("#id_mi_total");
+
+	    // Compare only if they are valid integers
+	    // TODO: Test ony if valid??
+	    if (validPosInt(bvAmount.val()) && validPosInt(miTotal.val())) {
+	        if (miTotal.val() > bvAmount.val()) {
+                    formIssue = true;
+                    miErrList.append("<li>MAIN: Total exceeds bank voucher amount</li>");
+		}
+	    }
 	}
 
 	/**
