@@ -190,8 +190,12 @@ class RemittanceController extends Controller
 
 	$names['first_name'] = $keywords[0];
 	$names['last_name'] = $keywords[$len-1];
+	$names['middle_name'] = null;
 
-	/* Todo: Extract middle names too */
+	if ($len > 2) {
+	    $middleNames = array_slice($keywords, 1, $len-2);
+	    $names['middle_name'] = implode(' ', $middleNames);
+	}
 
 	return $names;
     }
@@ -210,7 +214,7 @@ class RemittanceController extends Controller
 	$newPerson = new Person;
 
 	$newPerson->first_name = $names['first_name'];
-	//$newPerson->middle_name = $names['middle_name'];
+	$newPerson->middle_name = $names['middle_name'];
 	$newPerson->last_name = $names['last_name'];
 
 	$newPerson->creator_id = Auth::user()->id;
@@ -287,6 +291,8 @@ class RemittanceController extends Controller
 	     */
 	    foreach ($family->oblates as $oblate) {
                 if ($oblateNames['first_name'] === $oblate->person->first_name
+		  &&
+                  $oblateNames['middle_name'] === $oblate->person->middle_name
 		  && 
                   $oblateNames['last_name'] === $oblate->person->last_name) {
 		    $retval = $oblate;
@@ -429,6 +435,9 @@ class RemittanceController extends Controller
         $newPerson = new Person;
 
 	$newPerson->first_name = $ritwikName['first_name'];
+	if ($ritwikName['middle_name'] !== null) {
+	    $newPerson->middle_name = $ritwikName['middle_name'];
+	}
 	$newPerson->last_name = $ritwikName['last_name'];
 	$newPerson->creator_id = Auth::user()->id;
 	$newPerson->save();
@@ -487,6 +496,8 @@ class RemittanceController extends Controller
 
 		if ($person->first_name == $ritwikName['first_name']
 		  &&
+		  $person->middle_name == $ritwikName['middle_name']
+		  &&
 		  $person->last_name == $ritwikName['last_name']) {
 		    $match = true;
 	            echo 'Match found<br />';
@@ -515,6 +526,7 @@ class RemittanceController extends Controller
 	         * Oblate present in family. But still check if it has a 
 	         *  dummy ritwik
 	         */
+		 /* Todo: URGETN: Ritwik id 3? In Live? */
 		 if ($oblate->ritwik_id == 3) {
 		     $oblate->ritwik_id = $ritwikId;
 		     $oblate->save();

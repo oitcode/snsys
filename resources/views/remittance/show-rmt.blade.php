@@ -21,10 +21,12 @@
 	    Family Code: <strong>{{ $remittance->family->family_code }}</strong><br/>
 	    Serial num: <strong>{{ $remittance->remittance_id }}</strong><br/>
 	    Submitter: 
-	      {{ $remittance->submitter->person->first_name }} &nbsp;&nbsp;
+	      <strong>
+	      {{ $remittance->submitter->person->first_name }}&nbsp;&nbsp;
+	      {{ $remittance->submitter->person->middle_name }}&nbsp;&nbsp;
 	      {{ $remittance->submitter->person->last_name }}<br/>
-	    Date: {{ $remittance->submitted_date }}<br/>
-	    Bank Voucher num: {{ $remittance->remittance_lot->voucher_number }}<br/>
+	      </strong>
+	    Date: <strong>{{ $remittance->submitted_date }}</strong><br/>
 	  </p>
 	  <p>
 	    <table class="table">
@@ -53,10 +55,12 @@
 		  <tr>
 		    <td>
 		      {{ $remittance_line->oblate->person->first_name }}&nbsp;&nbsp;
+		      {{ $remittance_line->oblate->person->middle_name }}&nbsp;&nbsp;
 		      {{ $remittance_line->oblate->person->last_name }}&nbsp;&nbsp;
 		    </td>
 		    <td>
 		      {{ $remittance_line->oblate->worker->person->first_name }}&nbsp;&nbsp;
+		      {{ $remittance_line->oblate->worker->person->middle_name }}&nbsp;&nbsp;
 		      {{ $remittance_line->oblate->worker->person->last_name }}&nbsp;&nbsp;
 		    </td>
 		    <td>{{ $remittance_line->swastyayani }}</td>
