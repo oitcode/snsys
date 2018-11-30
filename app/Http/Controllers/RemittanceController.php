@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 
 use App\Http\Requests\SearchFamilyCode;
@@ -121,6 +122,7 @@ class RemittanceController extends Controller
      */
     public function createFamilyInDb($familyInfo, $request)
     {
+	DB::raw('lock tables family write');
         $newFamily = new Family;
         if ($familyInfo['familyCode'] === 'new') {
             /*
@@ -142,6 +144,7 @@ class RemittanceController extends Controller
             die('Could not insert new family to db.');
         }
         
+	DB::raw('unlock tables');
 	return $newFamily;
     }
 
@@ -1341,6 +1344,43 @@ class RemittanceController extends Controller
 	$remittanceLotId = $remittanceLot->remittance_lot_id;
 
         return $remittanceLot->amount - $this->usedBvAmount($remittanceLotId);
+    }
+
+    /**
+     * Input family code.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function familyInp()
+    {
+        return view('remittance.family-inp');
+    }
+
+    /**
+     * Get old data for a given family.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getlastFamilyRemittance(Request $request)
+    {
+        $familyCode = $request->input('family-code');
+
+	/* Check if family exists */
+	$family = Family::where('family_code', $familyCode)->first();
+
+	if (!$family) {
+	    /* Todo: Redirect to family create page */
+            return view('remittance.family-create');
+	}
+
+	$lastRemittance = Remittance::where('family_id', $family->family_id)
+	                  ->orderBy('created_time', 'desc')->first();
+        
+	$remitLines = $lastRemittance->remittance_lines;
+
+	return $remitLines;
+
+        return view('remittance.family-lastremit');
     }
 }
 
