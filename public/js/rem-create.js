@@ -658,6 +658,9 @@ $( document ).ready(function() {
         var formIssue = false;
         formIssue = false;
 
+	/* See if for multiple months */
+	var forMonths = $("#id_for_months").val();
+
 	/* Get the error lists */
 	var curErrList = $("#fe_cur_err_list");
 	var bvErrList = $("#fe_bv_err_list");
@@ -753,18 +756,27 @@ $( document ).ready(function() {
             formIssue = true;
 	}
 
+
 	/* Check total is not exceeded by sum of individuals */
 	/* TODO: Is this elem needed? */
         var elem = $(this);
 	if (miTotalValid()) {
             /* Get Head Total amount */    
             var headTotal = $("#id_mi_total").val();
+
+	    /* Get adjust value */
+            var adjustVal = $("#id_adjust_val").val();
+
 	    /* Calculate total by adding all the sum */
 	    var sumTotal = 0;
 	    //sumTotal = rlSumTotal();
 	    $(".col-val").each(function(){
                 sumTotal += +$(this).val();
             });
+
+	    /* Do any multi month and adjust value operation */
+	    sumTotal *= forMonths;
+	    sumTotal += parseFloat(adjustVal);
 
 	    /* See the difference */
 	    var diff = headTotal - sumTotal;

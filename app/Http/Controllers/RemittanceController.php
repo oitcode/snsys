@@ -388,6 +388,42 @@ class RemittanceController extends Controller
     }
 
     /**
+     * Multiply remittance lines for multiple months.
+     *
+     * @param array remitLines
+     *
+     * @return array
+     */
+    public function multiMonths($remitLines, $forMonths)
+    {
+	$i = 0;
+        foreach ($remitLines as $remitLine) {
+	    /**
+	     * Todo: using of $i in the loop condition itself would look more
+	     *       natural. 
+             */
+	    $remitLines[$i]['swastyayani'] *= $forMonths;
+	    $remitLines[$i]['istavrity'] *= $forMonths;
+	    $remitLines[$i]['acharyavrity'] *= $forMonths;
+	    $remitLines[$i]['dakshina'] *= $forMonths;
+	    $remitLines[$i]['sangathani'] *= $forMonths;
+	    $remitLines[$i]['ananda-bazar'] *= $forMonths;
+	    $remitLines[$i]['pranami'] *= $forMonths;
+	    $remitLines[$i]['swastyayani-awasista'] *= $forMonths;
+	    $remitLines[$i]['ritwiki'] *= $forMonths;
+	    $remitLines[$i]['utsav'] *= $forMonths;
+	    $remitLines[$i]['diksha-pranami'] *= $forMonths;
+	    $remitLines[$i]['acharya-pranami'] *= $forMonths;
+	    $remitLines[$i]['parivrity'] *= $forMonths;
+	    $remitLines[$i]['misc'] *= $forMonths;
+
+	    $i++;
+	}
+
+	return $remitLines;
+    }
+
+    /**
      * Convert currency of remittance lines.
      *
      * @param array remitLines
@@ -962,8 +998,16 @@ class RemittanceController extends Controller
 	 * Process remittance lines
 	 *=========================
 	 */
+	$forMonths = (int) $request->input('for-months');
+	if ($forMonths > 1) {
+	    $remitLines = $this->multiMonths($remitLines, $forMonths);
+	}
 	if ($currency === 'ic') {
 	    $remitLines = $this->currencyConvert($remitLines);
+	}
+	$adjustVal = (float) $request->input('adjust-val');
+	if ($adjustVal > 0 && count($remitLines) > 0) {
+	    $remitLines[0]['pranami'] += $adjustVal;
 	}
 	$this->processRemitLines($remitLines, $remittance);
 

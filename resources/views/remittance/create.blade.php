@@ -55,7 +55,7 @@
 	    {{ csrf_field() }}
 
 	    <!-- Currency info -->
-            <p>Currency</p>
+            <h4>Currency</h4>
             <div>
               <input type="radio" id="currency-nc" name="currency" value="nc">
               <label for="currency-nc">NRs</label>
@@ -66,7 +66,7 @@
 
             <!-- Bank Voucher Info -->
             @if (! session('lot'))
-              <h5>Bank Voucher info</h5>
+              <h4>Bank Voucher info</h4>
               <table class="nwo-form-table" id="bv_table">
                 <thead>
                   <tr>
@@ -89,7 +89,7 @@
             @endif
 
             <!-- Main Remittance Info -->
-            <h5>Main info</h5>
+            <h4>Main info</h4>
             <table class="nwo-form-table">
               <thead>
                 <tr>
@@ -123,7 +123,9 @@
             <hr />
 
             <!-- Remittance Lines -->
-            <h5>Breakdown</h5>
+            <h4>Breakdown</h4>
+
+
             <table class="nwo-form-table">
               <thead>
                 <tr>
@@ -172,6 +174,16 @@
               </tbody>
             </table>
             <br />
+
+	    <!-- For multiple months -->
+	    <label for="id_for_months">Months</label>
+	    <input type="number" min="1" step="1" class="nwo-std-5pc swo-std-frm-inp" id="id_for_months" name="for-months" value="1" required />
+
+	    <!-- Adjust value -->
+	    <label for="id_adjust_val">Adjust Value</label>
+	    <input type="number" min="0.0" step="0.1" class="nwo-std-5pc swo-std-frm-inp" id="id_adjust_val" name="adjust-val" value="0.0" required />
+	    <hr/>
+
             <!--<button type="button" id="rem_person" class="btn btn-danger">-Person</button>-->
             <button type="button" id="add_person" class="btn btn-primary">+Person</button>
             <!--<button type="button" id="check_total" class="btn btn-danger">Check Total</button>-->
