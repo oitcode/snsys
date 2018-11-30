@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\DB;
 
 use App\Http\Requests\SearchFamilyCode;
 use App\Http\Requests\StoreRemit;
@@ -121,6 +122,7 @@ class RemittanceController extends Controller
      */
     public function createFamilyInDb($familyInfo, $request)
     {
+	DB::raw('lock tables family write');
         $newFamily = new Family;
         if ($familyInfo['familyCode'] === 'new') {
             /*
@@ -142,6 +144,7 @@ class RemittanceController extends Controller
             die('Could not insert new family to db.');
         }
         
+	DB::raw('unlock tables');
 	return $newFamily;
     }
 
