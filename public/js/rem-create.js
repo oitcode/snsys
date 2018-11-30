@@ -654,6 +654,12 @@ $( document ).ready(function() {
     var submitFormBtn = $("#submit_remit");
 
     submitFormBtn.click(function(e){
+	/**
+	 * Prevent form from submitting. Will explicitly submit later if
+	 * there are no form issues, or any failures because of syntax errors
+         */
+	e.preventDefault();
+
         /* Issue flag */
         var formIssue = false;
         formIssue = false;
@@ -777,7 +783,7 @@ $( document ).ready(function() {
 	    /* Do any multi month and adjust value operation */
 	    sumTotal *= forMonths;
 	    sumTotal += parseFloat(adjustVal);
-
+	    
 	    /* See the difference */
 	    var diff = headTotal - sumTotal;
 
@@ -797,6 +803,9 @@ $( document ).ready(function() {
 	    console.log("Form Issue true");
             e.preventDefault();
 	    $("html, body").animate({ scrollTop: 0 }, "slow");
+	} else {
+	    /* Submit the form if there are not issues. */
+	    $(this).closest("form")[0].submit();
 	}
     });
 
