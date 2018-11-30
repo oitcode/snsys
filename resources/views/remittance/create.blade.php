@@ -154,21 +154,21 @@
 		<tr>
                   <td><input type="text" class="nwo-std-name nwo-std-10pc nwo-std-frminp nwo-std-frminp-lx"  name="remit-row[0][name]" id="" /></td>
                   <td><input type="text" class="nwo-std-name nwo-std-10pc nwo-std-frminp nwo-std-frminp-lx"  name="remit-row[0][ritwik-name]" id="" /></td>
-                  <td><input type="number" step="0.5" min="0.0" class="nwo-std-5pc nwo-std-frminp col-val"  name="remit-row[0][swastyayani]" id="" /></td>
-                  <td><input type="number" step="0.5" min="0.0" class="nwo-std-5pc nwo-std-frminp col-val"  name="remit-row[0][istavrity]" id="" /></td>
-                  <td><input type="number" step="0.5" min="0.0" class="nwo-std-5pc nwo-std-frminp col-val"  name="remit-row[0][acharyavrity]" id="" /></td>
-                  <td><input type="number" step="0.5" min="0.0" class="nwo-std-5pc nwo-std-frminp col-val"  name="remit-row[0][dakshina]" id="" /></td>
-                  <td><input type="number" step="0.5" min="0.0" class="nwo-std-5pc nwo-std-frminp col-val"  name="remit-row[0][sangathani]" id="" /></td>
-                  <td><input type="number" step="0.5" min="0.0" class="nwo-std-5pc nwo-std-frminp col-val"  name="remit-row[0][ritwiki]" id="" /></td>
-                  <td><input type="number" step="0.5" min="0.0" class="nwo-std-5pc nwo-std-frminp col-val"  name="remit-row[0][pranami]" id="" /></td>
-                  <td><input type="number" step="0.5" min="0.0" class="nwo-std-5pc nwo-std-frminp col-val"  name="remit-row[0][swastyayani-awasista]" id="" /></td>
-                  <td><input type="number" step="0.5" min="0.0" class="nwo-std-5pc nwo-std-frminp col-val"  name="remit-row[0][ananda-bazar]" id="" /></td>
-                  <td><input type="number" step="0.5" min="0.0" class="nwo-std-5pc nwo-std-frminp col-val"  name="remit-row[0][parivrity]" id="" /></td>
-                  <td><input type="number" step="0.5" min="0.0" class="nwo-std-5pc nwo-std-frminp col-val"  name="remit-row[0][misc]" id="" /></td>
+                  <td><input type="number" step="0.25" min="0.0" class="nwo-std-5pc nwo-std-frminp col-val"  name="remit-row[0][swastyayani]" id="" /></td>
+                  <td><input type="number" step="0.25" min="0.0" class="nwo-std-5pc nwo-std-frminp col-val"  name="remit-row[0][istavrity]" id="" /></td>
+                  <td><input type="number" step="0.25" min="0.0" class="nwo-std-5pc nwo-std-frminp col-val"  name="remit-row[0][acharyavrity]" id="" /></td>
+                  <td><input type="number" step="0.25" min="0.0" class="nwo-std-5pc nwo-std-frminp col-val"  name="remit-row[0][dakshina]" id="" /></td>
+                  <td><input type="number" step="0.25" min="0.0" class="nwo-std-5pc nwo-std-frminp col-val"  name="remit-row[0][sangathani]" id="" /></td>
+                  <td><input type="number" step="0.25" min="0.0" class="nwo-std-5pc nwo-std-frminp col-val"  name="remit-row[0][ritwiki]" id="" /></td>
+                  <td><input type="number" step="0.25" min="0.0" class="nwo-std-5pc nwo-std-frminp col-val"  name="remit-row[0][pranami]" id="" /></td>
+                  <td><input type="number" step="0.25" min="0.0" class="nwo-std-5pc nwo-std-frminp col-val"  name="remit-row[0][swastyayani-awasista]" id="" /></td>
+                  <td><input type="number" step="0.25" min="0.0" class="nwo-std-5pc nwo-std-frminp col-val"  name="remit-row[0][ananda-bazar]" id="" /></td>
+                  <td><input type="number" step="0.25" min="0.0" class="nwo-std-5pc nwo-std-frminp col-val"  name="remit-row[0][parivrity]" id="" /></td>
+                  <td><input type="number" step="0.25" min="0.0" class="nwo-std-5pc nwo-std-frminp col-val"  name="remit-row[0][misc]" id="" /></td>
 
-                  <td><input type="number" step="0.5" min="0.0" class="nwo-std-5pc nwo-std-frminp col-val"  name="remit-row[0][utsav]" id="" /></td>
-                  <td><input type="number" step="0.5" min="0.0" class="nwo-std-5pc nwo-std-frminp col-val"  name="remit-row[0][diksha-pranami]" id="" /></td>
-                  <td><input type="number" step="0.5" min="0.0" class="nwo-std-5pc nwo-std-frminp col-val"  name="remit-row[0][acharya-pranami]" id="" /></td>
+                  <td><input type="number" step="0.25" min="0.0" class="nwo-std-5pc nwo-std-frminp col-val"  name="remit-row[0][utsav]" id="" /></td>
+                  <td><input type="number" step="0.25" min="0.0" class="nwo-std-5pc nwo-std-frminp col-val"  name="remit-row[0][diksha-pranami]" id="" /></td>
+                  <td><input type="number" step="0.25" min="0.0" class="nwo-std-5pc nwo-std-frminp col-val"  name="remit-row[0][acharya-pranami]" id="" /></td>
 		</tr>
                 <!-- Additional rows go here -->
               </tbody>
@@ -181,7 +181,7 @@
 
 	    <!-- Adjust value -->
 	    <label for="id_adjust_val">Adjust Value</label>
-	    <input type="number" min="0.0" step="0.1" class="nwo-std-5pc swo-std-frm-inp" id="id_adjust_val" name="adjust-val" value="0.0" required />
+	    <input type="number" min="0.0" step="0.01" class="nwo-std-5pc swo-std-frm-inp" id="id_adjust_val" name="adjust-val" value="0.0" required />
 	    <hr/>
 
             <!--<button type="button" id="rem_person" class="btn btn-danger">-Person</button>-->
