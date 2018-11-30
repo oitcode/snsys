@@ -492,7 +492,8 @@ class RemittanceController extends Controller
 
 	$newOblate = new Oblate;
         /* Todo: 49? Need a constant? */
-	$newOblate->family_id = 49;
+        /* Update: Use 3 for live */
+	$newOblate->family_id = 3;
 	$newOblate->person_id = $newPerson->person_id;
         /* Todo: 3? Need a constant? */
 	$newOblate->ritwik_id = 3;
