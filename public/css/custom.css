@@ -23,3 +23,7 @@
 .nwo-std-name {
   /* */
 }
+
+input[type='number'] {
+    -moz-appearance:textfield;
+}

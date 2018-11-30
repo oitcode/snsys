@@ -44,7 +44,9 @@ function addRemitRow(remLineBody)
     /* Swastyayani */
     var newSwastyayaniCol = $("<td></td>");
     var newSwastyayaniInp = $("<input />", {
-        "type": "text",
+        "type": "number",
+        "step": "0.5",
+        "min": "0.0",
         "class": "nwo-std-5pc nwo-std-frminp col-val",
         "name": "remit-row[" + rowCount + "][swastyayani]",
         "id": "",
@@ -55,7 +57,9 @@ function addRemitRow(remLineBody)
     /* Istavrity */
     var newIstavrityCol = $("<td></td>");
     var newIstavrityInp = $("<input />", {
-        "type": "text",
+        "type": "number",
+        "step": "0.5",
+        "min": "0.0",
         "class": "nwo-std-5pc nwo-std-frminp col-val",
         "name": "remit-row[" + rowCount + "][istavrity]",
         "id": "",
@@ -66,7 +70,9 @@ function addRemitRow(remLineBody)
     /* Acharyavrity */
     var newAcharyavrityCol = $("<td></td>");
     var newAcharyavrityInp = $("<input />", {
-        "type": "text",
+        "type": "number",
+        "step": "0.5",
+        "min": "0.0",
         "class": "nwo-std-5pc nwo-std-frminp col-val",
         "name": "remit-row[" + rowCount + "][acharyavrity]",
         "id": "",
@@ -77,7 +83,9 @@ function addRemitRow(remLineBody)
     /* Dakshina */
     var newDakshinaCol = $("<td></td>");
     var newDakshinaInp = $("<input />", {
-        "type": "text",
+        "type": "number",
+        "step": "0.5",
+        "min": "0.0",
         "class": "nwo-std-5pc nwo-std-frminp col-val",
         "name": "remit-row[" + rowCount + "][dakshina]",
         "id": "",
@@ -88,7 +96,9 @@ function addRemitRow(remLineBody)
     /* Sangathani */
     var newSangathaniCol = $("<td></td>");
     var newSangathaniInp = $("<input />", {
-        "type": "text",
+        "type": "number",
+        "step": "0.5",
+        "min": "0.0",
         "class": "nwo-std-5pc nwo-std-frminp col-val",
         "name": "remit-row[" + rowCount + "][sangathani]",
         "id": "",
@@ -99,7 +109,9 @@ function addRemitRow(remLineBody)
     /* Ritwiki */
     var newRitwikiCol = $("<td></td>");
     var newRitwikiInp = $("<input />", {
-        "type": "text",
+        "type": "number",
+        "step": "0.5",
+        "min": "0.0",
         "class": "nwo-std-5pc nwo-std-frminp col-val",
         "name": "remit-row[" + rowCount + "][ritwiki]",
         "id": "",
@@ -110,7 +122,9 @@ function addRemitRow(remLineBody)
     /* Pranami */
     var newPranamiCol = $("<td></td>");
     var newPranamiInp = $("<input />", {
-        "type": "text",
+        "type": "number",
+        "step": "0.5",
+        "min": "0.0",
         "class": "nwo-std-5pc nwo-std-frminp col-val",
         "name": "remit-row[" + rowCount + "][pranami]",
         "id": "",
@@ -121,7 +135,9 @@ function addRemitRow(remLineBody)
     /* Swastyayani Awasista */
     var newSwaAwaCol = $("<td></td>");
     var newSwaAwaInp = $("<input />", {
-        "type": "text",
+        "type": "number",
+        "step": "0.5",
+        "min": "0.0",
         "class": "nwo-std-5pc nwo-std-frminp col-val",
         "name": "remit-row[" + rowCount + "][swastyayani-awasista]",
         "id": "",
@@ -132,7 +148,9 @@ function addRemitRow(remLineBody)
     /* Ananda bazar */
     var newAnandaBazarCol = $("<td></td>");
     var newAnandaBazarInp = $("<input />", {
-        "type": "text",
+        "type": "number",
+        "step": "0.5",
+        "min": "0.0",
         "class": "nwo-std-5pc nwo-std-frminp col-val",
         "name": "remit-row[" + rowCount + "][ananda-bazar]",
         "id": "",
@@ -143,7 +161,9 @@ function addRemitRow(remLineBody)
     /* Parivrity  */
     var newParivrityCol = $("<td></td>");
     var newParivrityInp = $("<input />", {
-        "type": "text",
+        "type": "number",
+        "step": "0.5",
+        "min": "0.0",
         "class": "nwo-std-5pc nwo-std-frminp col-val",
         "name": "remit-row[" + rowCount + "][parivrity]",
         "id": "",
@@ -154,7 +174,9 @@ function addRemitRow(remLineBody)
     /* Misc  */
     var newMiscCol = $("<td></td>");
     var newMiscInp = $("<input />", {
-        "type": "text",
+        "type": "number",
+        "step": "0.5",
+        "min": "0.0",
         "class": "nwo-std-5pc nwo-std-frminp col-val",
         "name": "remit-row[" + rowCount + "][misc]",
         "id": "",
@@ -165,7 +187,9 @@ function addRemitRow(remLineBody)
     /* Utsav */
     var newUtsavCol = $("<td></td>");
     var newUtsavInp = $("<input />", {
-        "type": "text",
+        "type": "number",
+        "step": "0.5",
+        "min": "0.0",
         "class": "nwo-std-5pc nwo-std-frminp col-val",
         "name": "remit-row[" + rowCount + "][utsav]",
         "id": "",
@@ -176,7 +200,9 @@ function addRemitRow(remLineBody)
     /* Diksha Pranami  */
     var newDikshaPrCol = $("<td></td>");
     var newDikshaPrInp = $("<input />", {
-        "type": "text",
+        "type": "number",
+        "step": "0.5",
+        "min": "0.0",
         "class": "nwo-std-5pc nwo-std-frminp col-val",
         "name": "remit-row[" + rowCount + "][diksha-pranami]",
         "id": "",
@@ -187,7 +213,9 @@ function addRemitRow(remLineBody)
     /* Acharya Pranami  */
     var newAcharyaPrCol = $("<td></td>");
     var newAcharyaPrInp = $("<input />", {
-        "type": "text",
+        "type": "number",
+        "step": "0.5",
+        "min": "0.0",
         "class": "nwo-std-5pc nwo-std-frminp col-val",
         "name": "remit-row[" + rowCount + "][acharya-pranami]",
         "id": "",

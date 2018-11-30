@@ -81,7 +81,7 @@
                     <!--<td><input type="text" class="nwo-std-frminp" name="bv-num" id="id_bv_num" value="{{ old('bv-num') }}"/></td>-->
                     <td><input type="text" class="nwo-std-frminp" name="bv-deposit-date" id="id_bv_date" value="{{ old('bv-deposit-date') }}" /></td>
                     <td><input type="text" class="nwo-std-name nwo-std-frminp" name="bv-depositor" id="id_bv_depositor" value="{{ old('bv-depositor') }}" /></td>
-                    <td><input type="text" class="nwo-std-frminp" name="bv-amount" id="id_bv_amount" value="{{ old('bv-amount') }}" /></td>
+                    <td><input type="number" step="1" min="1" class="nwo-std-frminp" name="bv-amount" id="id_bv_amount" value="{{ old('bv-amount') }}" /></td>
                   </tr>
                 </tbody>
               </table>
@@ -113,7 +113,7 @@
                   <td><input type="text" class="nwo-std-name nwo-std-frminp nwo-std-frminp-lx" name="submitter-name" id="id_mi_sname" value="{{ old('submitter-name') }}"/></td>
                   <td><input type="text" class="nwo-std-upper nwo-std-frminp nwo-std-frminp-lx" name="submitter-address" id="id_mi_saddress" value="{{ old('submitter-address') }}"/></td>
                   <td><input type="text" class="nwo-std-frminp" name="submitted-date" id="id_mi_sdate" value="{{ old('submitted-date') }}"/></td>
-                  <td><input type="text" class="nwo-std-frminp" name="submitted-total" id="id_mi_total" value="{{ old('submitted-total') }}"/></td>
+                  <td><input type="number" step="1" min="1" class="nwo-std-frminp" name="submitted-total" id="id_mi_total" value="{{ old('submitted-total') }}"/></td>
 		  {{--
                   <td><input type="text" class="nwo-std-frminp nwo-std-frminp-lx" name="delivered-by" id="id_mi_dname" value="{{ old('delivered-by') }}"/></td>
 		  --}}
@@ -154,21 +154,21 @@
 		<tr>
                   <td><input type="text" class="nwo-std-name nwo-std-10pc nwo-std-frminp nwo-std-frminp-lx"  name="remit-row[0][name]" id="" /></td>
                   <td><input type="text" class="nwo-std-name nwo-std-10pc nwo-std-frminp nwo-std-frminp-lx"  name="remit-row[0][ritwik-name]" id="" /></td>
-                  <td><input type="text" class="nwo-std-5pc nwo-std-frminp col-val"  name="remit-row[0][swastyayani]" id="" /></td>
-                  <td><input type="text" class="nwo-std-5pc nwo-std-frminp col-val"  name="remit-row[0][istavrity]" id="" /></td>
-                  <td><input type="text" class="nwo-std-5pc nwo-std-frminp col-val"  name="remit-row[0][acharyavrity]" id="" /></td>
-                  <td><input type="text" class="nwo-std-5pc nwo-std-frminp col-val"  name="remit-row[0][dakshina]" id="" /></td>
-                  <td><input type="text" class="nwo-std-5pc nwo-std-frminp col-val"  name="remit-row[0][sangathani]" id="" /></td>
-                  <td><input type="text" class="nwo-std-5pc nwo-std-frminp col-val"  name="remit-row[0][ritwiki]" id="" /></td>
-                  <td><input type="text" class="nwo-std-5pc nwo-std-frminp col-val"  name="remit-row[0][pranami]" id="" /></td>
-                  <td><input type="text" class="nwo-std-5pc nwo-std-frminp col-val"  name="remit-row[0][swastyayani-awasista]" id="" /></td>
-                  <td><input type="text" class="nwo-std-5pc nwo-std-frminp col-val"  name="remit-row[0][ananda-bazar]" id="" /></td>
-                  <td><input type="text" class="nwo-std-5pc nwo-std-frminp col-val"  name="remit-row[0][parivrity]" id="" /></td>
-                  <td><input type="text" class="nwo-std-5pc nwo-std-frminp col-val"  name="remit-row[0][misc]" id="" /></td>
+                  <td><input type="number" step="0.5" min="0.0" class="nwo-std-5pc nwo-std-frminp col-val"  name="remit-row[0][swastyayani]" id="" /></td>
+                  <td><input type="number" step="0.5" min="0.0" class="nwo-std-5pc nwo-std-frminp col-val"  name="remit-row[0][istavrity]" id="" /></td>
+                  <td><input type="number" step="0.5" min="0.0" class="nwo-std-5pc nwo-std-frminp col-val"  name="remit-row[0][acharyavrity]" id="" /></td>
+                  <td><input type="number" step="0.5" min="0.0" class="nwo-std-5pc nwo-std-frminp col-val"  name="remit-row[0][dakshina]" id="" /></td>
+                  <td><input type="number" step="0.5" min="0.0" class="nwo-std-5pc nwo-std-frminp col-val"  name="remit-row[0][sangathani]" id="" /></td>
+                  <td><input type="number" step="0.5" min="0.0" class="nwo-std-5pc nwo-std-frminp col-val"  name="remit-row[0][ritwiki]" id="" /></td>
+                  <td><input type="number" step="0.5" min="0.0" class="nwo-std-5pc nwo-std-frminp col-val"  name="remit-row[0][pranami]" id="" /></td>
+                  <td><input type="number" step="0.5" min="0.0" class="nwo-std-5pc nwo-std-frminp col-val"  name="remit-row[0][swastyayani-awasista]" id="" /></td>
+                  <td><input type="number" step="0.5" min="0.0" class="nwo-std-5pc nwo-std-frminp col-val"  name="remit-row[0][ananda-bazar]" id="" /></td>
+                  <td><input type="number" step="0.5" min="0.0" class="nwo-std-5pc nwo-std-frminp col-val"  name="remit-row[0][parivrity]" id="" /></td>
+                  <td><input type="number" step="0.5" min="0.0" class="nwo-std-5pc nwo-std-frminp col-val"  name="remit-row[0][misc]" id="" /></td>
 
-                  <td><input type="text" class="nwo-std-5pc nwo-std-frminp col-val"  name="remit-row[0][utsav]" id="" /></td>
-                  <td><input type="text" class="nwo-std-5pc nwo-std-frminp col-val"  name="remit-row[0][diksha-pranami]" id="" /></td>
-                  <td><input type="text" class="nwo-std-5pc nwo-std-frminp col-val"  name="remit-row[0][acharya-pranami]" id="" /></td>
+                  <td><input type="number" step="0.5" min="0.0" class="nwo-std-5pc nwo-std-frminp col-val"  name="remit-row[0][utsav]" id="" /></td>
+                  <td><input type="number" step="0.5" min="0.0" class="nwo-std-5pc nwo-std-frminp col-val"  name="remit-row[0][diksha-pranami]" id="" /></td>
+                  <td><input type="number" step="0.5" min="0.0" class="nwo-std-5pc nwo-std-frminp col-val"  name="remit-row[0][acharya-pranami]" id="" /></td>
 		</tr>
                 <!-- Additional rows go here -->
               </tbody>
