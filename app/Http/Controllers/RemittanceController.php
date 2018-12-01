@@ -92,11 +92,8 @@ class RemittanceController extends Controller
 	$newRemitLot->deposited_by = $remitLotInfo['bankDepositedBy'];
 	$newRemitLot->amount = $remitLotInfo['bankDepositAmount'];
 
-	/* Todo: URGENT: Ignoring these two for now. Need to do db migration first. */
-	/*
-	$newRemitLot->ph_deposit_date = $remitLotInfo['phDepositDate'];
-	$newRemitLot->ph_deposited_by = $remitLotInfo['phDepositedBy'];
-	*/
+	$newRemitLot->philanthrophy_deposit_date = $remitLotInfo['phDepositDate'];
+	$newRemitLot->philanthrophy_deposited_by = $remitLotInfo['phDepositedBy'];
 
 	$newRemitLot->creator_id = Auth::user()->id;
 
