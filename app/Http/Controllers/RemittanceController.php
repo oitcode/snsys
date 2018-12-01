@@ -1082,10 +1082,15 @@ class RemittanceController extends Controller
 
 	$familyCode = $request->input('family-code');
 	$lotNumber = $request->input('lot-num');
+	$serialNum = $request->input('serial-num');
 
 	/* Todo: Switch between different cases nicely! */
 	if ($lotNumber) {
 	    $remittances = $this->searchByLot($lotNumber);
+            return view('remittance.search-result')
+	        ->with('remittances', $remittances);
+	} else if ($serialNum) {
+	    $remittances = Remittance::where('remittance_id', $serialNum)->get();
             return view('remittance.search-result')
 	        ->with('remittances', $remittances);
 	}
