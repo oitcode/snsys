@@ -39,7 +39,7 @@ input[type='number'] {
   .nwo-ap-logo-side {
     display: inline-block;
     margin-top: 10px;
-    float-left;
+    float:left;
   }
   .nwo-clearfix {
     clear: both;
