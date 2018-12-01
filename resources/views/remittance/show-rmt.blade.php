@@ -3,7 +3,7 @@
 @section('content')
 <div class="container-fluid">
   <div class="panel panel-primary">
-      <div class="panel-heading"><h3><strong>Istavrity Detail</strong></h3></div>
+      <div class="panel-heading"><h3><strong>Arghya Praswasti</strong></h3></div>
       <div class="panel-body">
           @if (session('status'))
               <div class="alert alert-success">
@@ -12,7 +12,7 @@
           @endif
 
 	  <!-- Print -->
-	  <p>
+	  <p class="hidden-print">
 	      <button type="button" class="btn btn-primary" id="id_print_page">Print</button>
 	  </p>
 	  <hr />
