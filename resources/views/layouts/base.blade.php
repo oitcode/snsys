@@ -233,7 +233,7 @@
 
 	<!-- Display Lot information if any -->
         @if (session('lot'))
-            <div class="alert alert-danger">
+            <div class="alert alert-danger hidden-print">
                 Lot num: {{ session('lot') }}
             </div>
         @endif

@@ -18,17 +18,16 @@
 	  <hr />
 
 	  <p>
-	    Family Code: <strong>{{ $remittance->family->family_code }}</strong><br/>
-	    Serial num: <strong>{{ $remittance->remittance_id }}</strong><br/>
-	    Submitter: 
-	      <strong>
-	      {{ $remittance->submitter->person->first_name }}&nbsp;&nbsp;
-	      {{ $remittance->submitter->person->middle_name }}&nbsp;&nbsp;
-	      {{ $remittance->submitter->person->last_name }}<br/>
-	      </strong>
-	    Date: <strong>{{ $remittance->submitted_date }}</strong><br/>
-	    Total: <strong>{{ $remTotal }}</strong><br/>
+		<img src="/satsang-nepal-logo-2.jpg" style="max-width: 100px; display:block; margin-bottom: 15px;" />
+		<p style="primary">
+		<strong>
+		  Satsang Philanthropy, Satsang Nepal<br />
+		  Satsang Mandir,<br />
+		  Basundol Chandragiri-2, Kathmandu, Nepal
+		</strong>
 	  </p>
+	  <hr />
+
 	  <p>
 	    <table class="table">
 	      <thead>
@@ -82,6 +81,19 @@
 	        @endforeach
 	      </tbody>
 	    </table>
+	  </p>
+
+	  <p>
+	    Family Code: <strong>{{ $remittance->family->family_code }}</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	    Serial num: <strong>{{ $remittance->remittance_id }}</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	    Submitter: 
+	      <strong>
+	      {{ $remittance->submitter->person->first_name }}&nbsp;&nbsp;
+	      {{ $remittance->submitter->person->middle_name }}&nbsp;&nbsp;
+	      {{ $remittance->submitter->person->last_name }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	      </strong>
+	    Date: <strong>{{ $remittance->submitted_date }}</strong>&nbsp;&nbsp;
+	    Total: <strong>{{ $remTotal }}</strong>
 	  </p>
       </div>
   </div>
