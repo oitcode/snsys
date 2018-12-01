@@ -18,7 +18,6 @@
 	  <hr />
 
 	  <p>
-		<img src="/satsang-nepal-logo-2.jpg" style="max-width: 50px; display:block; margin-bottom: 15px;" />
 		<p style="primary">
 		<strong>
 		  Satsang Philanthropy, Satsang Nepal<br />
