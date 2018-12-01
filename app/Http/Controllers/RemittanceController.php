@@ -1134,8 +1134,11 @@ class RemittanceController extends Controller
     public function showRmt($remittance_id)
     {
 	$remittance = \App\Remittance::find($remittance_id);
+	$remTotal = $this->remTotalAmount($remittance);
+
         return view('remittance.show-rmt')
-	    ->with('remittance', $remittance);
+	    ->with('remittance', $remittance)
+	    ->with('remTotal', $remTotal);
     }
 
     /**

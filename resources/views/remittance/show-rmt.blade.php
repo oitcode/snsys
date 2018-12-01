@@ -27,6 +27,7 @@
 	      {{ $remittance->submitter->person->last_name }}<br/>
 	      </strong>
 	    Date: <strong>{{ $remittance->submitted_date }}</strong><br/>
+	    Total: <strong>{{ $remTotal }}</strong><br/>
 	  </p>
 	  <p>
 	    <table class="table">
