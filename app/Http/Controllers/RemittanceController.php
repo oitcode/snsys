@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -42,8 +41,12 @@ class RemittanceController extends Controller
 	if (session()->has('lot')) {
 	    $lotCode = session()->get('lot');
 	    $remainingBal = $this->lotRemainingBal($lotCode);
+	    /* Todo: check for uniqueness? */
+	    $remittanceLot = RemittanceLot::where('lot_code', $lotCode)->first();
+	    $bvDepositDate = $remittanceLot->deposit_date;
             return view('remittance.create')
-	        ->with('remainingBal', $remainingBal);
+	        ->with('remainingBal', $remainingBal)
+	        ->with('bvDepositDate', $bvDepositDate);
 	} else {
             return view('remittance.create');
 	}
