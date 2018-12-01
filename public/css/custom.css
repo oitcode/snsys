@@ -27,3 +27,21 @@
 input[type='number'] {
     -moz-appearance:textfield;
 }
+
+@media print {
+  .nwo-ap-logo {
+      display: inline-block;
+      margin-right: 50px;
+      width: 70px;
+      height: 70px;
+      float: left;
+  }
+  .nwo-ap-logo-side {
+    display: inline-block;
+    margin-top: 10px;
+    float-left;
+  }
+  .nwo-clearfix {
+    clear: both;
+  }
+}

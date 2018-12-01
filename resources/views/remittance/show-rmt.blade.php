@@ -18,12 +18,16 @@
 	  <hr />
 
 	  <p>
-		<p style="primary">
-		<strong>
-		  Satsang Philanthropy, Satsang Nepal<br />
-		  Satsang Mandir,<br />
-		  Basundol Chandragiri-2, Kathmandu, Nepal
-		</strong>
+	    <img src="/satsang-nepal-logo-2.jpg" class="nwo-ap-logo" style="max-width: 80px; display: inline-block; margin-right: 50px; float: left;" />
+	    <p style="display: inline-block; margin-top: 10px; float-left;" class="nwo-ap-logo-side">
+	    <strong>
+	      Satsang Philanthropy, Satsang Nepal<br />
+	      Satsang Mandir,<br />
+	      Basundol Chandragiri-2, Kathmandu, Nepal
+	    </strong>
+	    </p>
+	    <p style="clear: both;" class="nwo-clearfix">
+	    </p>
 	  </p>
 	  <hr />
 
