@@ -41,6 +41,9 @@ Route::post('/rmt/lot/resume/process', 'RemittanceController@resumeLotProcess');
 
 Route::get('/rmt/{remittance_id}', 'RemittanceController@showRmt');
 
+/* Change password */
+Route::get('/ol/changepw', 'Auth\ChangePasswordController@olChangePassword');
+Route::post('/ol/changepw/process', 'Auth\ChangePasswordController@olChangePasswordProcess');
 
 /* Sangh */
 Route::get('/sangh/family', 'SanghController@search');

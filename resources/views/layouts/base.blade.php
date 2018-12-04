@@ -211,7 +211,7 @@
                                 </a>
 
                                 <ul class="dropdown-menu">
-                                    <li><a href="">Change password</a></li>
+                                    <li><a href="{{ url('/ol/changepw') }}">Change password</a></li>
                                     <li>
                                         <a href="{{ route('logout') }}"
                                             onclick="event.preventDefault();
