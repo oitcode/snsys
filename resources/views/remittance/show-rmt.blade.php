@@ -14,6 +14,7 @@
 	  <!-- Print -->
 	  <p class="hidden-print">
 	      <button type="button" class="btn btn-primary" id="id_print_page">Print</button>
+	      <a href="{{ url('/rmt/print/' . $remittance->remittance_id) }}" class="btn btn-success" id="id_print_ap">Print AP</a>
 	  </p>
 	  <hr />
 
