@@ -1354,5 +1354,62 @@ class RemittanceController extends Controller
 
         return $remittanceLot->amount - $this->usedBvAmount($remittanceLotId);
     }
+
+    /**
+     * Print remittance to arghya praswasti paper.
+     *
+     * @param integer remittanceId
+     *
+     * @return bool
+     */
+    public function printRemittance($remittanceId)
+    {
+	$remittance = \App\Remittance::find($remittanceId);
+	$remTotal = $this->remTotalAmount($remittance);
+
+        return view('remittance.print-rmt')
+	    ->with('remittance', $remittance)
+	    ->with('remTotal', $remTotal);
+    }
+
+    /**
+     * Show print lot form.
+     *
+     * @return Response
+     */
+    public function printLotForm()
+    {
+        return view('remittance.print-lot-form');
+    }
+
+    /**
+     * Process print lot form.
+     *
+     * @return Response
+     */
+    public function printLotFormProcess(Request $request)
+    {
+	$rmtLot = RemittanceLot::where('lot_code', $request->input('lot-num'))->first();
+
+        return view('remittance.print-lot-prepare')
+	           ->with('rmtLot', $rmtLot);
+    }
+
+
+    /**
+     * Prepare lot print.
+     *
+     * @param integer rLotNum
+     *
+     * @return Response
+     */
+    public function printLotPrep(Request $request)
+    {
+	$rLotNum = $request->input('lot-num');
+	$rmtLot = RemittanceLot::where('lot_code', $rLotNum)->first();
+
+        return view('remittance.print-rmt-lot-p')
+	           ->with('rmtLot', $rmtLot);
+    }
 }
 

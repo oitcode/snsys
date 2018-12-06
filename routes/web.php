@@ -38,6 +38,12 @@ Route::post('/rmt/lot/create', 'RemittanceController@createLot');
 Route::get('/rmt/lot/exit', 'RemittanceController@exitLot');
 Route::get('/rmt/lot/resume', 'RemittanceController@resumeLot');
 Route::post('/rmt/lot/resume/process', 'RemittanceController@resumeLotProcess');
+Route::get('/rmt/print/{remittance_id}', 'RemittanceController@printRemittance');
+Route::get('/rmt/print/lot/form', 'RemittanceController@printLotForm');
+Route::post('/rmt/print/lot/process', 'RemittanceController@printLotFormProcess');
+Route::get('/rmt/print/lot/prep', 'RemittanceController@printLotPrep');
+
+
 
 Route::get('/rmt/{remittance_id}', 'RemittanceController@showRmt');
 
