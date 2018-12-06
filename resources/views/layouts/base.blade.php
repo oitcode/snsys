@@ -150,6 +150,11 @@
                           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" v-pre>
                               Print <span class="caret"></span>
                           </a>
+                          <ul class="dropdown-menu">
+                            <li><a href="{{ url('/rmt/print/lot/form') }}">Lot</a></li>
+
+                            <li><a href="">Single</a></li>
+                          </ul>
                       </li>
 
 		      <!-- Other -->
