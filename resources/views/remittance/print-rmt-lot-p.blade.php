@@ -7,14 +7,23 @@
 
       @page {
         /* Page setup */
-        size: 15in 6in;
-	margin: 0;
+        size: 15in 6in !important;
+	margin: 0 !important;
+	padding: 0 !important;
       }
 
       @media print {
+          @page {
+            /* Page setup */
+            size: 15in 6in !important;
+            margin: 0 !important;
+            padding: 0 !important;
+          }
         /* Print specific styling */
         body {
           font-family: sans-serif;
+	  margin: 0;
+	  padding: 0;
         }
 
 	.main-frame {

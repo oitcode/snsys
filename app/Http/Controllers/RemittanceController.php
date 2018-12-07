@@ -1411,5 +1411,22 @@ class RemittanceController extends Controller
         return view('remittance.print-rmt-lot-p')
 	           ->with('rmtLot', $rmtLot);
     }
+
+    /**
+     * Print remittance to arghya praswasti paper.
+     *
+     * @param integer remittanceId
+     *
+     * @return bool
+     */
+    public function printRemittanceIndNew($remittanceId)
+    {
+	$remittance = \App\Remittance::find($remittanceId);
+	$remTotal = $this->remTotalAmount($remittance);
+
+        return view('remittance.print-rmt-lot-p-ind')
+	    ->with('remittance', $remittance)
+	    ->with('remTotal', $remTotal);
+    }
 }
 

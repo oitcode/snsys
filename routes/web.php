@@ -42,6 +42,7 @@ Route::get('/rmt/print/{remittance_id}', 'RemittanceController@printRemittance')
 Route::get('/rmt/print/lot/form', 'RemittanceController@printLotForm');
 Route::post('/rmt/print/lot/process', 'RemittanceController@printLotFormProcess');
 Route::get('/rmt/print/lot/prep', 'RemittanceController@printLotPrep');
+Route::get('/rmt/print/ind/{remittance_id}', 'RemittanceController@printRemittanceIndNew');
 
 
 
