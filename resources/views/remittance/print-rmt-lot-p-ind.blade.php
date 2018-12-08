@@ -33,12 +33,12 @@
 	}
 
         p.rmt-header {
-          margin-left: 1.5in;
+          margin-left: 1.3in;
           margin-top: 0.6in;
           margin-bottom: 1.5in;
         }
         p.rmt-header-b {
-          margin-left: 1.5in;
+          margin-left: 1.3in;
           margin-top: 0.4in;
           margin-bottom: 1.5in;
         }
@@ -227,59 +227,98 @@
           @if ($remittance_line->oblate->person->middle_name)
             {{ $remittance_line->oblate->person->middle_name }}
           @endif
-          {{ $remittance_line->oblate->person->last_name }}
+	  {{-- If check Because of Ext workaround --}}
+	  @if ($remittance_line->oblate->person->last_name != 'EXT')
+            {{ $remittance_line->oblate->person->last_name }}
+	  @endif
         </span>
 
         <span class="rl-num rl-swastyayani">
-          {{ $remittance_line->swastyayani }}
+	  @if ($remittance_line->swastyayani != 0)
+            {{ $remittance_line->swastyayani }}
+	  @endif
         </span>
         <span class="rl-num rl-istavrity">
-          {{ $remittance_line->istavrity }}
+	  @if ($remittance_line->istavrity != 0)
+            {{ $remittance_line->istavrity }}
+	  @endif
         </span>
         <span class="rl-num rl-acharyavrity">
-          {{ $remittance_line->acharyavrity }}
+	  @if ($remittance_line->acharyavrity != 0)
+            {{ $remittance_line->acharyavrity }}
+	  @endif
         </span>
         <span class="rl-num rl-dakshina">
-          {{ $remittance_line->dakshina }}
+	  @if ($remittance_line->dakshina != 0)
+            {{ $remittance_line->dakshina }}
+	  @endif
         </span>
         <span class="rl-num rl-sangathani">
-          {{ $remittance_line->sangathani }}
+	  @if ($remittance_line->sangathani != 0)
+            {{ $remittance_line->sangathani }}
+	  @endif
         </span>
         <span class="rl-num rl-ananda_bazar">
-          {{ $remittance_line->ananda_bazar }}
+	  @if ($remittance_line->ananda_bazar != 0)
+            {{ $remittance_line->ananda_bazar }}
+	  @endif
         </span>
         <span class="rl-num rl-pranami">
-          {{ $remittance_line->pranami }}
+	  @if ($remittance_line->pranami != 0)
+            {{ $remittance_line->pranami }}
+	  @endif
         </span>
         <span class="rl-num rl-swastyayani_awasista">
-          {{ $remittance_line->swastyayani_awasista }}
+	  @if ($remittance_line->swastyayani_awasista != 0)
+            {{ $remittance_line->swastyayani_awasista }}
+	  @endif
         </span>
         <span class="rl-num rl-ritwiki">
-          {{ $remittance_line->ritwiki }}
+	  @if ($remittance_line->ritwiki != 0)
+            {{ $remittance_line->ritwiki }}
+	  @endif
         </span>
         <span class="rl-num rl-utsav">
-          {{ $remittance_line->utsav }}
+	  @if ($remittance_line->utsav != 0)
+            {{ $remittance_line->utsav }}
+	  @endif
         </span>
         <span class="rl-num rl-diksha_pranami">
-          {{ $remittance_line->diksha_pranami }}
+	  @if ($remittance_line->diksha_pranami != 0)
+            {{ $remittance_line->diksha_pranami }}
+	  @endif
         </span>
         <span class="rl-num rl-acharya_pranami">
-          {{ $remittance_line->acharya_pranami }}
+	  @if ($remittance_line->acharya_pranami != 0)
+            {{ $remittance_line->acharya_pranami }}
+	  @endif
         </span>
         <span class="rl-num rl-parivrity">
-          {{ $remittance_line->parivrity }}
+	  @if ($remittance_line->parivrity != 0)
+            {{ $remittance_line->parivrity }}
+	  @endif
         </span>
         <span class="rl-num rl-misc">
-          {{ $remittance_line->misc }}
+	  @if ($remittance_line->misc != 0)
+            {{ $remittance_line->misc }}
+	  @endif
         </span>
       </p>
       <p class="rl-p">
         <span class="rl-name">
-          *{{ $remittance_line->oblate->worker->person->first_name }}
-          @if ($remittance_line->oblate->worker->person->middle_name)
-            {{ $remittance_line->oblate->worker->person->middle_name }}
+	  {{-- Need to check if B R ritwik because of B R workaround --}}
+	  @if ($remittance_line->oblate->worker->person->first_name == 'B'
+	       &&
+               $remittance_line->oblate->worker->person->last_name == 'R'
+	       )
+            &nbsp;&nbsp;
+	  @else
+            *{{ $remittance_line->oblate->worker->person->first_name }}
+            @if ($remittance_line->oblate->worker->person->middle_name)
+              {{ $remittance_line->oblate->worker->person->middle_name }}
+            @endif
+            {{ $remittance_line->oblate->worker->person->last_name }}
           @endif
-          {{ $remittance_line->oblate->worker->person->last_name }}
         </span>
       </p>
 
