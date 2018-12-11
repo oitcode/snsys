@@ -1,6 +1,9 @@
 <?php
 namespace App\Http\Controllers;
 
+/* Use fpdf library */
+require('fpdf181/fpdf.php');
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
@@ -1427,6 +1430,280 @@ class RemittanceController extends Controller
         return view('remittance.print-rmt-lot-p-ind')
 	    ->with('remittance', $remittance)
 	    ->with('remTotal', $remTotal);
+    }
+
+
+    /** 
+     * Create a PDF file for printing a lot
+     *
+     * @param integer rmtId
+     *
+     * @return Response
+     */
+    public function printToPdfLotNew($lotCode)
+    {
+	$rmtLot = \App\RemittanceLot::where('lot_code', $lotCode)->first();
+
+	/*
+	|-----------------
+	| Create a new pdf
+	|-----------------
+	|
+	*/
+        $pdf = new \FPDF('L','mm', [380, 153]);
+	$pdf->SetMargins(0, 0, 0);
+	$pdf->SetAutoPageBreak(false);
+
+	/*
+	 |----------------------------------
+	 | Print each remittance in this lot
+	 |----------------------------------
+	 |
+	 */
+	foreach ($rmtLot->remittances as $remittance) {
+            $pdf->AddPage();
+            $pdf->SetFont('Courier','',13);
+
+	    $fCode = (string) $remittance->family->family_code;
+	    $submitter = [
+	      'firstName' => $remittance->submitter->person->first_name,
+	      'lastName' => $remittance->submitter->person->last_name,
+	    ];
+	    $submitterName = $submitter['firstName'] . ' ' . $submitter['lastName'];
+	    $submitterAddress = $remittance->family->address;
+	    
+	    /*
+	    |------------
+	    | Print Header
+	    |------------
+	    |
+	    */
+
+	    $headerX = 67;
+            $headerY = 20;
+
+	    $pdf->SetXY($headerX, $headerY);
+            $pdf->Cell(80,10, $submitterName, 0, 0);
+	    $pdf->Ln(5);
+            $pdf->SetX($headerX);
+            $pdf->SetFont('Courier','',12);
+            $pdf->Cell(80,10, $submitterAddress, 0, 1);
+            $pdf->SetFont('Courier','',13);
+
+
+	    /*
+	    |------------
+	    | Print Lines
+	    |------------
+	    |
+	    */
+
+            $linesY = 67;
+	    $pdf->SetXY(0, $linesY);
+
+	    $numRls = count($remittance->remittance_lines);
+	    echo "Total remittance lines: $numRls <br />";
+	    $rlCount = 0;
+	    foreach ($remittance->remittance_lines as $rl) {
+	        /*
+	         * Todo:
+	         *
+	         * 1. Check length of name and use required space.
+	         */
+
+		/* Add a new page after every 6 lines */
+		/* Todo: Do not repeat this code twice. */
+		if ($rlCount > 0 && $rlCount % 6 === 0) {
+                    $pdf->AddPage();
+
+		    $headerX = 67;
+                    $headerY = 20;
+
+	            $pdf->SetXY($headerX, $headerY);
+                    $pdf->Cell(80,10, $submitterName, 0, 0);
+	            $pdf->Ln(5);
+                    $pdf->SetX($headerX);
+                    $pdf->Cell(80,10, $submitterAddress, 0, 1);
+
+		    /**
+		     * Again set position for first remittance line in
+		     * this page.
+		     */
+                    $linesY = 67;
+	            $pdf->SetXY(0, $linesY);
+		}
+
+
+
+	        // -----------
+	        // Oblate Line
+	        // -----------
+	        $oblate = [
+	          'firstName' => $rl->oblate->person->first_name,
+	          'lastName' => $rl->oblate->person->last_name,
+	        ];
+	        $oblateName = $oblate['firstName'] . ' ' . $oblate['lastName'];
+		$pdf->setX(10);
+                $pdf->Cell(75, 10, $oblateName, 0, 0);
+                $pdf->Cell(5, 10, '', 0, 0);
+
+		// Decrease font size
+                $pdf->SetFont('Courier','',10);
+
+		// Set X position for numbers
+		$numStartX = 110;
+		$numCurX = $numStartX;
+
+		// X position of all numbers
+		$numPosX = [
+		    'swastyayani' => 122,
+		    'istavrity' => 139,
+		    'acharyavrity' => 161,
+		    'dakshina' => 178,
+		    'sangathani' => 197,
+		    'anandaBazar' => 212,
+		    'pranami' => 232,
+		    'swastyayaniAwasista' => 252,
+		    'ritwiki' => 269,
+		    'utsav' => 288,
+		    'dikshaPranami' => 306,
+		    'acharyaPranami' => 322,
+		    'parivrity' => 340,
+		    'misc' => 358,
+		];
+
+		$pdf->SetX($numPosX['swastyayani']);
+		$numWidth = $pdf->GetStringWidth((string) $rl->swastyayani);
+                $pdf->Cell($numWidth, 10, (string) $rl->swastyayani, 0, 0);
+
+		$pdf->SetX($numPosX['istavrity']);
+		$numWidth = $pdf->GetStringWidth((string) $rl->istavrity);
+                $pdf->Cell($numWidth, 10, (string) $rl->istavrity, 0, 0);
+
+		$pdf->SetX($numPosX['acharyavrity']);
+		$numWidth = $pdf->GetStringWidth((string) $rl->acharyavrity);
+                $pdf->Cell($numWidth, 10, (string) $rl->acharyavrity, 0, 0);
+
+		$pdf->SetX($numPosX['dakshina']);
+		$numWidth = $pdf->GetStringWidth((string) $rl->dakshina);
+                $pdf->Cell($numWidth, 10, (string) $rl->dakshina, 0, 0);
+
+		$pdf->SetX($numPosX['sangathani']);
+		$numWidth = $pdf->GetStringWidth((string) $rl->sangathani);
+                $pdf->Cell($numWidth, 10, (string) $rl->sangathani, 0, 0);
+
+		$pdf->SetX($numPosX['anandaBazar']);
+		$numWidth = $pdf->GetStringWidth((string) $rl->ananda_bazar);
+                $pdf->Cell($numWidth, 10, (string) $rl->ananda_bazar, 0, 0);
+
+		$pdf->SetX($numPosX['pranami']);
+		$numWidth = $pdf->GetStringWidth((string) $rl->pranami);
+                $pdf->Cell($numWidth, 10, (string) $rl->pranami, 0, 0);
+
+		$pdf->SetX($numPosX['swastyayaniAwasista']);
+		$numWidth = $pdf->GetStringWidth((string) $rl->swastyayani_awasista);
+                $pdf->Cell($numWidth, 10, (string) $rl->swastyayani_awasista, 0, 0);
+
+		$pdf->SetX($numPosX['ritwiki']);
+		$numWidth = $pdf->GetStringWidth((string) $rl->ritwiki);
+                $pdf->Cell($numWidth, 10, (string) $rl->ritwiki, 0, 0);
+
+		$pdf->SetX($numPosX['utsav']);
+		$numWidth = $pdf->GetStringWidth((string) $rl->utsav);
+                $pdf->Cell($numWidth, 10, (string) $rl->utsav, 0, 0);
+
+		$pdf->SetX($numPosX['dikshaPranami']);
+		$numWidth = $pdf->GetStringWidth((string) $rl->diksha_pranami);
+                $pdf->Cell($numWidth, 10, (string) $rl->diksha_pranami, 0, 0);
+
+		$pdf->SetX($numPosX['acharyaPranami']);
+		$numWidth = $pdf->GetStringWidth((string) $rl->acharya_pranami);
+                $pdf->Cell($numWidth, 10, (string) $rl->acharya_pranami, 0, 0);
+
+		$pdf->SetX($numPosX['parivrity']);
+		$numWidth = $pdf->GetStringWidth((string) $rl->parivrity);
+                $pdf->Cell($numWidth, 10, (string) $rl->parivrity, 0, 0);
+
+		$pdf->SetX($numPosX['misc']);
+		$numWidth = $pdf->GetStringWidth((string) $rl->misc);
+                $pdf->Cell($numWidth, 10, (string) $rl->misc, 0, 0);
+
+		// Come back to normal font size
+                $pdf->SetFont('Courier','',13);
+
+	        // Go to new line
+	        $pdf->Ln(5);
+
+	        // -----------
+	        // Ritwik Line
+	        // -----------
+	        $ritwik = [
+	          'firstName' => $rl->oblate->worker->person->first_name,
+	          'lastName' => $rl->oblate->worker->person->last_name,
+	        ];
+	        $ritwikName = $ritwik['firstName'] . ' ' . $ritwik['lastName'];
+		$pdf->setX(10);
+                $pdf->Cell(75, 10, "*$ritwikName", 0, 0);
+	        $pdf->Ln(5);
+	        
+
+		/* Add a footer after 6 lines if remittance not done yet. */
+		/* Todo: Do not repeat this code twice. */
+		if ($rlCount % 6 === 5  && $rlCount < $numRls - 1) {
+
+	            $familyCode = $remittance->family->family_code;
+	            $rmtDate = $remittance->submitted_date;
+	            $serialNum = $remittance->remittance_id;
+	            $rmtTotal = $this->remTotalAmount($remittance);
+
+	            $footerY = 137;
+
+	            $pdf->setXY(47, $footerY);
+                    $pdf->Cell(50, 10, (string) $familyCode, 0, 0);
+
+	            $pdf->setXY(137, $footerY);
+                    $pdf->Cell(30, 10, (string) $rmtDate, 0, 0);
+
+	            $pdf->setXY(267, $footerY);
+                    $pdf->Cell(30, 10, (string) $serialNum, 0, 0);
+
+	            $pdf->setXY(332, $footerY);
+                    $pdf->Cell(20, 10, "NRs " . (string) $rmtTotal, 0, 0);
+		}
+
+		$rlCount++;
+	    }
+
+
+	    /*
+	    |------------
+	    | Print Footer
+	    |------------
+	    |
+	    */
+	    $familyCode = $remittance->family->family_code;
+	    $rmtDate = $remittance->submitted_date;
+	    $serialNum = $remittance->remittance_id;
+	    $rmtTotal = $this->remTotalAmount($remittance);
+
+	    $footerY = 137;
+
+	    $pdf->setXY(47, $footerY);
+            $pdf->Cell(50, 10, (string) $familyCode, 0, 0);
+
+	    $pdf->setXY(137, $footerY);
+            $pdf->Cell(30, 10, (string) $rmtDate, 0, 0);
+
+	    $pdf->setXY(267, $footerY);
+            $pdf->Cell(30, 10, (string) $serialNum, 0, 0);
+
+	    $pdf->setXY(332, $footerY);
+            $pdf->Cell(20, 10, "NRs " . (string) $rmtTotal, 0, 0);
+	}
+
+	$pdf->Output('F', '/home/odev01/gpdf/temp-lot.pdf');
+
+	return 'Done';
     }
 }
 
