@@ -803,6 +803,83 @@ class RemittanceController extends Controller
     }
 
     /**
+     * Validate family code submitted by user.
+     *
+     * @param string formFamCode
+     *
+     * @return bool
+     */
+    public function validateFormFamilyCode($formFamCode)
+    {
+	$formFamCode = (string) $formFamCode;
+
+	/* Return true if it is new */
+	if ($formFamCode === 'new') {
+	    return true;
+	}
+
+	/* Check it is of 10 characters */
+	if (strlen($formFamCode) !== 10) {
+	    echo "Err: Family code not 10 characers.<br />";
+	    return false;
+	}
+
+	/* Standard regex match  (very loose/permissive check) */
+	$famCodeLoosePattern = '/^(4700[0-9]{6,6}|4700[0-9]{5,5}N)$/';
+	if (! preg_match($famCodeLoosePattern, $formFamCode)) {
+	    echo "Err: Family code not 'new' OR 4700*****(*/N).<br />";
+	    return false;
+	}
+
+	/* Get first 9 digits of fam code. */
+	$nineDFamCode = substr($formFamCode, 0, 9);
+	$nineDFamCode = (int) $nineDFamCode;
+
+	/**
+	 * For family codes with N at the end, check that these
+	 * are in the range actually given by Satsang Nepal.
+	 *
+	 * Also check that it is already present in database.
+	 */
+	if (substr($formFamCode, 9, 1) === 'N') {
+	    if ($nineDFamCode < 470026201) {
+	        echo "Err: Satsang NEPAL Family code but in old range.<br />";
+	        return false;
+	    }
+
+	    $famInDb = \App\Family::where('family_code', $nineDFamCode)->first();
+	    if (! $famInDb) {
+	        echo "Err: Satsang NEPAL Family code but does not exits in DB.<br />";
+	        return false;
+	    }
+	} else {
+	    /**
+	     * These are family codes given by Satsang Deoghar.
+	     * Do appropriate checks.
+	     */
+	    if ($nineDFamCode > 470026154) {
+	        echo "Err: Satsang DEOGHAR Family code but over range.<br />";
+	        return false;
+	    }
+
+	    /* If family code in database, then make sure check digit matches. */
+	    /**
+	     * Todo: Calculate check digit on actual logic rather than db
+	     *       saved value.
+             */
+	    $famInDb = \App\Family::where('family_code', $nineDFamCode)->first();
+	    if ($famInDb) {
+	        if ($famInDb->fcode_check_digit !==  substr($formFamCode, 9, 1)) {
+	            echo "Err: Satsang DEOGHAR Family code check digit mismatch.<br />";
+		    return false;
+		}
+	    }
+	}
+
+	return true;
+    }
+
+    /**
      * Validate data received in remittance creation form.
      *
      * @param Request request
@@ -815,7 +892,16 @@ class RemittanceController extends Controller
 
 	$namePattern = '/^[a-zA-Z]+[\s]+[a-zA-Z]+([\s]+[a-zA-Z]+){0,}$/';
 
-	$familyCodePattern = '/^(new|[0-9]+)$/';
+	$familyCodePattern = '/^(new|4700[0-9]{6,6}|4700[0-9]{5,5}N)$/';
+
+	/* Validate family code */
+	$formFamCode = $request->input('family-code');
+	if ($this->validateFormFamilyCode($formFamCode) == false) {
+	    echo "Error: Invalid family code: $formFamCode <br />";
+	    /* Todo: Redirect back with appropriate error message instead of dying. */
+	    die("FAIL:: Family code validation failed.<br/>");
+	    return false;
+	}
 
 	/* Validate currency */
 	$validatedCurrencyData = $request->validate([

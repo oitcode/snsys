@@ -88,7 +88,7 @@
 	  </p>
 
 	  <p>
-	    Family Code: <strong>{{ $remittance->family->family_code }}</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	    Family Code: <strong>{{ $remittance->family->family_code }}@if($remittance->family->fcode_check_digit !== NULL){{ $remittance->family->fcode_check_digit }}@else N @endif</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	    Serial num: <strong>{{ $remittance->remittance_id }}</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	    Submitter: 
 	      <strong>

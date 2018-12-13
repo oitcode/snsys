@@ -34,7 +34,9 @@
 	        @foreach ($remittances as $remittance)
 		  <tr>
 		    <td>{{  $remittance->remittance_id  }}</td>
-		    <td>{{ $remittance->family->family_code }}</td>
+		    <td>
+		    {{ $remittance->family->family_code }}@if($remittance->family->fcode_check_digit !== NULL){{ $remittance->family->fcode_check_digit }}@else N @endif
+                    </td>
 		    <td>
 		      {{ $remittance->submitter->person->first_name }}
 		      {{ $remittance->submitter->person->last_name }}
