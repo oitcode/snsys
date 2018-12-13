@@ -132,7 +132,14 @@ class RemittanceController extends Controller
             */
             $newFamily->family_code = Family::max('family_code') + 1;
         } else {
-            $newFamily->family_code = $familyInfo['familyCode'];
+
+	    /* Get first 9 digits of fam code. */
+	    $tenDFamCode = $familyInfo['familyCode'];
+	    $nineDFamCode = substr($tenDFamCode, 0, 9);
+	    $checkDigit = substr($tenDFamCode, 9, 1);
+
+            $newFamily->family_code = $nineDFamCode;
+            $newFamily->fcode_check_digit = $checkDigit;
         }
         
         $newFamily->address = $familyInfo['familyAddress'];
@@ -162,11 +169,27 @@ class RemittanceController extends Controller
 
 	/* For a given family code */
 	if ($familyInfo['familyCode'] !== 'new') {
+
+	    /* Get first 9 digits of fam code. */
+	    $tenDFamCode = $familyInfo['familyCode'];
+	    $nineDFamCode = substr($tenDFamCode, 0, 9);
+
 	    /* Check if family exists in database. */
-            $family = Family::where('family_code', $familyInfo['familyCode'])->first();
+            $family = Family::where('family_code', $nineDFamCode)->first();
 	    if ($family) {
 	        $familyExistsInDb = true;
 	    }
+	}
+
+	/**
+	 * Family code ending in 'N' does not exist in DB.
+	 * It should not be happening.
+         */
+	if ($familyInfo['familyCode'] !== 'new'
+	    && substr($tenDFamCode, 9, 1) === 'N'
+	    && $familyExistsInDb === false) {
+	    /* Todo: Do sth instead of dying. */
+	    die("Error: 'N' family code not existing in DB");
 	}
 
 	/* Family not existing in db */
