@@ -1347,6 +1347,32 @@ class RemittanceController extends Controller
     }
 
     /**
+     * Break 10 digit family code to 9 digit family code and  check digit.
+     *
+     * @param string tenDFamCode
+     * 
+     * @return array
+     *
+     */
+    public function breakFamilyCode($tenDFamCode)
+    {
+        $tenDFamCode = (string) $tenDFamCode;
+
+	/* Todo: implement validateTenDFamCode
+	if ($this->validateTenDFamCode($tenDFamCode) === false) {
+	    return false;
+	}
+	*/
+
+	$famCodeParts = [
+	    'nineDFamCode' => substr($tenDFamCode, 0, 9),
+	    'checkDigit' => substr($tenDFamCode, 9, 1),
+	];
+
+	return $famCodeParts;
+    }
+
+    /**
      * Input family code.
      *
      * @return \Illuminate\Http\Response
@@ -1363,10 +1389,19 @@ class RemittanceController extends Controller
      */
     public function getlastFamilyRemittance(Request $request)
     {
-        $familyCode = $request->input('family-code');
+        $tenDFamCode = $request->input('family-code');
+
+	$famCodeParts = $this->breakFamilyCode($tenDFamCode);
+
+	if ($famCodeParts === false) {
+	    /* Todo: Show error istead of dying. */
+	    die("Error: Could not extract family code parts");
+	}
+
+	$nineDFamCode = $famCodeParts['nineDFamCode'];
 
 	/* Check if family exists */
-	$family = Family::where('family_code', $familyCode)->first();
+	$family = Family::where('family_code', $nineDFamCode)->first();
 
 	if (!$family) {
 	    /* Todo: Redirect to family create page */
@@ -1376,11 +1411,10 @@ class RemittanceController extends Controller
 	$lastRemittance = Remittance::where('family_id', $family->family_id)
 	                  ->orderBy('created_time', 'desc')->first();
         
-	$remitLines = $lastRemittance->remittance_lines;
+	//$remitLines = $lastRemittance->remittance_lines;
 
-	return $remitLines;
-
-        return view('remittance.family-lastremit');
+        return view('remittance.create-wior')
+	    ->with('lastRmt', $lastRemittance);
     }
 }
 
