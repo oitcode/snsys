@@ -1540,9 +1540,24 @@ class RemittanceController extends Controller
 	        // -----------
 	        $oblate = [
 	          'firstName' => $rl->oblate->person->first_name,
+	          'middleName' => $rl->oblate->person->middle_name,
 	          'lastName' => $rl->oblate->person->last_name,
 	        ];
-	        $oblateName = $oblate['firstName'] . ' ' . $oblate['lastName'];
+
+		if ($oblate['middleName']) {
+	            $oblateName = $oblate['firstName'] . ' ' .
+		                  $oblate['middleName']  . ' ' .
+		                  $oblate['lastName'];
+		} else {
+	            $oblateName = $oblate['firstName'] . ' ' .
+		                  $oblate['lastName'];
+		}
+
+		/* Print only first name if last name is ext */
+                if ($oblate['lastName'] == 'EXT' ||
+		    $oblate['lastName'] == 'ext') {
+		     $oblateName = $oblate['firstName'];
+	        }
 		$pdf->setX(10);
                 $pdf->Cell(75, 10, $oblateName, 0, 0);
                 $pdf->Cell(5, 10, '', 0, 0);
@@ -1573,60 +1588,88 @@ class RemittanceController extends Controller
 		];
 
 		$pdf->SetX($numPosX['swastyayani']);
-		$numWidth = $pdf->GetStringWidth((string) $rl->swastyayani);
-                $pdf->Cell($numWidth, 10, (string) $rl->swastyayani, 0, 0);
+		if ($rl->swastyayani != 0) {
+		    $numWidth = $pdf->GetStringWidth((string) $rl->swastyayani);
+                    $pdf->Cell($numWidth, 10, (string) $rl->swastyayani, 0, 0);
+		}
 
 		$pdf->SetX($numPosX['istavrity']);
-		$numWidth = $pdf->GetStringWidth((string) $rl->istavrity);
-                $pdf->Cell($numWidth, 10, (string) $rl->istavrity, 0, 0);
+		if ($rl->istavrity != 0) {
+		    $numWidth = $pdf->GetStringWidth((string) $rl->istavrity);
+                    $pdf->Cell($numWidth, 10, (string) $rl->istavrity, 0, 0);
+		}
 
 		$pdf->SetX($numPosX['acharyavrity']);
-		$numWidth = $pdf->GetStringWidth((string) $rl->acharyavrity);
-                $pdf->Cell($numWidth, 10, (string) $rl->acharyavrity, 0, 0);
+		if ($rl->acharyavrity != 0) {
+		    $numWidth = $pdf->GetStringWidth((string) $rl->acharyavrity);
+                    $pdf->Cell($numWidth, 10, (string) $rl->acharyavrity, 0, 0);
+		}
 
 		$pdf->SetX($numPosX['dakshina']);
-		$numWidth = $pdf->GetStringWidth((string) $rl->dakshina);
-                $pdf->Cell($numWidth, 10, (string) $rl->dakshina, 0, 0);
+		if ($rl->dakshina != 0) {
+		    $numWidth = $pdf->GetStringWidth((string) $rl->dakshina);
+                    $pdf->Cell($numWidth, 10, (string) $rl->dakshina, 0, 0);
+		}
 
 		$pdf->SetX($numPosX['sangathani']);
-		$numWidth = $pdf->GetStringWidth((string) $rl->sangathani);
-                $pdf->Cell($numWidth, 10, (string) $rl->sangathani, 0, 0);
+		if ($rl->sangathani != 0) {
+		    $numWidth = $pdf->GetStringWidth((string) $rl->sangathani);
+                    $pdf->Cell($numWidth, 10, (string) $rl->sangathani, 0, 0);
+		}
 
 		$pdf->SetX($numPosX['anandaBazar']);
-		$numWidth = $pdf->GetStringWidth((string) $rl->ananda_bazar);
-                $pdf->Cell($numWidth, 10, (string) $rl->ananda_bazar, 0, 0);
+		if ($rl->ananda_bazar != 0) {
+		    $numWidth = $pdf->GetStringWidth((string) $rl->ananda_bazar);
+                    $pdf->Cell($numWidth, 10, (string) $rl->ananda_bazar, 0, 0);
+		}
 
 		$pdf->SetX($numPosX['pranami']);
-		$numWidth = $pdf->GetStringWidth((string) $rl->pranami);
-                $pdf->Cell($numWidth, 10, (string) $rl->pranami, 0, 0);
+		if ($rl->pranami != 0) {
+		    $numWidth = $pdf->GetStringWidth((string) $rl->pranami);
+                    $pdf->Cell($numWidth, 10, (string) $rl->pranami, 0, 0);
+		}
 
 		$pdf->SetX($numPosX['swastyayaniAwasista']);
-		$numWidth = $pdf->GetStringWidth((string) $rl->swastyayani_awasista);
-                $pdf->Cell($numWidth, 10, (string) $rl->swastyayani_awasista, 0, 0);
+		if ($rl->swastyayani_awasista != 0) {
+		    $numWidth = $pdf->GetStringWidth((string) $rl->swastyayani_awasista);
+                    $pdf->Cell($numWidth, 10, (string) $rl->swastyayani_awasista, 0, 0);
+		}
 
 		$pdf->SetX($numPosX['ritwiki']);
-		$numWidth = $pdf->GetStringWidth((string) $rl->ritwiki);
-                $pdf->Cell($numWidth, 10, (string) $rl->ritwiki, 0, 0);
+		if ($rl->ritwiki != 0) {
+		    $numWidth = $pdf->GetStringWidth((string) $rl->ritwiki);
+                    $pdf->Cell($numWidth, 10, (string) $rl->ritwiki, 0, 0);
+		}
 
 		$pdf->SetX($numPosX['utsav']);
-		$numWidth = $pdf->GetStringWidth((string) $rl->utsav);
-                $pdf->Cell($numWidth, 10, (string) $rl->utsav, 0, 0);
+		if ($rl->utsav != 0) {
+		    $numWidth = $pdf->GetStringWidth((string) $rl->utsav);
+                    $pdf->Cell($numWidth, 10, (string) $rl->utsav, 0, 0);
+		}
 
 		$pdf->SetX($numPosX['dikshaPranami']);
-		$numWidth = $pdf->GetStringWidth((string) $rl->diksha_pranami);
-                $pdf->Cell($numWidth, 10, (string) $rl->diksha_pranami, 0, 0);
+		if ($rl->diksha_pranami != 0) {
+		    $numWidth = $pdf->GetStringWidth((string) $rl->diksha_pranami);
+                    $pdf->Cell($numWidth, 10, (string) $rl->diksha_pranami, 0, 0);
+		}
 
 		$pdf->SetX($numPosX['acharyaPranami']);
-		$numWidth = $pdf->GetStringWidth((string) $rl->acharya_pranami);
-                $pdf->Cell($numWidth, 10, (string) $rl->acharya_pranami, 0, 0);
+		if ($rl->acharya_pranami != 0) {
+		    $numWidth = $pdf->GetStringWidth((string) $rl->acharya_pranami);
+                    $pdf->Cell($numWidth, 10, (string) $rl->acharya_pranami, 0, 0);
+		}
 
 		$pdf->SetX($numPosX['parivrity']);
-		$numWidth = $pdf->GetStringWidth((string) $rl->parivrity);
-                $pdf->Cell($numWidth, 10, (string) $rl->parivrity, 0, 0);
+		if ($rl->parivrity != 0) {
+		    $numWidth = $pdf->GetStringWidth((string) $rl->parivrity);
+                    $pdf->Cell($numWidth, 10, (string) $rl->parivrity, 0, 0);
+		}
 
 		$pdf->SetX($numPosX['misc']);
-		$numWidth = $pdf->GetStringWidth((string) $rl->misc);
-                $pdf->Cell($numWidth, 10, (string) $rl->misc, 0, 0);
+		if ($rl->misc != 0) {
+		    $numWidth = $pdf->GetStringWidth((string) $rl->misc);
+                    $pdf->Cell($numWidth, 10, (string) $rl->misc, 0, 0);
+		}
 
 		// Come back to normal font size
                 $pdf->SetFont('Courier','',13);
@@ -1639,11 +1682,25 @@ class RemittanceController extends Controller
 	        // -----------
 	        $ritwik = [
 	          'firstName' => $rl->oblate->worker->person->first_name,
+	          'middleName' => $rl->oblate->worker->person->middle_name,
 	          'lastName' => $rl->oblate->worker->person->last_name,
 	        ];
-	        $ritwikName = $ritwik['firstName'] . ' ' . $ritwik['lastName'];
+		if ($ritwik['middleName']) {
+	            $ritwikName = $ritwik['firstName'] . ' ' .
+		                  $ritwik['middleName']  . ' ' .
+		                  $ritwik['lastName'];
+		} else {
+	            $ritwikName = $ritwik['firstName'] . ' ' .
+		                  $ritwik['lastName'];
+		}
 		$pdf->setX(10);
-                $pdf->Cell(75, 10, "*$ritwikName", 0, 0);
+
+		/* Do not print 'B R' ritwik */
+		if ($ritwik['firstName'] == 'B' && $ritwik['lastName'] == 'R') {
+		    //
+		} else {
+                    $pdf->Cell(75, 10, "*$ritwikName", 0, 0);
+		}
 	        $pdf->Ln(5);
 	        
 
@@ -1651,15 +1708,23 @@ class RemittanceController extends Controller
 		/* Todo: Do not repeat this code twice. */
 		if ($rlCount % 6 === 5  && $rlCount < $numRls - 1) {
 
-	            $familyCode = $remittance->family->family_code;
+	            $nineDFamCode = $remittance->family->family_code;
+		    $checkDigit = $remittance->family->fcode_check_digit;
+
+		    if ($checkDigit === null) {
+		        $tenDFamCode = (string) $nineDFamCode . 'N';
+		    } else {
+		        $tenDFamCode = (string) $nineDFamCode . (string) $checkDigit;
+		    }
+
 	            $rmtDate = $remittance->submitted_date;
 	            $serialNum = $remittance->remittance_id;
 	            $rmtTotal = $this->remTotalAmount($remittance);
 
-	            $footerY = 137;
+	            $footerY = 139;
 
 	            $pdf->setXY(47, $footerY);
-                    $pdf->Cell(50, 10, (string) $familyCode, 0, 0);
+                    $pdf->Cell(50, 10, (string) $tenDFamCode, 0, 0);
 
 	            $pdf->setXY(137, $footerY);
                     $pdf->Cell(30, 10, (string) $rmtDate, 0, 0);
@@ -1681,15 +1746,23 @@ class RemittanceController extends Controller
 	    |------------
 	    |
 	    */
-	    $familyCode = $remittance->family->family_code;
+	    $nineDFamCode = $remittance->family->family_code;
+	    $checkDigit = $remittance->family->fcode_check_digit;
+
+	    if ($checkDigit === null) {
+	        $tenDFamCode = (string) $nineDFamCode . 'N';
+	    } else {
+	        $tenDFamCode = (string) $nineDFamCode . (string) $checkDigit;
+	    }
+
 	    $rmtDate = $remittance->submitted_date;
 	    $serialNum = $remittance->remittance_id;
 	    $rmtTotal = $this->remTotalAmount($remittance);
 
-	    $footerY = 137;
+	    $footerY = 139;
 
 	    $pdf->setXY(47, $footerY);
-            $pdf->Cell(50, 10, (string) $familyCode, 0, 0);
+            $pdf->Cell(50, 10, (string) $tenDFamCode, 0, 0);
 
 	    $pdf->setXY(137, $footerY);
             $pdf->Cell(30, 10, (string) $rmtDate, 0, 0);

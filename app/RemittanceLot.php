@@ -47,7 +47,7 @@ class RemittanceLot extends Model
 	 * 3rd arg: name of primary key column in bank_voucher table
 	 */
         return $this->hasMany('App\Remittance', 'remittance_lot_id', 'remittance_lot_id')
-	             ->orderBy('created_time', 'DESC');
+	             ->orderBy('remittance_id', 'ASC');
     }
 
     /*
