@@ -45,8 +45,8 @@ Route::get('/rmt/print/lot/prep', 'RemittanceController@printLotPrep');
 Route::get('/rmt/print/ind/{remittance_id}', 'RemittanceController@printRemittanceIndNew');
 
 // Print to PDF
-Route::get('/rmt/print/pdf/pdf/{rmtId}', 'RemittanceController@printToPdf');
-Route::get('/rmt/print/pdf/pdf/lot/{lotCode}', 'RemittanceController@printToPdfLotNew');
+Route::get('/rmt/print/pdf/pdf/{rmtId}', 'PrintController@printToPdf');
+Route::get('/rmt/print/pdf/pdf/lot/{lotCode}', 'PrintController@printToPdfLotNew');
 
 
 
