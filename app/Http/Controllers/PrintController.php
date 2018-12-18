@@ -8,6 +8,8 @@ require('fpdf181/fpdf.php');
 use Illuminate\Http\Request;
 use App\Traits\RemittanceTrait;
 
+use Illuminate\Support\Facades\Storage;
+
 class PrintController extends Controller
 {
     use RemittanceTrait;
@@ -29,9 +31,36 @@ class PrintController extends Controller
      *
      * @return Response
      */
+    public function printSingleForm()
+    {
+        return view('remittance.print-single-form');
+    }
+
+    /**
+     * Show print lot form.
+     *
+     * @return Response
+     */
     public function printLotForm()
     {
         return view('remittance.print-lot-form');
+    }
+
+    /**
+     * Process print lot form.
+     *
+     * @return Response
+     */
+    public function printSingleFormProcess(Request $request)
+    {
+	/* Validate data */
+	$validatedData = $request->validate([
+	    'serial-num' => 'bail|required|integer|exists:remittance,remittance_id',
+	]);
+
+	$serialNum = $request->input('serial-num');
+
+        return redirect("/rmt/print/htm/s/" . $serialNum);
     }
 
     /**
@@ -46,7 +75,6 @@ class PrintController extends Controller
         return view('remittance.print-lot-prepare')
 	           ->with('rmtLot', $rmtLot);
     }
-
 
     /**
      * Prepare lot print.
@@ -74,11 +102,11 @@ class PrintController extends Controller
     public function printRemittanceIndNew($remittanceId)
     {
 	$remittance = \App\Remittance::find($remittanceId);
-	$remTotal = $this->getRmtTotalAmount($remittance);
+	$rmtTotal = $this->getRmtTotalAmount($remittanceId);
 
         return view('remittance.print-rmt-lot-p-ind')
 	    ->with('remittance', $remittance)
-	    ->with('remTotal', $remTotal);
+	    ->with('rmtTotal', $rmtTotal);
     }
 
 
@@ -393,7 +421,7 @@ class PrintController extends Controller
     {
 	/* Todo: Print this info only if needed? Or log. */
         $numRls = count($remittance->remittance_lines);
-        echo "Total remittance lines: $numRls <br />";
+        //echo "Total remittance lines: $numRls <br />";
 
 	$pdf = $this->setPageRlPos($pdf);
 
@@ -508,9 +536,49 @@ class PrintController extends Controller
 
 	/* Save the pdf file */
 	// Todo: See if it actually needed to save?
-	// Todo: Sensible file name?
-	$pdf->Output('F', '/home/odev01/gpdf/temp-lot.pdf');
+	// Todo: Use laravel storage system to save
+	$pdf->Output('F', '/home/osa_ad1/Documents/src/own/stage/larasites/snsys/storage/app/public/rmtlot-' . $lotCode . '.pdf');
+	//Storage::put('tempLot.pdf', $pdf);
 
 	return 'Done';
+    }
+
+    /** 
+     * Prepare for printing pdf of a lot.
+     *
+     * @param Request request
+     *
+     * @return Response
+     */
+    public function printToPdfLotPrep(Request $request)
+    {
+	/* Validate form input */
+	$validatedData = $request->validate([
+	    'lot-num' => 'bail|required|integer|exists:remittance_lot,lot_code',
+	]);
+
+	$lotNum = $request->input('lot-num');
+
+	$done = $this->printToPdfLotNew($lotNum);
+	$request->session()->flash('status', "Success: Lot $lotNum PDF created!");
+
+        return view('remittance.lot-pdf-success')
+	       ->with('lotNum', $lotNum);
+    }
+
+    /** 
+     * Display PDF for a lot.
+     *
+     * @param Integer lotNum
+     *
+     * @return Response
+     */
+    public function displayLotPdf($lotNum)
+    {
+	$header = [
+	    'Content-type' => 'application/pdf',
+	];
+
+	return response()->file('/home/osa_ad1/Documents/src/own/stage/larasites/snsys/storage/app/public/rmtlot-' . $lotNum . '.pdf', $header);
     }
 }

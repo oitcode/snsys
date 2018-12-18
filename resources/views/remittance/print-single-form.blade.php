@@ -3,7 +3,7 @@
 @section('content')
 <div class="container-fluid">
   <div class="panel panel-info">
-      <div class="panel-heading"><h3><strong>Print Lot</strong></h3></div>
+      <div class="panel-heading"><h3><strong>Print Single</strong></h3></div>
       <div class="panel-body">
           @if (session('status'))
               <div class="alert alert-success">
@@ -24,13 +24,12 @@
 
 	  <!-- Display search form -->
           <p>
-            <!--<form class="form-inline" method="post" action="{{ url('/rmt/print/lot/process') }}">-->
-            <form class="form-inline" method="get" action="{{ url('/rmt/print/pdf/lot/pdf/prep') }}">
+            <form class="form-inline" method="get" action="{{ url('/rmt/print/htm/s/fp/prep') }}">
 	      {{ csrf_field() }}
 
               <div class="form-group">
-                <label for="id_lot_num">Lot number</label><br />
-                <input type="text" class="form-control" id="id_lot_num" name="lot-num" placeholder="Lot number" required>
+                <label for="id_lot_num">Serial number</label><br />
+                <input type="text" class="form-control" id="id_lot_num" name="serial-num" placeholder="Serial num" required>
               </div>
 	      <br />
 	      <br />

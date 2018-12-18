@@ -352,7 +352,7 @@
               {{ $remittance->remittance_id }}
             </span>
             <span class="rmt-footer-total">
-              NRs {{ $remTotal }}
+              NRs {{ $rmtTotal }}
             </span>
           </p>
       @endif <!-- End footer -->
