@@ -47,12 +47,11 @@ Route::get('/rmt/print/ind/{remittance_id}', 'RemittanceController@printRemittan
 Route::get('/rmt/print/pdf/lot/form', 'PrintController@printLotForm');
 Route::get('/rmt/print/pdf/single/form', 'PrintController@printSingleForm');
 Route::get('/rmt/print/pdf/pdf/{rmtId}', 'PrintController@printToPdf');
-Route::get('/rmt/print/pdf/lot/pdf/show/{lotCode}', 'PrintController@printToPdfLotNew');
+//Route::get('/rmt/print/pdf/lot/pdf/show/{lotCode}', 'PrintController@printToPdfLotNew');
 Route::get('/rmt/print/pdf/lot/pdf/prep', 'PrintController@printToPdfLotPrep');
-Route::get('/rmt/print/htm/s/fp/prep', 'PrintController@printSingleFormProcess');
+Route::get('/rmt/print/pdf/single/pdf/prep', 'PrintController@printToPdfSinglePrep');
+Route::get('/rmt/print/pdf/s/p/{rmtId}', 'PrintController@printToPdfSingleParam');
 Route::get('/rmt/print/pdf/l/{lotNum}', 'PrintController@displayLotPdf');
-Route::get('/rmt/print/htm/s/{serialNum}', 'PrintController@printRemittanceIndNew');
-
 
 
 Route::get('/rmt/{remittance_id}', 'RemittanceController@showRmt');

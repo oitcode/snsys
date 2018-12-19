@@ -33,6 +33,13 @@
                   Family Code: {{ session('familyCode') }}
 		</p>
             </div>
+	    <div>
+	      <p>
+	        <a href="/rmt/print/pdf/s/p/{{ session('serialNum') }}" target="_blank" class="btn btn-primary">
+	          Print
+	        </a>
+	      </p>
+	    </div>
         @endif
 
     </div>

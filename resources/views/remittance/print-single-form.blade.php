@@ -24,7 +24,7 @@
 
 	  <!-- Display search form -->
           <p>
-            <form class="form-inline" method="get" action="{{ url('/rmt/print/htm/s/fp/prep') }}">
+            <form class="form-inline" method="get" action="{{ url('/rmt/print/pdf/single/pdf/prep') }}">
 	      {{ csrf_field() }}
 
               <div class="form-group">

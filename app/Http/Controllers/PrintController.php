@@ -51,23 +51,6 @@ class PrintController extends Controller
      *
      * @return Response
      */
-    public function printSingleFormProcess(Request $request)
-    {
-	/* Validate data */
-	$validatedData = $request->validate([
-	    'serial-num' => 'bail|required|integer|exists:remittance,remittance_id',
-	]);
-
-	$serialNum = $request->input('serial-num');
-
-        return redirect("/rmt/print/htm/s/" . $serialNum);
-    }
-
-    /**
-     * Process print lot form.
-     *
-     * @return Response
-     */
     public function printLotFormProcess(Request $request)
     {
 	$rmtLot = RemittanceLot::where('lot_code', $request->input('lot-num'))->first();
@@ -512,11 +495,11 @@ class PrintController extends Controller
     /** 
      * Create a PDF file for printing a lot
      *
-     * @param integer rmtId
+     * @param integer lotCode
      *
      * @return Response
      */
-    public function printToPdfLotNew($lotCode)
+    public function printToPdfLot($lotCode)
     {
 	$rmtLot = \App\RemittanceLot::where('lot_code', $lotCode)->first();
 
@@ -534,13 +517,33 @@ class PrintController extends Controller
 	    $pdf = $this->addRemittanceToPdf($pdf, $remittance);
 	}
 
-	/* Save the pdf file */
-	// Todo: See if it actually needed to save?
-	// Todo: Use laravel storage system to save
-	$pdf->Output('F', '/home/osa_ad1/Documents/src/own/stage/larasites/snsys/storage/app/public/rmtlot-' . $lotCode . '.pdf');
-	//Storage::put('tempLot.pdf', $pdf);
+	return $pdf;
+    }
 
-	return 'Done';
+    /** 
+     * Create a PDF file for printing a single remittance
+     *
+     * @param integer rmtId
+     *
+     * @return Response
+     */
+    public function printToPdfSingle($rmtId)
+    {
+	$remittance = \App\Remittance::where('remittance_id', $rmtId)->first();
+
+	/*
+	| Create a new pdf
+	*/
+        $pdf = new \FPDF('L','mm', [380, 153]);
+	$pdf->SetMargins(0, 0, 0);
+	$pdf->SetAutoPageBreak(false);
+
+	/*
+	| Add the remittance to the pdf
+	*/
+	$pdf = $this->addRemittanceToPdf($pdf, $remittance);
+
+	return $pdf;
     }
 
     /** 
@@ -559,11 +562,50 @@ class PrintController extends Controller
 
 	$lotNum = $request->input('lot-num');
 
-	$done = $this->printToPdfLotNew($lotNum);
-	$request->session()->flash('status', "Success: Lot $lotNum PDF created!");
+	$pdf = $this->printToPdfLot($lotNum);
 
-        return view('remittance.lot-pdf-success')
-	       ->with('lotNum', $lotNum);
+	/* Send the pdf to browser */
+	return response($pdf->Output('I'), 200)
+	                  ->header('Content-Type', 'application/pdf');
+    }
+
+    /**
+     * Prepare for printing pdf of a single remittance.
+     *
+     * @return Response
+     */
+    public function printToPdfSinglePrep(Request $request)
+    {
+	/* Validate data */
+	$validatedData = $request->validate([
+	    'serial-num' => 'bail|required|integer|exists:remittance,remittance_id',
+	]);
+
+	$serialNum = $request->input('serial-num');
+
+	$pdf = $this->printToPdfSingle($serialNum);
+
+	/* Send the pdf to browser */
+	return response($pdf->Output('I'), 200)
+	                  ->header('Content-Type', 'application/pdf');
+    }
+
+    /**
+     * Print a single remmittance.
+     *
+     * @return Response
+     *
+     * Todo: Refactor with printToPdfSinglePrep method.
+     */
+    public function printToPdfSingleParam($rmtId)
+    {
+	$serialNum = $rmtId;
+
+	$pdf = $this->printToPdfSingle($serialNum);
+
+	/* Send the pdf to browser */
+	return response($pdf->Output('I'), 200)
+	                  ->header('Content-Type', 'application/pdf');
     }
 
     /** 
