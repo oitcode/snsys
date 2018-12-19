@@ -151,9 +151,8 @@
                               Print <span class="caret"></span>
                           </a>
                           <ul class="dropdown-menu">
-                            <li><a href="{{ url('/rmt/print/lot/form') }}">Lot</a></li>
-
-                            <li><a href="">Single</a></li>
+                            <li><a href="{{ url('/rmt/print/pdf/lot/form') }}">Lot</a></li>
+                            <li><a href="{{ url('/rmt/print/pdf/single/form') }}">Single</a></li>
                           </ul>
                       </li>
 

@@ -1481,44 +1481,5 @@ class RemittanceController extends Controller
 	    ->with('remTotal', $remTotal);
     }
 
-    /**
-     * Show print lot form.
-     *
-     * @return Response
-     */
-    public function printLotForm()
-    {
-        return view('remittance.print-lot-form');
-    }
-
-    /**
-     * Process print lot form.
-     *
-     * @return Response
-     */
-    public function printLotFormProcess(Request $request)
-    {
-	$rmtLot = RemittanceLot::where('lot_code', $request->input('lot-num'))->first();
-
-        return view('remittance.print-lot-prepare')
-	           ->with('rmtLot', $rmtLot);
-    }
-
-
-    /**
-     * Prepare lot print.
-     *
-     * @param integer rLotNum
-     *
-     * @return Response
-     */
-    public function printLotPrep(Request $request)
-    {
-	$rLotNum = $request->input('lot-num');
-	$rmtLot = RemittanceLot::where('lot_code', $rLotNum)->first();
-
-        return view('remittance.print-rmt-lot-p')
-	           ->with('rmtLot', $rmtLot);
-    }
 }
 
