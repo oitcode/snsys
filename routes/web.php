@@ -60,5 +60,9 @@ Route::get('/rmt/{remittance_id}', 'RemittanceController@showRmt');
 Route::get('/ol/changepw', 'Auth\ChangePasswordController@olChangePassword');
 Route::post('/ol/changepw/process', 'Auth\ChangePasswordController@olChangePasswordProcess');
 
+Route::get('/rmt/r/familyinp', 'RemittanceController@familyInp');
+Route::post('/rmt/r/create', 'RemittanceController@getlastFamilyRemittance');
+
+
 /* Sangh */
 Route::get('/sangh/family', 'SanghController@search');

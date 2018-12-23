@@ -124,7 +124,7 @@
                           </a>
 
                           <ul class="dropdown-menu">
-                              <li><a href="{{ url('/rmt/create') }}">Create</a></li>
+                              <li><a href="{{ url('/rmt/r/familyinp') }}">Create</a></li>
                               <li><a href="{{ url('/rmt/search') }}">Search</a></li>
                           </ul>
                       </li>

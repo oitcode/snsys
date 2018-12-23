@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\DB;
 
@@ -1481,5 +1482,75 @@ class RemittanceController extends Controller
 	    ->with('remTotal', $remTotal);
     }
 
+    /**
+     * Break 10 digit family code to 9 digit family code and  check digit.
+     *
+     * @param string tenDFamCode
+     * 
+     * @return array
+     *
+     */
+    public function breakFamilyCode($tenDFamCode)
+    {
+        $tenDFamCode = (string) $tenDFamCode;
+
+	/* Todo: implement validateTenDFamCode
+	if ($this->validateTenDFamCode($tenDFamCode) === false) {
+	    return false;
+	}
+	*/
+
+	$famCodeParts = [
+	    'nineDFamCode' => substr($tenDFamCode, 0, 9),
+	    'checkDigit' => substr($tenDFamCode, 9, 1),
+	];
+
+	return $famCodeParts;
+    }
+
+    /**
+     * Input family code.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function familyInp()
+    {
+        return view('remittance.family-inp');
+    }
+
+    /**
+     * Get old data for a given family.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getlastFamilyRemittance(Request $request)
+    {
+        $tenDFamCode = $request->input('family-code');
+
+	$famCodeParts = $this->breakFamilyCode($tenDFamCode);
+
+	if ($famCodeParts === false) {
+	    /* Todo: Show error istead of dying. */
+	    die("Error: Could not extract family code parts");
+	}
+
+	$nineDFamCode = $famCodeParts['nineDFamCode'];
+
+	/* Check if family exists */
+	$family = Family::where('family_code', $nineDFamCode)->first();
+
+	if (!$family) {
+	    /* Todo: Redirect to normal remittance create page */
+            return view('remittance.create');
+	}
+
+	$lastRemittance = Remittance::where('family_id', $family->family_id)
+	                  ->orderBy('created_time', 'desc')->first();
+        
+	//$remitLines = $lastRemittance->remittance_lines;
+
+        return view('remittance.create-wior')
+	    ->with('lastRmt', $lastRemittance);
+    }
 }
 

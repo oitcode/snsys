@@ -839,39 +839,6 @@ $( document ).ready(function() {
 
 });
 
-// function rlSumTotal()
-// {
-//     var sumTotal = 0;
-//     //sumTotal = rlSumTotal();
-//     $(".col-val").each(function(){
-//         sumTotal += +$(this).val();
-//     });
-// 
-//     var retval = true;
-//     var curRetval = true;
-// 
-//     var rlErrList = $("#fe_rl_err_list");
-// 
-//     /* Get all remit rows first */
-//     var remitRows = $("#remit_row_body tr");
-// 
-//     // Validate each row
-//     remitRows.each(function(i, obj){
-//         var name = $(this).children(":first").children(":first");
-// 
-//         var sumTotal = 0;
-// 
-// 	/* Only check for rows which have person name. */
-// 	if ($.trim(name.val()) != '') {
-// 	    curRetVal = remitLineSum(i, $(this));
-// 	    if (curRetVal == false) {
-// 	        retval = false;
-// 	    }
-// 	}
-//     });
-// }
-
-
 
 /**
  * Change names to uppercase while typing
@@ -886,4 +853,39 @@ $( document ).ready(function() {
     $('.nwo-std-upper').keyup(function(){
         this.value=this.value.toUpperCase();
     });
+});
+
+
+$( document ).ready(function() {
+    /**
+     * Convert numbers to IC
+     */
+    var icConvertBtn = $('#id_convert_to_ic');
+
+    if (icConvertBtn) {
+        icConvertBtn.click(function(e) {
+	    $(".col-val").each(function(){
+		if ($(this).val() > 0) {
+		    var ncVal = $(this).val();
+		    var icVal = (ncVal / 1.6).toFixed(2);
+                    $(this).val(icVal);
+		}
+            });
+	/* Disable the button once clicked */
+	icConvertBtn.prop("disabled", true);
+	});
+    }
+
+    /**
+     * Clear all numbers
+     */
+    var numClearBtn = $('#id_clear_nums');
+
+    if (numClearBtn) {
+        numClearBtn.click(function(e) {
+	    $(".col-val").each(function(){
+                $(this).val("");
+            });
+	});
+    }
 });
