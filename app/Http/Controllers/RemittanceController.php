@@ -1524,32 +1524,56 @@ class RemittanceController extends Controller
      */
     public function getlastFamilyRemittance(Request $request)
     {
+	/* Get lot info if in lot */
+	if (session()->has('lot')) {
+	    $lotCode = session()->get('lot');
+	    $remainingBal = $this->lotRemainingBal($lotCode);
+	    /* Todo: check for uniqueness? */
+	    $remittanceLot = RemittanceLot::where('lot_code', $lotCode)->first();
+	    $bvDepositDate = $remittanceLot->deposit_date;
+	}
+
+	/**
+	 * Check for family old remittance
+	 */
         $tenDFamCode = $request->input('family-code');
-
 	$famCodeParts = $this->breakFamilyCode($tenDFamCode);
-
 	if ($famCodeParts === false) {
 	    /* Todo: Show error istead of dying. */
 	    die("Error: Could not extract family code parts");
 	}
-
 	$nineDFamCode = $famCodeParts['nineDFamCode'];
-
-	/* Check if family exists */
 	$family = Family::where('family_code', $nineDFamCode)->first();
 
-	if (!$family) {
-	    /* Todo: Redirect to normal remittance create page */
-            return view('remittance.create');
+	$lastRemittance = null;
+	if ($family) {
+	    /* Get last remittance of this family */
+	    $lastRemittance = Remittance::where('family_id', $family->family_id)
+	                      ->orderBy('created_time', 'desc')->first();
 	}
 
-	$lastRemittance = Remittance::where('family_id', $family->family_id)
-	                  ->orderBy('created_time', 'desc')->first();
-        
-	//$remitLines = $lastRemittance->remittance_lines;
+	/* If no old remittance in db, return normal create view. */
+	if (!$family || !$lastRemittance) {
+	    if (session()->has('lot')) {
+                return view('remittance.create')
+	            ->with('remainingBal', $remainingBal)
+	            ->with('bvDepositDate', $bvDepositDate);
+	    } else {
+                return view('remittance.create');
+	    }
+	}
 
-        return view('remittance.create-wior')
-	    ->with('lastRmt', $lastRemittance);
+
+	/* Return view with old remittance info */
+        if (session()->has('lot')) {
+            return view('remittance.create-wior')
+                ->with('remainingBal', $remainingBal)
+                ->with('bvDepositDate', $bvDepositDate)
+	        ->with('lastRmt', $lastRemittance);
+        } else {
+            return view('remittance.create-wior')
+	        ->with('lastRmt', $lastRemittance);
+        }
     }
 }
 

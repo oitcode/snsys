@@ -564,8 +564,10 @@ class PrintController extends Controller
 
 	$pdf = $this->printToPdfLot($lotNum);
 
+	$pdfFileName = "lot-" . $lotNum . '.pdf';
+
 	/* Send the pdf to browser */
-	return response($pdf->Output('I'), 200)
+	return response($pdf->Output('I', $pdfFileName), 200)
 	                  ->header('Content-Type', 'application/pdf');
     }
 
@@ -585,8 +587,10 @@ class PrintController extends Controller
 
 	$pdf = $this->printToPdfSingle($serialNum);
 
+	$pdfFileName = "single-" . $serialNum . '.pdf';
+
 	/* Send the pdf to browser */
-	return response($pdf->Output('I'), 200)
+	return response($pdf->Output('I', $pdfFileName), 200)
 	                  ->header('Content-Type', 'application/pdf');
     }
 
