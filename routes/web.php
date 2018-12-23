@@ -42,7 +42,7 @@ Route::post('/rmt/lot/resume/process', 'RemittanceController@resumeLotProcess');
 Route::get('/rmt/{remittance_id}', 'RemittanceController@showRmt');
 
 Route::get('/rmt/r/familyinp', 'RemittanceController@familyInp');
-Route::post('/rmt/r/familylastr', 'RemittanceController@getlastFamilyRemittance');
+Route::post('/rmt/r/create', 'RemittanceController@getlastFamilyRemittance');
 
 
 /* Sangh */

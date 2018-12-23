@@ -1404,8 +1404,8 @@ class RemittanceController extends Controller
 	$family = Family::where('family_code', $nineDFamCode)->first();
 
 	if (!$family) {
-	    /* Todo: Redirect to family create page */
-            return view('remittance.family-create');
+	    /* Todo: Redirect to normal remittance create page */
+            return view('remittance.create');
 	}
 
 	$lastRemittance = Remittance::where('family_id', $family->family_id)

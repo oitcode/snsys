@@ -78,7 +78,6 @@
                 </thead>
                 <tbody>
                   <tr>
-                    <!--<td><input type="text" class="nwo-std-frminp" name="bv-num" id="id_bv_num" value="{{ old('bv-num') }}"/></td>-->
                     <td><input type="text" class="nwo-std-frminp" name="bv-deposit-date" id="id_bv_date" value="{{ old('bv-deposit-date') }}" /></td>
                     <td><input type="text" class="nwo-std-name nwo-std-frminp" name="bv-depositor" id="id_bv_depositor" value="{{ old('bv-depositor') }}" /></td>
                     <td><input type="number" step="1" min="1" class="nwo-std-frminp" name="bv-amount" id="id_bv_amount" value="{{ old('bv-amount') }}" /></td>
@@ -106,28 +105,14 @@
               </thead>
               <tbody>
                 <tr>
-		  <!--
                   <td> 
                     <span style="font-size: 12px;"><strong style="font-size: 11px;"><?php echo date('Y-m-d') . "&nbsp;&nbsp;&nbsp;&nbsp;";  ?></strong></span>
                   </td>
-                  <td><input type="text" class="nwo-std-frminp" name="family-code" id="id_mi_fcode" value="{{ old('family-code') }}"/></td>
-                  <td><input type="text" class="nwo-std-name nwo-std-frminp nwo-std-frminp-lx" name="submitter-name" id="id_mi_sname" value="{{ old('submitter-name') }}"/></td>
-                  <td><input type="text" class="nwo-std-upper nwo-std-frminp nwo-std-frminp-lx" name="submitter-address" id="id_mi_saddress" value="{{ old('submitter-address') }}"/></td>
-                  <td><input type="text" class="nwo-std-frminp" name="submitted-date" id="id_mi_sdate" value="{{ old('submitted-date') }}"/></td>
-                  <td><input type="number" step="1" min="1" class="nwo-std-frminp" name="submitted-total" id="id_mi_total" value="{{ old('submitted-total') }}"/></td>
-		  -->
-
-                  <td> 
-                    <span style="font-size: 12px;"><strong style="font-size: 11px;"><?php echo date('Y-m-d') . "&nbsp;&nbsp;&nbsp;&nbsp;";  ?></strong></span>
-                  </td>
-                  <td><input type="text" class="nwo-std-frminp" name="family-code" id="id_mi_fcode" value="{{ $lastRmt->family->family_code }}{{ $lastRmt->family->fcode_check_digit }}"/></td>
+                  <td><input type="text" class="nwo-std-frminp" name="family-code" id="id_mi_fcode" value="{{ $lastRmt->family->family_code }}{{ $lastRmt->family->fcode_check_digit }}" readonly/></td>
                   <td><input type="text" class="nwo-std-name nwo-std-frminp nwo-std-frminp-lx" name="submitter-name" id="id_mi_sname" value="{{ $lastRmt->submitter->person->first_name }} {{ $lastRmt->submitter->person->middle_name }} {{ $lastRmt->submitter->person->last_name }}"/></td>
                   <td><input type="text" class="nwo-std-upper nwo-std-frminp nwo-std-frminp-lx" name="submitter-address" id="id_mi_saddress" value="{{ $lastRmt->family->address }}"/></td>
                   <td><input type="text" class="nwo-std-frminp" name="submitted-date" id="id_mi_sdate" value="{{ old('submitted-date') }}"/></td>
                   <td><input type="number" step="1" min="1" class="nwo-std-frminp" name="submitted-total" id="id_mi_total" value=""/></td>
-		  {{--
-                  <td><input type="text" class="nwo-std-frminp nwo-std-frminp-lx" name="delivered-by" id="id_mi_dname" value="{{ old('delivered-by') }}"/></td>
-		  --}}
                 </tr>
               </tbody>
             </table>
@@ -135,6 +120,13 @@
 
             <!-- Remittance Lines -->
             <h4>Breakdown</h4>
+
+	    <!-- Convert to IC button -->
+	    <div>
+	      <button type="button" class="btn btn-sm btn-primary" id="id_convert_to_ic">Convert to IC</button>
+	      <button type="button" class="btn btn-sm" id="id_clear_nums">Clear</button>
+	    </div>
+	    <br/>
 
 
             <table class="nwo-form-table">

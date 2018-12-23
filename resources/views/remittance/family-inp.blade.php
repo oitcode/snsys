@@ -3,7 +3,7 @@
 @section('content')
 <div class="container-fluid">
   <div class="panel panel-info">
-      <div class="panel-heading"><h3><strong>Family Input</strong></h3></div>
+      <div class="panel-heading"><h3><strong>Create</strong></h3></div>
       <div class="panel-body">
           @if (session('status'))
               <div class="alert alert-success">
@@ -24,10 +24,7 @@
 
 	  <!-- Display search form -->
           <p>
-	    {{--
-            <form class="form" method="post" action="{{ url('/rmt/search/process') }}">
-	    --}}
-            <form class="form" method="post" action="{{ url('/rmt/r/familylastr') }}">
+            <form class="form" method="post" action="{{ url('/rmt/r/create') }}">
 	      {{ csrf_field() }}
 
               <div class="form-group">
