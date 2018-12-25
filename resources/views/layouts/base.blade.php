@@ -164,6 +164,7 @@
 
                           <ul class="dropdown-menu">
                             <li><a href="{{ url('/rmt/create') }}">Old Create</a></li>
+                            <li><a href="{{ url('/info/maxfamily') }}">Max Family Code</a></li>
                           </ul>
                       </li>
 

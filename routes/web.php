@@ -67,3 +67,7 @@ Route::post('/rmt/r/create', 'RemittanceController@getlastFamilyRemittance');
 
 /* Sangh */
 Route::get('/sangh/family', 'SanghController@search');
+
+/* Info */
+Route::get('/info/maxfamily', 'InfoController@getMaxFamilyCode');
+
