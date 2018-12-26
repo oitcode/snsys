@@ -46,6 +46,11 @@
                     ( IC {{ $remainingBal / 1.6 }} )
 		  </strong>
 	      </p>
+	      <p>
+	          <strong>
+		    Bank deposit date  => {{ $bvDepositDate }}
+		  </strong>
+	      </p>
 	      <hr />
 	  @endif
 
