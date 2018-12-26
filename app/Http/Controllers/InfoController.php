@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Family;
+use App\Remittance;
 
 class InfoController extends Controller
 {
@@ -24,11 +25,13 @@ class InfoController extends Controller
      *
      * @return Response
      */
-    public function getMaxFamilyCode()
+    public function getLatestInfo()
     {
 	$maxFamCode = Family::max('family_code');
+	$maxSerialNum = Remittance::max('remittance_id');
 
-        return view('info.max-family')
-	    ->with('maxFamCode', $maxFamCode);
+        return view('info.latest')
+	    ->with('maxFamCode', $maxFamCode)
+	    ->with('maxSerialNum', $maxSerialNum);
     }
 }

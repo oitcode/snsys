@@ -3,7 +3,7 @@
 @section('content')
 <div class="container-fluid">
   <div class="panel panel-info">
-      <div class="panel-heading"><h3><strong>Max Family Code</strong></h3></div>
+      <div class="panel-heading"><h3><strong>Latest Info</strong></h3></div>
       <div class="panel-body">
           @if (session('status'))
               <div class="alert alert-success">
@@ -24,9 +24,12 @@
 
 	  <!-- Main display div -->
 	  <div>
-	    <strong>
-	       Maximum Family Code: {{ $maxFamCode }}
-	    </strong>
+	    <p>
+	      <strong>Maximum Family Code: {{ $maxFamCode }}</strong>
+	    <p>
+	    <p>
+	      <strong>Maximum Serial Num: {{ $maxSerialNum }}</strong>
+	    <p>
 	  </div>
       </div>
   </div>
