@@ -113,7 +113,19 @@
                   <td> 
                     <span style="font-size: 12px;"><strong style="font-size: 11px;"><?php echo date('Y-m-d') . "&nbsp;&nbsp;&nbsp;&nbsp;";  ?></strong></span>
                   </td>
-                  <td><input type="text" class="nwo-std-frminp" name="family-code" id="id_mi_fcode" value="{{ $lastRmt->family->family_code }}{{ $lastRmt->family->fcode_check_digit }}" readonly/></td>
+                  <td>
+                    <input type="text" class="nwo-std-frminp" name="family-code" id="id_mi_fcode"
+                      @if ($lastRmt->family->fcode_check_digit === null)
+                        @if ($lastRmt->family->family_code <= 470026154)
+                          value="Error"
+                        @else
+                          value="{{ $lastRmt->family->family_code }}N"
+                        @endif
+                      @else
+                        value="{{ $lastRmt->family->family_code }}{{ $lastRmt->family->fcode_check_digit }}"
+                      @endif
+                    readonly/>
+                  </td>
                   <td><input type="text" class="nwo-std-name nwo-std-frminp nwo-std-frminp-lx" name="submitter-name" id="id_mi_sname" value="{{ $lastRmt->submitter->person->first_name }} {{ $lastRmt->submitter->person->middle_name }} {{ $lastRmt->submitter->person->last_name }}"/></td>
                   <td><input type="text" class="nwo-std-upper nwo-std-frminp nwo-std-frminp-lx" name="submitter-address" id="id_mi_saddress" value="{{ $lastRmt->family->address }}"/></td>
                   <td><input type="text" class="nwo-std-frminp" name="submitted-date" id="id_mi_sdate" value="{{ old('submitted-date') }}"/></td>
