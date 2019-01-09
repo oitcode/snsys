@@ -3,9 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Remittance extends Model
 {
+    use SoftDeletes;
+
     /**
      * The table associated with the model.
      *
@@ -29,6 +32,15 @@ class Remittance extends Model
      */
     const CREATED_AT = 'created_time';
     const UPDATED_AT = 'updated_time';
+
+    /**
+     * For Soft Delete to work.
+     * 
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
+    protected $dates = ['deleted_at'];
 
 
     /*

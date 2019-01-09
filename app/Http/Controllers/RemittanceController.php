@@ -1575,5 +1575,35 @@ class RemittanceController extends Controller
 	        ->with('lastRmt', $lastRemittance);
         }
     }
+
+    /**
+     * Delete a remittance.
+     *
+     * @param integer rmtId
+     * @param Request request
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function deleteRemittance($rmtId, Request $request)
+    {
+
+        $rmt = Remittance::find($rmtId);
+
+        /* See if good time for allowing delete? */
+        $createdTime  = strtotime($rmt->created_time);
+        $currentTime  = strtotime(\Carbon\Carbon::now());
+
+        if ($currentTime - $createdTime > 60*5) {
+          return redirect("/")->withErrors(["Sorry cannot delete $rmtId ! Too late."]);
+        }
+
+        /* Just delete it! */
+        $rmt->remittance_lines()->delete();
+        $rmt->delete();
+
+        /* Todo: Redirect to more appropriate page. */
+        $request->session()->flash("status", "Done: Remittance $rmtId deleted.");
+        return redirect("/");
+    }
 }
 

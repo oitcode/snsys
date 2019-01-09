@@ -43,6 +43,9 @@ Route::post('/rmt/print/lot/process', 'RemittanceController@printLotFormProcess'
 Route::get('/rmt/print/lot/prep', 'RemittanceController@printLotPrep');
 Route::get('/rmt/print/ind/{remittance_id}', 'RemittanceController@printRemittanceIndNew');
 
+/* Delete remittance */
+Route::get('/rmt/delete/{rmtId}', 'RemittanceController@deleteRemittance');
+
 // Print to PDF
 Route::get('/rmt/print/pdf/lot/form', 'PrintController@printLotForm');
 Route::get('/rmt/print/pdf/single/form', 'PrintController@printSingleForm');

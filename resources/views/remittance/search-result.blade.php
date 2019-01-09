@@ -44,7 +44,8 @@
 		    <td>{{  $remittance->submitted_date  }}</td>
 		    <td>
 		      <a href="/rmt/{{ $remittance->remittance_id }}">View</a> &nbsp;&nbsp;
-		      <a href="">Update</a>
+		      <a href="">Update</a> &nbsp;&nbsp;
+		      <a href="/rmt/delete/{{ $remittance->remittance_id }}">Delete</a>
 		    </td>
 		  </tr>
 	        @endforeach
