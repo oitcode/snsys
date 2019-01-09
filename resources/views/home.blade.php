@@ -27,7 +27,7 @@
 	  <p>
 
 	  <p>
-          &copy; 2018 Satsang Nepal
+          &copy; 2018-2019 Satsang Nepal
 	  <p>
 
       </div>
