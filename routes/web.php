@@ -74,3 +74,9 @@ Route::get('/sangh/family', 'SanghController@search');
 /* Info */
 Route::get('/info/latest', 'InfoController@getLatestInfo');
 
+/* DB */
+Route::get('/db/family/{famCode}', 'FamilyController@displayFamily');
+Route::get('/db/edit/person/{perosnId}', 'FamilyController@editPerson');
+Route::post('/db/edit/person/p/process', 'FamilyController@editPersonProcess');
+
+
