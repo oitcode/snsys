@@ -165,6 +165,7 @@
                           <ul class="dropdown-menu">
                             <li><a href="{{ url('/rmt/create') }}">Old Create</a></li>
                             <li><a href="{{ url('/info/latest') }}">Latest Info</a></li>
+                            <li><a href="{{ url('/sdeo/faminp') }}">Match</a></li>
                           </ul>
                       </li>
 

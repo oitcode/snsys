@@ -74,3 +74,6 @@ Route::get('/sangh/family', 'SanghController@search');
 /* Info */
 Route::get('/info/latest', 'InfoController@getLatestInfo');
 
+/* Sdeo */
+Route::get('/sdeo/faminp', 'SdeoController@famInp');
+Route::post('/sdeo/faminp/process', 'SdeoController@processFamInp');
