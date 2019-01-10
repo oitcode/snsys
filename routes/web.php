@@ -77,3 +77,9 @@ Route::get('/info/latest', 'InfoController@getLatestInfo');
 /* Sdeo */
 Route::get('/sdeo/faminp', 'SdeoController@famInp');
 Route::post('/sdeo/faminp/process', 'SdeoController@processFamInp');
+
+/* DB */
+Route::get('/db/family/{famCode}', 'FamilyController@displayFamily');
+Route::get('/db/edit/person/{perosnId}', 'FamilyController@editPerson');
+Route::post('/db/edit/person/p/process', 'FamilyController@editPersonProcess');
+
