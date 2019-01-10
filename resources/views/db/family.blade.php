@@ -40,14 +40,17 @@
           <table class="table table-striped table-bordered">
             <thead>
               <tr>
+                <th>Action</th>
                 <th>Name</th>
                 <th>Ritwik</th>
-                <th>Action</th>
               </tr>
             </thead>
             <tbody>
               @foreach ($family->oblates as $oblate)
                 <tr>
+                  <td>
+                    <a href="/db/edit/person/{{ $oblate->person->person_id }}">Edit</a>
+                  </td>
                   <td>
                     {{ $oblate->person->first_name }}
                     @if ($oblate->person->middle_name != null)
@@ -61,9 +64,6 @@
                       {{ $oblate->worker->person->middle_name }}
                     @endif
                     {{ $oblate->worker->person->last_name }}
-                  </td>
-                  <td>
-                    <a href="/db/edit/person/{{ $oblate->person->person_id }}">Edit</a>
                   </td>
                 </tr>
               @endforeach
