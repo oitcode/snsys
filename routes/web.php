@@ -82,4 +82,7 @@ Route::post('/sdeo/faminp/process', 'SdeoController@processFamInp');
 Route::get('/db/family/{famCode}', 'FamilyController@displayFamily');
 Route::get('/db/edit/person/{perosnId}', 'FamilyController@editPerson');
 Route::post('/db/edit/person/p/process', 'FamilyController@editPersonProcess');
+Route::get('/db/worker/msearch', 'WorkerController@mSearch');
+Route::post('/db/worker/msearch/process', 'WorkerController@mSearchProcess');
+Route::get('/db/worker/msearch/result', 'WorkerController@mSearchResult');
 

@@ -164,6 +164,7 @@
                           <ul class="dropdown-menu">
                             <li><a href="">Family</a></li>
                             <li><a href="">Remittance</a></li>
+                            <li><a href="/db/worker/msearch">Worker</a></li>
                           </ul>
                       </li>
 

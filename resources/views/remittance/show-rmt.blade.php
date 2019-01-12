@@ -2,8 +2,8 @@
 
 @section('content')
 <div class="container-fluid">
-  <div class="panel panel-primary">
-      <div class="panel-heading"><h3><strong>Arghya Praswasti</strong></h3></div>
+  <div class="panel panel-info">
+      <div class="panel-heading"><h3><strong>Remittance Detail</strong></h3></div>
       <div class="panel-body">
           @if (session('status'))
               <div class="alert alert-success">
@@ -13,27 +13,47 @@
 
 	  <!-- Print -->
 	  <p class="hidden-print">
-	      <button type="button" class="btn btn-primary" id="id_print_page">Print</button>
-	      <a href="{{ url('/rmt/print/' . $remittance->remittance_id) }}" class="btn btn-success" id="id_print_ap">Print AP</a>
+	      <button type="button" class="btn btn-secondary" id="id_print_page">Print</button>
+	      <a href="{{ url('/rmt/print/' . $remittance->remittance_id) }}" class="btn btn-secondary" id="id_print_ap">Print AP</a>
 	  </p>
 	  <hr />
 
-	  <p>
-	    <img src="/satsang-nepal-logo-2.jpg" class="nwo-ap-logo" style="max-width: 80px; display: inline-block; margin-right: 50px; float: left;" />
-	    <p style="display: inline-block; margin-top: 10px; float-left;" class="nwo-ap-logo-side">
-	    <strong>
-	      Satsang Philanthropy, Satsang Nepal<br />
-	      Satsang Mandir,<br />
-	      Basundol Chandragiri-2, Kathmandu, Nepal
-	    </strong>
-	    </p>
-	    <p style="clear: both;" class="nwo-clearfix">
-	    </p>
-	  </p>
-	  <hr />
 
 	  <p>
-	    <table class="table">
+	    <table class="table table-condensed table-striped table-bordered table-hover">
+	      <thead>
+	      </thead>
+	      <tbody>
+	        <tr>
+	          <th>Family Code</th>
+	          <td>{{ $remittance->family->family_code }}@if($remittance->family->fcode_check_digit !== NULL){{ $remittance->family->fcode_check_digit }}@else N @endif</td>
+	        </tr>
+	        <tr>
+	          <th>Serial Num</th>
+	          <td>{{ $remittance->remittance_id }}</td>
+	        </tr>
+	        <tr>
+	          <th>Submitter</th>
+	          <td>
+	            {{ $remittance->submitter->person->first_name }}&nbsp;
+	            {{ $remittance->submitter->person->middle_name }}&nbsp;
+	            {{ $remittance->submitter->person->last_name }}
+              </td>
+	        </tr>
+	        <tr>
+	          <th>Date</th>
+	          <td>{{ $remittance->submitted_date }}</td>
+	        </tr>
+	        <tr>
+	          <th>Total</th>
+	          <td>{{ $remTotal }}</td>
+	        </tr>
+	      </tbody>
+	    </table>
+	  </p>
+
+	  <p>
+	    <table class="table table-striped table-condensed table-bordered table-hover">
 	      <thead>
 	        <tr class="info">
 	        <th>Name</th>
@@ -57,48 +77,103 @@
 	      <tbody>
 	        @foreach ( $remittance->remittance_lines as $remittance_line)
 		  <tr>
-		    <td>
+		    <td style="font-size:13px;">
 		      {{ $remittance_line->oblate->person->first_name }}&nbsp;&nbsp;
 		      {{ $remittance_line->oblate->person->middle_name }}&nbsp;&nbsp;
 		      {{ $remittance_line->oblate->person->last_name }}&nbsp;&nbsp;
 		    </td>
-		    <td>
+		    <td style="font-size:13px;">
 		      {{ $remittance_line->oblate->worker->person->first_name }}&nbsp;&nbsp;
 		      {{ $remittance_line->oblate->worker->person->middle_name }}&nbsp;&nbsp;
 		      {{ $remittance_line->oblate->worker->person->last_name }}&nbsp;&nbsp;
 		    </td>
-		    <td>{{ $remittance_line->swastyayani }}</td>
-		    <td>{{ $remittance_line->istavrity }}</td>
-		    <td>{{ $remittance_line->acharyavrity }}</td>
-		    <td>{{ $remittance_line->dakshina }}</td>
-		    <td>{{ $remittance_line->sangathani }}</td>
-		    <td>{{ $remittance_line->ananda_bazar }}</td>
-		    <td>{{ $remittance_line->pranami }}</td>
-		    <td>{{ $remittance_line->swastyayani_awasista }}</td>
-		    <td>{{ $remittance_line->ritwiki }}</td>
-		    <td>{{ $remittance_line->utsav }}</td>
-		    <td>{{ $remittance_line->diksha_pranami }}</td>
-		    <td>{{ $remittance_line->acharya_pranami }}</td>
-		    <td>{{ $remittance_line->parivrity }}</td>
-		    <td>{{ $remittance_line->misc }}</td>
+		    <td>
+			  @if ($remittance_line->swastyayani != null && $remittance_line->swastyayani > 0)
+			    {{ $remittance_line->swastyayani }}
+              @else
+			  @endif
+			</td>
+		    <td>
+			    {{ $remittance_line->istavrity }}
+			</td>
+		    <td>
+			  @if ($remittance_line->acharyavrity != null && $remittance_line->acharyavrity > 0)
+			    {{ $remittance_line->acharyavrity }}
+              @else
+			  @endif
+			</td>
+		    <td>
+			  @if ($remittance_line->dakshina != null && $remittance_line->dakshina > 0)
+			    {{ $remittance_line->dakshina }}
+              @else
+			  @endif
+			</td>
+		    <td>
+			  @if ($remittance_line->sangathani != null && $remittance_line->sangathani > 0)
+			    {{ $remittance_line->sangathani }}
+              @else
+			  @endif
+			</td>
+		    <td>
+			  @if ($remittance_line->ananda_bazar != null && $remittance_line->ananda_bazar > 0)
+			    {{ $remittance_line->ananda_bazar }}
+              @else
+			  @endif
+			</td>
+		    <td>
+			  @if ($remittance_line->pranami != null && $remittance_line->pranami > 0)
+			    {{ $remittance_line->pranami }}
+              @else
+			  @endif
+			</td>
+		    <td>
+			  @if ($remittance_line->swastyayani_awasista != null && $remittance_line->swastyayani_awasista > 0)
+			    {{ $remittance_line->swastyayani_awasista }}
+              @else
+			  @endif
+			</td>
+		    <td>
+			  @if ($remittance_line->ritwiki != null && $remittance_line->ritwiki > 0)
+			    {{ $remittance_line->ritwiki }}
+              @else
+			  @endif
+			</td>
+		    <td>
+			  @if ($remittance_line->utsav != null && $remittance_line->utsav > 0)
+			    {{ $remittance_line->utsav }}
+              @else
+			  @endif
+			</td>
+		    <td>
+			  @if ($remittance_line->diksha_pranami != null && $remittance_line->diksha_pranami > 0)
+			    {{ $remittance_line->diksha_pranami }}
+              @else
+			  @endif
+			</td>
+		    <td>
+			  @if ($remittance_line->acharya_pranami != null && $remittance_line->acharya_pranami > 0)
+			    {{ $remittance_line->acharya_pranami }}
+              @else
+			  @endif
+			</td>
+		    <td>
+			  @if ($remittance_line->parivrity != null && $remittance_line->parivrity > 0)
+			    {{ $remittance_line->parivrity }}
+              @else
+			  @endif
+			</td>
+		    <td>
+			  @if ($remittance_line->misc != null && $remittance_line->misc > 0)
+			    {{ $remittance_line->misc }}
+              @else
+			  @endif
+			</td>
 		  </tr>
 	        @endforeach
 	      </tbody>
 	    </table>
 	  </p>
 
-	  <p>
-	    Family Code: <strong>{{ $remittance->family->family_code }}@if($remittance->family->fcode_check_digit !== NULL){{ $remittance->family->fcode_check_digit }}@else N @endif</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	    Serial num: <strong>{{ $remittance->remittance_id }}</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	    Submitter: 
-	      <strong>
-	      {{ $remittance->submitter->person->first_name }}&nbsp;&nbsp;
-	      {{ $remittance->submitter->person->middle_name }}&nbsp;&nbsp;
-	      {{ $remittance->submitter->person->last_name }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	      </strong>
-	    Date: <strong>{{ $remittance->submitted_date }}</strong>&nbsp;&nbsp;
-	    Total: <strong>{{ $remTotal }}</strong>
-	  </p>
       </div>
   </div>
 </div>
