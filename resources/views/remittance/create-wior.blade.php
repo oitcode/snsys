@@ -322,9 +322,21 @@
 	    <hr/>
 
             <!--<button type="button" id="rem_person" class="btn btn-danger">-Person</button>-->
-            <button type="button" id="add_person" class="btn btn-primary">+Person</button>
-            <!--<button type="button" id="check_total" class="btn btn-danger">Check Total</button>-->
-            <input type="submit"  id="submit_remit" class="btn btn-success" value="Submit"> <br />
+	    <div style="visibility: sdf;">
+              <button type="button" id="add_person" class="btn btn-primary">+Person</button>
+              <!--<button type="button" id="check_total" class="btn btn-danger">Check Total</button>-->
+              <input type="submit"  id="submit_remit" class="btn btn-success" value="Submit"> <br />
+	    </div>
+
+	    <br />
+	    <br />
+            <button type="button" id="" class="btn btn-primary">Save</button>
+            <button type="button" id="" class="btn btn-primary">Delete</button>
+            <button type="button" id="" class="btn btn-primary">Print</button>
+            <button type="button" id="" class="btn btn-primary">Search</button>
+            <button type="button" id="" class="btn btn-primary">New Voucher</button>
+            <button type="button" id="" class="btn btn-success">Post</button>
+            <button type="button" id="" class="btn btn-danger">Unpost</button>
           </form>
       </div>
   </div>

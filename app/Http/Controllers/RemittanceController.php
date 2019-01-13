@@ -1605,5 +1605,27 @@ class RemittanceController extends Controller
         $request->session()->flash("status", "Done: Remittance $rmtId deleted.");
         return redirect("/");
     }
+
+    /* Get rmt id from user. Show the ui to enter the value. */
+    public function rmtInp()
+    {
+	return view('db.rmt-inp');
+    }
+
+    public function rmtInpProcess(Request $request)
+    {
+        /* Todo: Validate input */
+
+	$remittance = Remittance::find($request->input('serial-num'));
+
+	if ($remittance) {
+	    $rmtTotal = $this->remTotalAmount($remittance);
+	    return view('db.rmt-inp-res')
+	        ->with('remittance', $remittance)
+		->with('rmtTotal', $rmtTotal);
+	} else {
+	    return 'Sorry,  remittance ' . $request->input('serial-num') . ' not found!';
+	}
+    }
 }
 

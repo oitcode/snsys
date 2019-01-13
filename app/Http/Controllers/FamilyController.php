@@ -106,4 +106,32 @@ class FamilyController extends Controller
 
 	    return $names;
     }
+
+    public function famInp()
+    {
+        return view('db.fam-inp');
+    }
+
+    public function famInpProcess(Request $request)
+    {
+	/* Todo: Validate */
+
+	//
+	$family = Family::where('family_code', $request->input('family-code'))->first();
+
+
+	return $this->famInpResult($family);
+    }
+
+    public function famInpResult($family)
+    {
+	if ($family) {
+            return view('db.fam-inp-res')->with('family', $family);
+	} else {
+            return view('db.fam-inp-res')
+	        ->with('errMsg', 'Sorry, no results found !');
+	}
+    }
+
+
 }
