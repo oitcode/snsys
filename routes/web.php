@@ -83,3 +83,7 @@ Route::get('/db/family/{famCode}', 'FamilyController@displayFamily');
 Route::get('/db/edit/person/{perosnId}', 'FamilyController@editPerson');
 Route::post('/db/edit/person/p/process', 'FamilyController@editPersonProcess');
 
+/* Ajax */
+Route::get('/ajax/page', 'AjaxController@ajaxPage');
+Route::post('/ajax/page/process', 'AjaxController@ajaFoo');
+

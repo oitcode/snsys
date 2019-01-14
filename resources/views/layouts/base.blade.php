@@ -178,6 +178,7 @@
                             <li><a href="{{ url('/rmt/create') }}">Old Create</a></li>
                             <li><a href="{{ url('/info/latest') }}">Latest Info</a></li>
                             <li><a href="{{ url('/sdeo/faminp') }}">Match</a></li>
+                            <li><a href="/ajax/page">Ajax</a></li>
                           </ul>
                       </li>
 
@@ -267,5 +268,65 @@
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('js/rem-create.js') }}"></script>
     <script src="{{ asset('js/rem-print.js') }}"></script>
+    <script src="{{ asset('js/ajax.js') }}"></script>
+    <script>
+        $( document ).ready(function() {
+            var ajaxBtn = $("#id_ajax_btn");
+	    var ajaForm = $("#id_ajax_form");
+
+            ajaxBtn.click(function(){
+        	console.log('Yyo');
+        
+        	// $.ajaxSetup({
+        	//     headers: {
+        	//         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        	//     }
+        	// });
+        
+                // Using the core $.ajax() method
+                $.ajax({
+        
+                    type: "POST",
+                    // dataType : "json",
+                    url: "/ajax/page/process",
+                    data: ajaForm.serialize(),
+		    headers: {
+		          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+		    },
+
+        
+        	    // success:function(data) {
+        	    //     console.log('Ola ka gola');
+        	    // }
+                })
+                      // Code to run if the request succeeds (is done);
+                      // The response is passed to the function
+                      .done(function( json ) {
+			 var nameArr = json.names;
+
+			 // nameArr.forEach(function() {
+                         //     $( "<p>" ).text('Foo Bar Cup').appendTo( "body" );
+			 // });
+
+                         //$( "<p>" ).text( json.msg ).appendTo( "body" );
+                         //$( "<div class=\"content\">").html( json.html ).appendTo( "body" );
+			 console.log("Kho");
+                      })
+                      // Code to run if the request fails; the raw request and
+                      // status codes are passed to the function
+                      .fail(function( xhr, status, errorThrown ) {
+                        alert( "Sorry, there was a problem!" );
+                        console.log( "Error: " + errorThrown );
+                        console.log( "Status: " + status );
+                        console.dir( xhr );
+                      })
+                      // Code to run regardless of success or failure;
+                      .always(function( xhr, status ) {
+                        alert( "The request is complete!" );
+                      });
+            });
+        
+        });
+    </script>
 </body>
 </html>
