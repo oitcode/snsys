@@ -79,10 +79,20 @@ Route::get('/sdeo/faminp', 'SdeoController@famInp');
 Route::post('/sdeo/faminp/process', 'SdeoController@processFamInp');
 
 /* DB */
+Route::get('/db/family/search', 'FamilyController@famInp');
+Route::post('/db/family/search/process', 'FamilyController@famInpProcess');
+Route::post('/db/family/search/result', 'FamilyController@famInpResult');
+
 Route::get('/db/family/{famCode}', 'FamilyController@displayFamily');
 Route::get('/db/edit/person/{perosnId}', 'FamilyController@editPerson');
 Route::post('/db/edit/person/p/process', 'FamilyController@editPersonProcess');
+
+
 Route::get('/db/worker/msearch', 'WorkerController@mSearch');
 Route::post('/db/worker/msearch/process', 'WorkerController@mSearchProcess');
 Route::get('/db/worker/msearch/result', 'WorkerController@mSearchResult');
+
+
+Route::get('/db/remittance/search', 'RemittanceController@rmtInp');
+Route::post('/db/remittance/search/process', 'RemittanceController@rmtInpProcess');
 
