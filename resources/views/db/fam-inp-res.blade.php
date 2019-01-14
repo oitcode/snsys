@@ -32,7 +32,7 @@
             </tr>
             <tr>
               <td>Address</td>
-              <td>{{ $family->address }} &nbsp;&nbsp;&nbsp;&nbsp;<a href="">Edit</a></td>
+              <td><a href="">{{ $family->address }}</a></td>
             </tr>
           </table>
 
@@ -52,18 +52,22 @@
                     <a href="/db/edit/person/{{ $oblate->person->person_id }}">Edit</a>
                   </td>
                   <td>
-                    {{ $oblate->person->first_name }}
-                    @if ($oblate->person->middle_name != null)
-                      {{ $oblate->person->middle_name }}
-                    @endif
-                    {{ $oblate->person->last_name }}
+		    <a href="">
+                      {{ $oblate->person->first_name }}
+                      @if ($oblate->person->middle_name != null)
+                        {{ $oblate->person->middle_name }}
+                      @endif
+                      {{ $oblate->person->last_name }}
+		    </a>
                   </td>
                   <td>
-                    {{ $oblate->worker->person->first_name }} 
-                    @if ($oblate->worker->person->middle_name != null)
-                      {{ $oblate->worker->person->middle_name }}
-                    @endif
-                    {{ $oblate->worker->person->last_name }}
+		    <a href="">
+                      {{ $oblate->worker->person->first_name }} 
+                      @if ($oblate->worker->person->middle_name != null)
+                        {{ $oblate->worker->person->middle_name }}
+                      @endif
+                      {{ $oblate->worker->person->last_name }}
+		    </a>
                   </td>
                 </tr>
               @endforeach

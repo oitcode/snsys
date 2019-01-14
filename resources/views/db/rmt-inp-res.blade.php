@@ -14,6 +14,7 @@
 	  <!-- Print -->
 	  <p class="hidden-print">
 	      <button type="button" class="btn btn-secondary" id="id_print_page">Print</button>
+	      <button type="button" class="btn btn-secondary" id="id_print_page">Edit</button>
 	      <a href="{{ url('/rmt/print/' . $remittance->remittance_id) }}" class="btn btn-secondary" id="id_print_ap">Print AP</a>
 	  </p>
 	  <hr />
@@ -25,19 +26,21 @@
 	      </thead>
 	      <tbody>
 	        <tr>
-	          <th>Family Code</th>
-	          <td>{{ $remittance->family->family_code }}@if($remittance->family->fcode_check_digit !== NULL){{ $remittance->family->fcode_check_digit }}@else N @endif</td>
-	        </tr>
-	        <tr>
 	          <th>Serial Num</th>
 	          <td>{{ $remittance->remittance_id }}</td>
 	        </tr>
 	        <tr>
+	          <th>Family Code</th>
+	          <td>{{ $remittance->family->family_code }}@if($remittance->family->fcode_check_digit !== NULL){{ $remittance->family->fcode_check_digit }}@else N @endif</td>
+	        </tr>
+	        <tr>
 	          <th>Submitter</th>
 	          <td>
-	            {{ $remittance->submitter->person->first_name }}&nbsp;
-	            {{ $remittance->submitter->person->middle_name }}&nbsp;
-	            {{ $remittance->submitter->person->last_name }}
+		    <a href="">
+	              {{ $remittance->submitter->person->first_name }}&nbsp;
+	              {{ $remittance->submitter->person->middle_name }}&nbsp;
+	              {{ $remittance->submitter->person->last_name }}
+		    </a>
               </td>
 	        </tr>
 	        <tr>
@@ -72,20 +75,25 @@
 	        <th>Acharya Pranami</th>
 	        <th>Parivrity</th>
 	        <th>Misc</th>
+	        <th>Action</th>
 	        </tr>
 	      </thead>
 	      <tbody>
 	        @foreach ( $remittance->remittance_lines as $remittance_line)
 		  <tr>
 		    <td style="font-size:13px;">
-		      {{ $remittance_line->oblate->person->first_name }}&nbsp;&nbsp;
-		      {{ $remittance_line->oblate->person->middle_name }}&nbsp;&nbsp;
-		      {{ $remittance_line->oblate->person->last_name }}&nbsp;&nbsp;
+		      <a href="">
+		        {{ $remittance_line->oblate->person->first_name }}&nbsp;&nbsp;
+		        {{ $remittance_line->oblate->person->middle_name }}&nbsp;&nbsp;
+		        {{ $remittance_line->oblate->person->last_name }}&nbsp;&nbsp;
+		      </a>
 		    </td>
 		    <td style="font-size:13px;">
-		      {{ $remittance_line->oblate->worker->person->first_name }}&nbsp;&nbsp;
-		      {{ $remittance_line->oblate->worker->person->middle_name }}&nbsp;&nbsp;
-		      {{ $remittance_line->oblate->worker->person->last_name }}&nbsp;&nbsp;
+		      <a href="">
+		        {{ $remittance_line->oblate->worker->person->first_name }}&nbsp;&nbsp;
+		        {{ $remittance_line->oblate->worker->person->middle_name }}&nbsp;&nbsp;
+		        {{ $remittance_line->oblate->worker->person->last_name }}&nbsp;&nbsp;
+                      </a>
 		    </td>
 		    <td>
 			  @if ($remittance_line->swastyayani != null && $remittance_line->swastyayani > 0)
@@ -168,6 +176,9 @@
               @else
 			  @endif
 			</td>
+		    <td>
+		      <a href="">Edit</a>
+		    </td>
 		  </tr>
 	        @endforeach
 	      </tbody>
