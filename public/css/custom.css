@@ -9,11 +9,11 @@
 }
 
 .nwo-std-10pc {
-  width: 10vw;
+  width: 15vw;
 }
 
 .nwo-std-5pc {
-  width: 5vw;
+  width: 4vw;
 }
 
 .nwo-std-smf {
@@ -44,4 +44,8 @@ input[type='number'] {
   .nwo-clearfix {
     clear: both;
   }
+}
+
+.o-smf {
+  font-size: 5px;
 }

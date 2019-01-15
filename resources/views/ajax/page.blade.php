@@ -29,6 +29,10 @@
 	  </form>
 	  <!-- Ajax button -->
 
+	  <hr/>
+	  <h4>Available names</h4>
+	  <hr/>
+
 	  <!-- Ajax msg displayed here -->
 	  <div id="id_ajax_msg">
 	  </div>

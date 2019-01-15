@@ -274,7 +274,10 @@
             var ajaxBtn = $("#id_ajax_btn");
 	    var ajaForm = $("#id_ajax_form");
 
-            ajaxBtn.click(function(){
+            //ajaxBtn.click(function(){
+	    // $(".ajx-name").keyup(function(e) {
+	    $('body').on('click', '.ajx-rtnm', function() {
+	        console.log('Search val: ' + $(this).val());
         	console.log('Yyo');
         
         	// $.ajaxSetup({
@@ -289,7 +292,11 @@
                     type: "POST",
                     // dataType : "json",
                     url: "/ajax/page/process",
-                    data: ajaForm.serialize(),
+                    data: {
+		        'search_name': $(this).val()
+		        // 'search_name': 'Oklahoma'
+		    },
+		    //ajaForm.serialize(),
 		    headers: {
 		          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 		    },
@@ -302,15 +309,34 @@
                       // Code to run if the request succeeds (is done);
                       // The response is passed to the function
                       .done(function( json ) {
-			 var nameArr = json.names;
-
-			 // nameArr.forEach(function() {
-                         //     $( "<p>" ).text('Foo Bar Cup').appendTo( "body" );
-			 // });
+			 $("#for_ajax").empty();
+			 console.log('Name arr: ' + json);
 
                          //$( "<p>" ).text( json.msg ).appendTo( "body" );
                          //$( "<div class=\"content\">").html( json.html ).appendTo( "body" );
 			 console.log("Kho");
+
+			 data = $.parseJSON(json);
+
+			 $.each(data, function(i, item) {
+
+			     var newPara = $("<p></p>");
+
+			     var newName = $("<span></span>");
+			     newName.text(item.first_name + ' ' + item.last_name + ' ');
+
+			     var link = $("<a>", {
+			         "href": "",
+				 "target": "_blank",
+                                 "id": "",
+			     });
+			     link.text("Use me");
+
+
+			     newName.appendTo(newPara);
+			     link.appendTo(newPara);
+			     newPara.appendTo("#for_ajax");
+			 }); 
                       })
                       // Code to run if the request fails; the raw request and
                       // status codes are passed to the function
@@ -322,11 +348,20 @@
                       })
                       // Code to run regardless of success or failure;
                       .always(function( xhr, status ) {
-                        alert( "The request is complete!" );
+                        //alert( "The request is complete!" );
                       });
             });
         
         });
+
+	function fillWorkerName()
+	{
+	    //
+	}
+
+        $( document ).ready(function() {
+	    
+	});
     </script>
 </body>
 </html>

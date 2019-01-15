@@ -31,7 +31,7 @@ function addRemitRow(remLineBody)
     var newRitwikCol = $("<td></td>");
     var newRitwikInp = $("<input />", {
         "type": "text",
-        "class": "nwo-std-name nwo-std-10pc nwo-std-frminp nwo-std-frminp-lx",
+        "class": "nwo-std-name nwo-std-10pc nwo-std-frminp nwo-std-frminp-lx ajx-rtnm",
         "name": "remit-row[" + rowCount + "][ritwik-name]",
         "id": "",
     });

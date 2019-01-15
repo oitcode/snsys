@@ -31,6 +31,15 @@ class RemittanceController extends Controller
     }
 
 
+    public function nameCmp($p1, $p2)
+    {
+        if ($p1.first_name == $p2.first_name) {
+	    return 0;
+	}
+
+	return ($p1.first_name < $p2.first_name) ? -1 : 1;
+    }
+
     /**
      * Create a new remittance.
      *
@@ -38,6 +47,15 @@ class RemittanceController extends Controller
      */
     public function create()
     {
+	$ritwiks = Worker::join('person', 'person.person_id', '=', 'worker.person_id')
+	    ->orderBy('person.first_name')
+	    ->get();
+
+	/* Ignore dummy ritwiks */
+        $ritwiks = $ritwiks->except(1);
+        $ritwiks = $ritwiks->except(2);
+        $ritwiks = $ritwiks->except(3);
+
 	if (session()->has('lot')) {
 	    $lotCode = session()->get('lot');
 	    $remainingBal = $this->lotRemainingBal($lotCode);
@@ -46,9 +64,11 @@ class RemittanceController extends Controller
 	    $bvDepositDate = $remittanceLot->deposit_date;
             return view('remittance.create')
 	        ->with('remainingBal', $remainingBal)
-	        ->with('bvDepositDate', $bvDepositDate);
+	        ->with('bvDepositDate', $bvDepositDate)
+	        ->with('ritwiks', $ritwiks);
 	} else {
-            return view('remittance.create');
+            return view('remittance.create')
+	        ->with('ritwiks', $ritwiks);
 	}
     }
 

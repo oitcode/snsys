@@ -56,7 +56,7 @@
 
 
 	  <!-- Form -->
-          <form action="{{ url('/rmt/create/store') }}" method="post">
+          <form action="{{ url('/rmt/create/store') }}" method="post" id="ajx-frm">
 	    {{ csrf_field() }}
 
 	    <!-- Currency info -->
@@ -137,28 +137,43 @@
                   <th class="nwo-std-10pc nwo-std-smf">Person</th>
                   <th class="nwo-std-10pc nwo-std-smf">Ritwik Name</th>
 
-                  <th class="nwo-std-5pc nwo-std-smf">Swstyani</th>
-                  <th class="nwo-std-5pc nwo-std-smf">Istavrity</th>
-                  <th class="nwo-std-5pc nwo-std-smf">Acharya vrity</th>
-                  <th class="nwo-std-5pc nwo-std-smf">Dkshina</th>
-                  <th class="nwo-std-5pc nwo-std-smf">Sngathani</th>
-                  <th class="nwo-std-5pc nwo-std-smf">Ritwiki</th>
-                  <th class="nwo-std-5pc nwo-std-smf">Pranami</th>
-                  <th class="nwo-std-5pc nwo-std-smf">Swst aws</th>
-                  <th class="nwo-std-5pc nwo-std-smf">Ananda Bazar</th>
-                  <th class="nwo-std-5pc nwo-std-smf">Parivrity</th>
-                  <th class="nwo-std-5pc nwo-std-smf">Misc</th>
+                  <th class="nwo-std-5pc nwo-std-smf">Swst</th>
+                  <th class="nwo-std-5pc nwo-std-smf">Ist</th>
+                  <th class="nwo-std-5pc nwo-std-smf">Acvt</th>
+                  <th class="nwo-std-5pc nwo-std-smf">Dks</th>
+                  <th class="nwo-std-5pc nwo-std-smf">Sng</th>
+                  <th class="nwo-std-5pc nwo-std-smf">Rit</th>
+                  <th class="nwo-std-5pc nwo-std-smf">Pra</th>
+                  <th class="nwo-std-5pc nwo-std-smf">Swaw</th>
+                  <th class="nwo-std-5pc nwo-std-smf">AB</th>
+                  <th class="nwo-std-5pc nwo-std-smf">Pvt</th>
+                  <th class="nwo-std-5pc nwo-std-smf">Msc</th>
 
-                  <th class="nwo-std-5pc nwo-std-smf">Utsav</th>
-                  <th class="nwo-std-5pc nwo-std-smf">Diksha Pr</th>
-                  <th class="nwo-std-5pc nwo-std-smf">Acharya Pr</th>
+                  <th class="nwo-std-5pc nwo-std-smf">Uts</th>
+                  <th class="nwo-std-5pc nwo-std-smf">Dpr</th>
+                  <th class="nwo-std-5pc nwo-std-smf">Apr</th>
                 </tr>
               </thead>
               <tbody id="remit_row_body">
 		<!-- New way: Use 2D Array -->
 		<tr>
                   <td><input type="text" class="nwo-std-name nwo-std-10pc nwo-std-frminp nwo-std-frminp-lx"  name="remit-row[0][name]" id="" /></td>
-                  <td><input type="text" class="nwo-std-name nwo-std-10pc nwo-std-frminp nwo-std-frminp-lx"  name="remit-row[0][ritwik-name]" id="" /></td>
+
+
+<td>
+  <select name="choice" class="ajx-rtn-nm">
+    @foreach ($ritwiks as $ritwik)
+      <option value="{{ $ritwik->first_name }}" class="o-smf">
+        {{ $ritwik->person->first_name }}
+	@if ($ritwik->person->middle_name != null)
+          {{ $ritwik->person->middle_name }}
+	@endif
+        {{ $ritwik->person->last_name }}
+      </option> 
+    @endforeach
+  </select>
+</td>
+
                   <td><input type="number" step="0.25" min="0.0" class="nwo-std-5pc nwo-std-frminp col-val"  name="remit-row[0][swastyayani]" id="" /></td>
                   <td><input type="number" step="0.25" min="0.0" class="nwo-std-5pc nwo-std-frminp col-val"  name="remit-row[0][istavrity]" id="" /></td>
                   <td><input type="number" step="0.25" min="0.0" class="nwo-std-5pc nwo-std-frminp col-val"  name="remit-row[0][acharyavrity]" id="" /></td>
@@ -194,7 +209,13 @@
             <!--<button type="button" id="check_total" class="btn btn-danger">Check Total</button>-->
             <input type="submit"  id="submit_remit" class="btn btn-success" value="Submit"> <br />
           </form>
+
+          <h4>Dynamic</h4>
+          <!-- For ajax -->
+          <div id="for_ajax">
+          </div>
       </div>
+
   </div>
 </div>
 @endsection

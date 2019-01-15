@@ -26,18 +26,13 @@ class AjaxController extends Controller
     public function ajaFoo(Request $request)
     {
 	    //return '200';
-	    $searchName = $request->input('frm_name');
+	    $searchName = $request->input('search_name');
 
-	    $names = Person::where('first_name', $searchName)->get();
+	    $names = Person::where('first_name', $searchName)->get()->toJson();
 
 	    return response()
 	        ->json(
-		    $names->toArray(),
-		    // [
-	            // 'msg' => 'Just foo and ajax and ' . $searchName . ' Hai ... ',
-	            // //'sts' => 'Biz bar and cup',
-
-                    // ],
+		    $names,
 	            200
 		);
     }
