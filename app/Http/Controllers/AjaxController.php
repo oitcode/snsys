@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Person;
+use App\Worker;
 
 class AjaxController extends Controller
 {
@@ -28,11 +29,23 @@ class AjaxController extends Controller
 	    //return '200';
 	    $searchName = $request->input('search_name');
 
-	    $names = Person::where('first_name', $searchName)->get()->toJson();
+	    //$names = Person::where('first_name', $searchName)->get()->toJson();
+	    $ritwiks = Worker::join('person', 'person.person_id', '=', 'worker.person_id')
+		->where('person.first_name', 'like', $request->input('search_name') . '%')
+	        ->orderBy('person.first_name')
+	        ->get();
+
+	    /* Ignore dummy ritwiks */
+            $ritwiks = $ritwiks->except(1);
+            $ritwiks = $ritwiks->except(2);
+            $ritwiks = $ritwiks->except(3);
+
+	    $ritwiks = $ritwiks->toJson();
 
 	    return response()
 	        ->json(
-		    $names,
+		    // $names,
+		    $ritwiks,
 	            200
 		);
     }

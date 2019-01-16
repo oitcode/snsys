@@ -59,6 +59,19 @@
           <form action="{{ url('/rmt/create/store') }}" method="post" id="ajx-frm">
 	    {{ csrf_field() }}
 
+	    <!-- Datalist used for ritwik list -->
+	    <datalist id="id_ritwik_list">
+	      @foreach ($ritwiks as $ritwik)
+	        <option 
+		  @if ($ritwik->middle_name != null)
+		    value="{{ $ritwik->first_name }} {{ $ritwik->middle_name }} {{ $ritwik->last_name }}"
+		  @else
+		    value="{{ $ritwik->first_name }} {{ $ritwik->last_name }}"
+		  @endif
+                >
+	      @endforeach
+	    </datalist>
+
 	    <!-- Currency info -->
             <h4>Currency</h4>
             <div>
@@ -160,20 +173,7 @@
                   <td><input type="text" class="nwo-std-name nwo-std-10pc nwo-std-frminp nwo-std-frminp-lx"  name="remit-row[0][name]" id="" /></td>
 
 
-<td>
-  <select name="choice" class="ajx-rtn-nm">
-    @foreach ($ritwiks as $ritwik)
-      <option value="{{ $ritwik->first_name }}" class="o-smf">
-        {{ $ritwik->person->first_name }}
-	@if ($ritwik->person->middle_name != null)
-          {{ $ritwik->person->middle_name }}
-	@endif
-        {{ $ritwik->person->last_name }}
-      </option> 
-    @endforeach
-  </select>
-</td>
-
+                  <td><input type="text" class="nwo-std-name nwo-std-10pc nwo-std-frminp nwo-std-frminp-lx"  name="remit-row[0][ritwik-name]" id="" list="id_ritwik_list" /></td>
                   <td><input type="number" step="0.25" min="0.0" class="nwo-std-5pc nwo-std-frminp col-val"  name="remit-row[0][swastyayani]" id="" /></td>
                   <td><input type="number" step="0.25" min="0.0" class="nwo-std-5pc nwo-std-frminp col-val"  name="remit-row[0][istavrity]" id="" /></td>
                   <td><input type="number" step="0.25" min="0.0" class="nwo-std-5pc nwo-std-frminp col-val"  name="remit-row[0][acharyavrity]" id="" /></td>

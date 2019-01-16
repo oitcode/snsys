@@ -31,9 +31,10 @@ function addRemitRow(remLineBody)
     var newRitwikCol = $("<td></td>");
     var newRitwikInp = $("<input />", {
         "type": "text",
-        "class": "nwo-std-name nwo-std-10pc nwo-std-frminp nwo-std-frminp-lx ajx-rtnm",
+        "class": "nwo-std-name nwo-std-10pc nwo-std-frminp nwo-std-frminp-lx",
         "name": "remit-row[" + rowCount + "][ritwik-name]",
         "id": "",
+	"list": "id_ritwik_list",
     });
     newRitwikInp.keyup(function(){
         this.value=this.value.toUpperCase();
