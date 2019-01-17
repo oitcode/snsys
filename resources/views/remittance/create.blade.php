@@ -174,24 +174,23 @@
 		<!-- New way: Use 2D Array -->
 		<tr>
                   <td class="nwo-std-10pc"><input type="text" class="nwo-std-name nwo-std-10pc nwo-std-frminp nwo-std-frminp-lx"  name="remit-row[0][name]" id="" /></td>
-
-
                   <td class="nwo-std-10pc"><input type="text" class="nwo-std-name nwo-std-10pc nwo-std-frminp nwo-std-frminp-lx"  name="remit-row[0][ritwik-name]" id="" list="id_ritwik_list" /></td>
-                  <td><input type="number" step="0.25" min="0.0" class="nwo-std-5pc nwo-std-frminp col-val col-swst"  name="remit-row[0][swastyayani]" id="" /></td>
-                  <td><input type="number" step="0.25" min="0.0" class="nwo-std-5pc nwo-std-frminp col-val col-ist"  name="remit-row[0][istavrity]" id="" /></td>
-                  <td><input type="number" step="0.25" min="0.0" class="nwo-std-5pc nwo-std-frminp col-val col-acvt"  name="remit-row[0][acharyavrity]" id="" /></td>
-                  <td><input type="number" step="0.25" min="0.0" class="nwo-std-5pc nwo-std-frminp col-val col-dks"  name="remit-row[0][dakshina]" id="" /></td>
-                  <td><input type="number" step="0.25" min="0.0" class="nwo-std-5pc nwo-std-frminp col-val col-sng"  name="remit-row[0][sangathani]" id="" /></td>
-                  <td><input type="number" step="0.25" min="0.0" class="nwo-std-5pc nwo-std-frminp col-val col-rit"  name="remit-row[0][ritwiki]" id="" /></td>
-                  <td><input type="number" step="0.25" min="0.0" class="nwo-std-5pc nwo-std-frminp col-val col-pra"  name="remit-row[0][pranami]" id="" /></td>
-                  <td><input type="number" step="0.25" min="0.0" class="nwo-std-5pc nwo-std-frminp col-val col-swaw"  name="remit-row[0][swastyayani-awasista]" id="" /></td>
-                  <td><input type="number" step="0.25" min="0.0" class="nwo-std-5pc nwo-std-frminp col-val col-ab"  name="remit-row[0][ananda-bazar]" id="" /></td>
-                  <td><input type="number" step="0.25" min="0.0" class="nwo-std-5pc nwo-std-frminp col-val col-pvt"  name="remit-row[0][parivrity]" id="" /></td>
-                  <td><input type="number" step="0.25" min="0.0" class="nwo-std-5pc nwo-std-frminp col-val col-msc"  name="remit-row[0][misc]" id="" /></td>
 
-                  <td><input type="number" step="0.25" min="0.0" class="nwo-std-5pc nwo-std-frminp col-val col-uts"  name="remit-row[0][utsav]" id="" /></td>
-                  <td><input type="number" step="0.25" min="0.0" class="nwo-std-5pc nwo-std-frminp col-val col-dpr"  name="remit-row[0][diksha-pranami]" id="" /></td>
-                  <td><input type="number" step="0.25" min="0.0" class="nwo-std-5pc nwo-std-frminp col-val col-apr"  name="remit-row[0][acharya-pranami]" id="" /></td>
+                  <td><input type="number" min="1" step="1" class="nwo-std-5pc nwo-std-frminp col-val col-swas"  name="remit-row[0][swastyayani]" id="" /></td>
+                  <td><input type="number" class="nwo-std-5pc nwo-std-frminp col-val col-ist"  name="remit-row[0][istavrity]" id="" /></td>
+                  <td><input type="number" class="nwo-std-5pc nwo-std-frminp col-val col-acvt"  name="remit-row[0][acharyavrity]" id="" /></td>
+                  <td><input type="number" class="nwo-std-5pc nwo-std-frminp col-val col-dks"  name="remit-row[0][dakshina]" id="" /></td>
+                  <td><input type="number" class="nwo-std-5pc nwo-std-frminp col-val col-sng"  name="remit-row[0][sangathani]" id="" /></td>
+                  <td><input type="number" class="nwo-std-5pc nwo-std-frminp col-val col-rit"  name="remit-row[0][ritwiki]" id="" /></td>
+                  <td><input type="number" class="nwo-std-5pc nwo-std-frminp col-val col-pra"  name="remit-row[0][pranami]" id="" /></td>
+                  <td><input type="number" class="nwo-std-5pc nwo-std-frminp col-val col-swaw"  name="remit-row[0][swastyayani-awasista]" id="" /></td>
+                  <td><input type="number" class="nwo-std-5pc nwo-std-frminp col-val col-ab"  name="remit-row[0][ananda-bazar]" id="" /></td>
+                  <td><input type="number" class="nwo-std-5pc nwo-std-frminp col-val col-pvt"  name="remit-row[0][parivrity]" id="" /></td>
+                  <td><input type="number" class="nwo-std-5pc nwo-std-frminp col-val col-msc"  name="remit-row[0][misc]" id="" /></td>
+
+                  <td><input type="number" class="nwo-std-5pc nwo-std-frminp col-val col-uts"  name="remit-row[0][utsav]" id="" /></td>
+                  <td><input type="number" class="nwo-std-5pc nwo-std-frminp col-val col-dpr"  name="remit-row[0][diksha-pranami]" id="" /></td>
+                  <td><input type="number" class="nwo-std-5pc nwo-std-frminp col-val col-apr"  name="remit-row[0][acharya-pranami]" id="" /></td>
                   <td>
 		    <span class="nwo-rmc-rd">D</span>
 		    <span> </span>

@@ -46,9 +46,7 @@ function addRemitRow(remLineBody)
     var newSwastyayaniCol = $("<td></td>");
     var newSwastyayaniInp = $("<input />", {
         "type": "number",
-        "step": "0.25",
-        "min": "0.0",
-        "class": "nwo-std-5pc nwo-std-frminp col-val",
+        "class": "nwo-std-5pc nwo-std-frminp col-val col-swas",
         "name": "remit-row[" + rowCount + "][swastyayani]",
         "id": "",
     });
@@ -59,9 +57,7 @@ function addRemitRow(remLineBody)
     var newIstavrityCol = $("<td></td>");
     var newIstavrityInp = $("<input />", {
         "type": "number",
-        "step": "0.25",
-        "min": "0.0",
-        "class": "nwo-std-5pc nwo-std-frminp col-val",
+        "class": "nwo-std-5pc nwo-std-frminp col-val col-ist",
         "name": "remit-row[" + rowCount + "][istavrity]",
         "id": "",
     });
@@ -72,9 +68,7 @@ function addRemitRow(remLineBody)
     var newAcharyavrityCol = $("<td></td>");
     var newAcharyavrityInp = $("<input />", {
         "type": "number",
-        "step": "0.25",
-        "min": "0.0",
-        "class": "nwo-std-5pc nwo-std-frminp col-val",
+        "class": "nwo-std-5pc nwo-std-frminp col-val col-acvt",
         "name": "remit-row[" + rowCount + "][acharyavrity]",
         "id": "",
     });
@@ -85,9 +79,7 @@ function addRemitRow(remLineBody)
     var newDakshinaCol = $("<td></td>");
     var newDakshinaInp = $("<input />", {
         "type": "number",
-        "step": "0.25",
-        "min": "0.0",
-        "class": "nwo-std-5pc nwo-std-frminp col-val",
+        "class": "nwo-std-5pc nwo-std-frminp col-val col-dks",
         "name": "remit-row[" + rowCount + "][dakshina]",
         "id": "",
     });
@@ -98,9 +90,7 @@ function addRemitRow(remLineBody)
     var newSangathaniCol = $("<td></td>");
     var newSangathaniInp = $("<input />", {
         "type": "number",
-        "step": "0.25",
-        "min": "0.0",
-        "class": "nwo-std-5pc nwo-std-frminp col-val",
+        "class": "nwo-std-5pc nwo-std-frminp col-val col-sng",
         "name": "remit-row[" + rowCount + "][sangathani]",
         "id": "",
     });
@@ -111,9 +101,7 @@ function addRemitRow(remLineBody)
     var newRitwikiCol = $("<td></td>");
     var newRitwikiInp = $("<input />", {
         "type": "number",
-        "step": "0.25",
-        "min": "0.0",
-        "class": "nwo-std-5pc nwo-std-frminp col-val",
+        "class": "nwo-std-5pc nwo-std-frminp col-val col-rit",
         "name": "remit-row[" + rowCount + "][ritwiki]",
         "id": "",
     });
@@ -124,9 +112,7 @@ function addRemitRow(remLineBody)
     var newPranamiCol = $("<td></td>");
     var newPranamiInp = $("<input />", {
         "type": "number",
-        "step": "0.25",
-        "min": "0.0",
-        "class": "nwo-std-5pc nwo-std-frminp col-val",
+        "class": "nwo-std-5pc nwo-std-frminp col-val col-pra",
         "name": "remit-row[" + rowCount + "][pranami]",
         "id": "",
     });
@@ -137,9 +123,7 @@ function addRemitRow(remLineBody)
     var newSwaAwaCol = $("<td></td>");
     var newSwaAwaInp = $("<input />", {
         "type": "number",
-        "step": "0.25",
-        "min": "0.0",
-        "class": "nwo-std-5pc nwo-std-frminp col-val",
+        "class": "nwo-std-5pc nwo-std-frminp col-val col-swaw",
         "name": "remit-row[" + rowCount + "][swastyayani-awasista]",
         "id": "",
     });
@@ -150,9 +134,7 @@ function addRemitRow(remLineBody)
     var newAnandaBazarCol = $("<td></td>");
     var newAnandaBazarInp = $("<input />", {
         "type": "number",
-        "step": "0.25",
-        "min": "0.0",
-        "class": "nwo-std-5pc nwo-std-frminp col-val",
+        "class": "nwo-std-5pc nwo-std-frminp col-val col-ab",
         "name": "remit-row[" + rowCount + "][ananda-bazar]",
         "id": "",
     });
@@ -163,9 +145,7 @@ function addRemitRow(remLineBody)
     var newParivrityCol = $("<td></td>");
     var newParivrityInp = $("<input />", {
         "type": "number",
-        "step": "0.25",
-        "min": "0.0",
-        "class": "nwo-std-5pc nwo-std-frminp col-val",
+        "class": "nwo-std-5pc nwo-std-frminp col-val col-pvt",
         "name": "remit-row[" + rowCount + "][parivrity]",
         "id": "",
     });
@@ -176,9 +156,7 @@ function addRemitRow(remLineBody)
     var newMiscCol = $("<td></td>");
     var newMiscInp = $("<input />", {
         "type": "number",
-        "step": "0.25",
-        "min": "0.0",
-        "class": "nwo-std-5pc nwo-std-frminp col-val",
+        "class": "nwo-std-5pc nwo-std-frminp col-val col-msc",
         "name": "remit-row[" + rowCount + "][misc]",
         "id": "",
     });
@@ -189,9 +167,7 @@ function addRemitRow(remLineBody)
     var newUtsavCol = $("<td></td>");
     var newUtsavInp = $("<input />", {
         "type": "number",
-        "step": "0.25",
-        "min": "0.0",
-        "class": "nwo-std-5pc nwo-std-frminp col-val",
+        "class": "nwo-std-5pc nwo-std-frminp col-val col-uts",
         "name": "remit-row[" + rowCount + "][utsav]",
         "id": "",
     });
@@ -202,9 +178,7 @@ function addRemitRow(remLineBody)
     var newDikshaPrCol = $("<td></td>");
     var newDikshaPrInp = $("<input />", {
         "type": "number",
-        "step": "0.25",
-        "min": "0.0",
-        "class": "nwo-std-5pc nwo-std-frminp col-val",
+        "class": "nwo-std-5pc nwo-std-frminp col-val col-dpr",
         "name": "remit-row[" + rowCount + "][diksha-pranami]",
         "id": "",
     });
@@ -215,9 +189,7 @@ function addRemitRow(remLineBody)
     var newAcharyaPrCol = $("<td></td>");
     var newAcharyaPrInp = $("<input />", {
         "type": "number",
-        "step": "0.25",
-        "min": "0.0",
-        "class": "nwo-std-5pc nwo-std-frminp col-val",
+        "class": "nwo-std-5pc nwo-std-frminp col-val col-apr",
         "name": "remit-row[" + rowCount + "][acharya-pranami]",
         "id": "",
     });
@@ -947,15 +919,40 @@ $( document ).ready(function() {
     $("body").on("click", '.nwo-rmc-rc', function() {
         console.log('Copying remit line row');
         var curRow = $(this).parent().parent();
-	var prevRow = curRow.prev();
-	prevRow.css('background-color', 'red');
+	    var prevRow = curRow.prev();
+	    // prevRow.css('background-color', 'red');
 
-	var curRowColVals = curRow.find(".col-val");
-	var prevRowColVals = prevRow.find(".col-val");
+	    var curRowColVals = curRow.find(".col-val");
+	    var prevRowColVals = prevRow.find(".col-val");
 
-	console.log(prevRowColVals);
-	curRowColVals.each(function() {
-	    console.log('Col val: ' + $(this).val())
-	});
+		/* Todo: Copy all these value in a loopish way.
+		         Dont unroll the loop like this by hand.
+	    */
+
+	    //console.log(prevRowColVals);
+	    /*
+	    var i = 0;
+	    prevRowColVals.each(function() {
+	    	var temp = +$(this).val();
+	        console.log(temp);
+	        console.log('Col val: ' + temp + i);
+	    	i++;
+	    });
+	    */
+
+        curRow.find('.col-swas').val(prevRow.find('.col-swas').val());
+        curRow.find('.col-ist').val(prevRow.find('.col-ist').val());
+        curRow.find('.col-acvt').val(prevRow.find('.col-acvt').val());
+        curRow.find('.col-dks').val(prevRow.find('.col-dks').val());
+        curRow.find('.col-sng').val(prevRow.find('.col-sng').val());
+        curRow.find('.col-rit').val(prevRow.find('.col-rit').val());
+        curRow.find('.col-pra').val(prevRow.find('.col-pra').val());
+        curRow.find('.col-swaw').val(prevRow.find('.col-swaw').val());
+        curRow.find('.col-ab').val(prevRow.find('.col-ab').val());
+        curRow.find('.col-pvt').val(prevRow.find('.col-pvt').val());
+        curRow.find('.col-msc').val(prevRow.find('.col-msc').val());
+        curRow.find('.col-uts').val(prevRow.find('.col-uts').val());
+        curRow.find('.col-dpr').val(prevRow.find('.col-dpr').val());
+        curRow.find('.col-apr').val(prevRow.find('.col-apr').val());
     });
 });
