@@ -72,3 +72,10 @@ input[type="number"] {
 .nwo-std-10pc {
   width: 15vw !important;
 }
+
+.nwo-rmc-rd {
+  color: #a00;
+}
+.nwo-rmc-rd:hover {
+  cursor: pointer;
+}

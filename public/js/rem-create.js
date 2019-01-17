@@ -230,12 +230,20 @@ function addRemitRow(remLineBody)
         "class": "nwo-rmc-rd",
     });
     dAction.text('D');
+
+    /* Line Spacer */
+    var mSpace = $("<span>", {
+        "class": "",
+    });
+    mSpace.text(' ');
+
     var cAction = $("<span>", {
         "class": "nwo-rmc-rc",
     });
     cAction.text('C');
 
     dAction.appendTo(newActionsCol);
+    mSpace.appendTo(newActionsCol);
     cAction.appendTo(newActionsCol);
     newActionsCol.appendTo(newRow);
     /*
@@ -918,4 +926,36 @@ $( document ).ready(function() {
             });
 	});
     }
+});
+
+/*
+|------------------------------------------------------------------------------
+| To make remit lines rows delete and copy.
+|------------------------------------------------------------------------------
+*/
+// Delete
+$( document ).ready(function() {
+    $("body").on("click", '.nwo-rmc-rd', function() {
+        console.log('Removing remit line row');
+        var delRow = $(this).parent().parent();
+	delRow.remove();
+    });
+});
+
+// Copy
+$( document ).ready(function() {
+    $("body").on("click", '.nwo-rmc-rc', function() {
+        console.log('Copying remit line row');
+        var curRow = $(this).parent().parent();
+	var prevRow = curRow.prev();
+	prevRow.css('background-color', 'red');
+
+	var curRowColVals = curRow.find(".col-val");
+	var prevRowColVals = prevRow.find(".col-val");
+
+	console.log(prevRowColVals);
+	curRowColVals.each(function() {
+	    console.log('Col val: ' + $(this).val())
+	});
+    });
 });
