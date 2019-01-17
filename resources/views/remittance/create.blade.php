@@ -68,7 +68,8 @@
 		  @else
 		    value="{{ $ritwik->first_name }} {{ $ritwik->last_name }}"
 		  @endif
-                >
+                  style="color: red !important;"
+		>
 	      @endforeach
 	    </datalist>
 
@@ -165,15 +166,17 @@
                   <th class="nwo-std-5pc nwo-std-smf">Uts</th>
                   <th class="nwo-std-5pc nwo-std-smf">Dpr</th>
                   <th class="nwo-std-5pc nwo-std-smf">Apr</th>
+
+                  <th class="nwo-std-5pc nwo-std-smf" style="background-color: aliceblue; color: #888;">---</th>
                 </tr>
               </thead>
               <tbody id="remit_row_body">
 		<!-- New way: Use 2D Array -->
 		<tr>
-                  <td><input type="text" class="nwo-std-name nwo-std-10pc nwo-std-frminp nwo-std-frminp-lx"  name="remit-row[0][name]" id="" /></td>
+                  <td class="nwo-std-10pc"><input type="text" class="nwo-std-name nwo-std-10pc nwo-std-frminp nwo-std-frminp-lx"  name="remit-row[0][name]" id="" /></td>
 
 
-                  <td><input type="text" class="nwo-std-name nwo-std-10pc nwo-std-frminp nwo-std-frminp-lx"  name="remit-row[0][ritwik-name]" id="" list="id_ritwik_list" /></td>
+                  <td class="nwo-std-10pc"><input type="text" class="nwo-std-name nwo-std-10pc nwo-std-frminp nwo-std-frminp-lx"  name="remit-row[0][ritwik-name]" id="" list="id_ritwik_list" /></td>
                   <td><input type="number" step="0.25" min="0.0" class="nwo-std-5pc nwo-std-frminp col-val"  name="remit-row[0][swastyayani]" id="" /></td>
                   <td><input type="number" step="0.25" min="0.0" class="nwo-std-5pc nwo-std-frminp col-val"  name="remit-row[0][istavrity]" id="" /></td>
                   <td><input type="number" step="0.25" min="0.0" class="nwo-std-5pc nwo-std-frminp col-val"  name="remit-row[0][acharyavrity]" id="" /></td>
@@ -189,6 +192,14 @@
                   <td><input type="number" step="0.25" min="0.0" class="nwo-std-5pc nwo-std-frminp col-val"  name="remit-row[0][utsav]" id="" /></td>
                   <td><input type="number" step="0.25" min="0.0" class="nwo-std-5pc nwo-std-frminp col-val"  name="remit-row[0][diksha-pranami]" id="" /></td>
                   <td><input type="number" step="0.25" min="0.0" class="nwo-std-5pc nwo-std-frminp col-val"  name="remit-row[0][acharya-pranami]" id="" /></td>
+                  <td>
+		    <span style="color: red;" class="nwo-rmc-rd">
+		      D
+		    </span>
+		    <span style="color: blue;" class="nwo-rmc-rc">
+		      C
+		    </span>
+		  </td>
 		</tr>
                 <!-- Additional rows go here -->
               </tbody>
@@ -205,15 +216,10 @@
 	    <hr/>
 
             <!--<button type="button" id="rem_person" class="btn btn-danger">-Person</button>-->
-            <button type="button" id="add_person" class="btn btn-primary">+Person</button>
+            <button type="button" id="add_person" class="btn btn-primary btn-sm">+Person</button>
             <!--<button type="button" id="check_total" class="btn btn-danger">Check Total</button>-->
-            <input type="submit"  id="submit_remit" class="btn btn-success" value="Submit"> <br />
+            <input type="submit"  id="submit_remit" class="btn btn-success btn-sm" value="Submit"> <br />
           </form>
-
-          <h4>Dynamic</h4>
-          <!-- For ajax -->
-          <div id="for_ajax">
-          </div>
       </div>
 
   </div>

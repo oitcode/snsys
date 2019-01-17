@@ -49,3 +49,26 @@ input[type='number'] {
 .o-smf {
   font-size: 5px;
 }
+
+input[type="text"] {
+  font-size: 10px !important;
+  height: 100% !important;
+  /*border: 1px solid blue !important;*/
+  margin: 0 !important;
+  color: blue !important;
+  background-color: #fed;
+  width: 100%;
+}
+/*
+input[type="number"] {
+  font-size: 10px !important;
+  height: 100% !important;
+  border: 1px solid green !important;
+  margin: 0 !important;
+  color: blue !important;
+}
+*/
+
+.nwo-std-10pc {
+  width: 15vw !important;
+}

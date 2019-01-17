@@ -224,6 +224,23 @@ function addRemitRow(remLineBody)
     newAcharyaPrInp.appendTo(newAcharyaPrCol);
     newAcharyaPrCol.appendTo(newRow);
 
+    /* Actions  */
+    var newActionsCol = $("<td></td>");
+    var dAction = $("<span>", {
+        "class": "nwo-rmc-rd",
+    });
+    dAction.text('D');
+    var cAction = $("<span>", {
+        "class": "nwo-rmc-rc",
+    });
+    cAction.text('C');
+
+    dAction.appendTo(newActionsCol);
+    cAction.appendTo(newActionsCol);
+    newActionsCol.appendTo(newRow);
+    /*
+    */
+
 
     /**
      * Append new row to form body
