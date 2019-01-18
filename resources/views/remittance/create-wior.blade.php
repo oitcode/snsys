@@ -59,6 +59,20 @@
           <form action="{{ url('/rmt/create/store') }}" method="post">
 	    {{ csrf_field() }}
 
+	    <!-- Datalist used for ritwik list -->
+	    <datalist id="id_ritwik_list">
+	      @foreach ($ritwiks as $ritwik)
+	        <option 
+		  @if ($ritwik->middle_name != null)
+		    value="{{ $ritwik->first_name }} {{ $ritwik->middle_name }} {{ $ritwik->last_name }}"
+		  @else
+		    value="{{ $ritwik->first_name }} {{ $ritwik->last_name }}"
+		  @endif
+                  style="color: red !important;"
+		>
+	      @endforeach
+	    </datalist>
+
 	    <!-- Currency info -->
             <h4>Currency</h4>
             <div>
@@ -152,21 +166,23 @@
                   <th class="nwo-std-10pc nwo-std-smf">Person</th>
                   <th class="nwo-std-10pc nwo-std-smf">Ritwik Name</th>
 
-                  <th class="nwo-std-5pc nwo-std-smf">Swstyani</th>
-                  <th class="nwo-std-5pc nwo-std-smf">Istavrity</th>
-                  <th class="nwo-std-5pc nwo-std-smf">Acharya vrity</th>
-                  <th class="nwo-std-5pc nwo-std-smf">Dkshina</th>
-                  <th class="nwo-std-5pc nwo-std-smf">Sngathani</th>
-                  <th class="nwo-std-5pc nwo-std-smf">Ritwiki</th>
-                  <th class="nwo-std-5pc nwo-std-smf">Pranami</th>
-                  <th class="nwo-std-5pc nwo-std-smf">Swst aws</th>
-                  <th class="nwo-std-5pc nwo-std-smf">Ananda Bazar</th>
-                  <th class="nwo-std-5pc nwo-std-smf">Parivrity</th>
-                  <th class="nwo-std-5pc nwo-std-smf">Misc</th>
+                  <th class="nwo-std-5pc nwo-std-smf">Swst</th>
+                  <th class="nwo-std-5pc nwo-std-smf">Ist</th>
+                  <th class="nwo-std-5pc nwo-std-smf">Acvt</th>
+                  <th class="nwo-std-5pc nwo-std-smf">Dks</th>
+                  <th class="nwo-std-5pc nwo-std-smf">Sng</th>
+                  <th class="nwo-std-5pc nwo-std-smf">Rit</th>
+                  <th class="nwo-std-5pc nwo-std-smf">Pra</th>
+                  <th class="nwo-std-5pc nwo-std-smf">Swaw</th>
+                  <th class="nwo-std-5pc nwo-std-smf">AB</th>
+                  <th class="nwo-std-5pc nwo-std-smf">Pvt</th>
+                  <th class="nwo-std-5pc nwo-std-smf">Msc</th>
 
-                  <th class="nwo-std-5pc nwo-std-smf">Utsav</th>
-                  <th class="nwo-std-5pc nwo-std-smf">Diksha Pr</th>
-                  <th class="nwo-std-5pc nwo-std-smf">Acharya Pr</th>
+                  <th class="nwo-std-5pc nwo-std-smf">Uts</th>
+                  <th class="nwo-std-5pc nwo-std-smf">Dpr</th>
+                  <th class="nwo-std-5pc nwo-std-smf">Apr</th>
+
+                  <th class="nwo-std-5pc nwo-std-smf" style="background-color: aliceblue; color: #888;">---</th>
                 </tr>
               </thead>
               <tbody id="remit_row_body">
@@ -179,7 +195,7 @@
 		    </td>
                     <td>
 		      <input type="text" class="nwo-std-name nwo-std-10pc nwo-std-frminp nwo-std-frminp-lx"  name="remit-row[{{ $loop->index }}][ritwik-name]" id=""
-		        value="{{ $rl->oblate->worker->person->first_name }} {{ $rl->oblate->worker->person->middle_name }} {{ $rl->oblate->worker->person->last_name }}" />
+		        value="{{ $rl->oblate->worker->person->first_name }} {{ $rl->oblate->worker->person->middle_name }} {{ $rl->oblate->worker->person->last_name }}" list="id_ritwik_list" />
 		    </td>
                     <td>
 		      <input type="number" step="0.25" min="0.0" class="nwo-std-5pc nwo-std-frminp col-val"  name="remit-row[{{ $loop->index }}][swastyayani]" id=""
@@ -303,6 +319,10 @@
 		          value=""
 			@endif
 		     />
+		    </td>
+            <td>
+		      <span> </span>
+		      <span class="nwo-rmc-rc">C</span>
 		    </td>
 		  </tr>
 

@@ -192,7 +192,6 @@
                   <td><input type="number" class="nwo-std-5pc nwo-std-frminp col-val col-dpr"  name="remit-row[0][diksha-pranami]" id="" /></td>
                   <td><input type="number" class="nwo-std-5pc nwo-std-frminp col-val col-apr"  name="remit-row[0][acharya-pranami]" id="" /></td>
                   <td>
-		    <span class="nwo-rmc-rd">D</span>
 		    <span> </span>
 		    <span class="nwo-rmc-rc">C</span>
 		  </td>

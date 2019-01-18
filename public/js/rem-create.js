@@ -214,7 +214,7 @@ function addRemitRow(remLineBody)
     });
     cAction.text('C');
 
-    dAction.appendTo(newActionsCol);
+    //dAction.appendTo(newActionsCol);
     mSpace.appendTo(newActionsCol);
     cAction.appendTo(newActionsCol);
     newActionsCol.appendTo(newRow);

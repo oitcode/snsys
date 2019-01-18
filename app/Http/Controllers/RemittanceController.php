@@ -1546,6 +1546,11 @@ class RemittanceController extends Controller
      */
     public function getlastFamilyRemittance(Request $request)
     {
+	/* Ritwik list to pass to views */
+	$ritwiks = Worker::join('person', 'person.person_id', '=', 'worker.person_id')
+	    ->orderBy('person.first_name')
+	    ->get();
+
 	/* Get lot info if in lot */
 	if (session()->has('lot')) {
 	    $lotCode = session()->get('lot');
@@ -1579,9 +1584,11 @@ class RemittanceController extends Controller
 	    if (session()->has('lot')) {
                 return view('remittance.create')
 	            ->with('remainingBal', $remainingBal)
-	            ->with('bvDepositDate', $bvDepositDate);
+	            ->with('bvDepositDate', $bvDepositDate)
+	            ->with('ritwiks', $ritwiks);
 	    } else {
-                return view('remittance.create');
+                return view('remittance.create')
+	                ->with('ritwiks', $ritwiks);
 	    }
 	}
 
@@ -1591,10 +1598,12 @@ class RemittanceController extends Controller
             return view('remittance.create-wior')
                 ->with('remainingBal', $remainingBal)
                 ->with('bvDepositDate', $bvDepositDate)
-	        ->with('lastRmt', $lastRemittance);
+	            ->with('lastRmt', $lastRemittance)
+	            ->with('ritwiks', $ritwiks);
         } else {
             return view('remittance.create-wior')
-	        ->with('lastRmt', $lastRemittance);
+	            ->with('lastRmt', $lastRemittance)
+	            ->with('ritwiks', $ritwiks);
         }
     }
 
