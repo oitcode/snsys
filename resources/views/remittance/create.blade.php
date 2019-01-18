@@ -144,6 +144,13 @@
             <!-- Remittance Lines -->
             <h4>Breakdown</h4>
 
+			<!-- Toolbar -->
+			<div class="bg-alert" style="background-color: #eee; margin-bottom: 10px; padding: 5px; font-size: 10px;">
+			  <a href="">Convert</a>
+			  &nbsp;&nbsp;&nbsp;&nbsp;
+			  <a href="">Clear</a>
+			</div>
+
 
             <table class="nwo-form-table">
               <thead>

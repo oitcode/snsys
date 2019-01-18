@@ -198,7 +198,7 @@
 		        value="{{ $rl->oblate->worker->person->first_name }} {{ $rl->oblate->worker->person->middle_name }} {{ $rl->oblate->worker->person->last_name }}" list="id_ritwik_list" />
 		    </td>
                     <td>
-		      <input type="number" step="0.25" min="0.0" class="nwo-std-5pc nwo-std-frminp col-val"  name="remit-row[{{ $loop->index }}][swastyayani]" id=""
+		      <input type="number" step="0.25" min="0.0" class="nwo-std-5pc nwo-std-frminp col-val col-swas"  name="remit-row[{{ $loop->index }}][swastyayani]" id=""
                         @if ($rl->swastyayani > 0)
 		          value="{{ $rl->swastyayani }}"
                         @else
@@ -207,12 +207,12 @@
 		     />
 	            </td>
                     <td>
-		      <input type="number" step="0.25" min="0.0" class="nwo-std-5pc nwo-std-frminp col-val"  name="remit-row[{{ $loop->index }}][istavrity]" id=""
+		      <input type="number" step="0.25" min="0.0" class="nwo-std-5pc nwo-std-frminp col-val col-ist"  name="remit-row[{{ $loop->index }}][istavrity]" id=""
 		        value="{{ $rl->istavrity }}"
 		     />
 		    </td>
                     <td>
-		      <input type="number" step="0.25" min="0.0" class="nwo-std-5pc nwo-std-frminp col-val"  name="remit-row[{{ $loop->index }}][acharyavrity]" id=""
+		      <input type="number" step="0.25" min="0.0" class="nwo-std-5pc nwo-std-frminp col-val col-acvt"  name="remit-row[{{ $loop->index }}][acharyavrity]" id=""
                         @if ($rl->acharyavrity > 0)
 		          value="{{ $rl->acharyavrity }}"
                         @else
@@ -221,7 +221,7 @@
 		     />
 		    </td>
                     <td>
-		      <input type="number" step="0.25" min="0.0" class="nwo-std-5pc nwo-std-frminp col-val"  name="remit-row[{{ $loop->index }}][dakshina]" id=""
+		      <input type="number" step="0.25" min="0.0" class="nwo-std-5pc nwo-std-frminp col-dks"  name="remit-row[{{ $loop->index }}][dakshina]" id=""
                         @if ($rl->dakshina > 0)
 		          value="{{ $rl->dakshina }}"
                         @else
@@ -230,7 +230,7 @@
 		     />
 		    </td>
                     <td>
-		      <input type="number" step="0.25" min="0.0" class="nwo-std-5pc nwo-std-frminp col-val"  name="remit-row[{{ $loop->index }}][sangathani]" id=""
+		      <input type="number" step="0.25" min="0.0" class="nwo-std-5pc nwo-std-frminp col-val col-sng"  name="remit-row[{{ $loop->index }}][sangathani]" id=""
                         @if ($rl->sangathani > 0)
 		          value="{{ $rl->sangathani }}"
                         @else
@@ -239,7 +239,7 @@
 		     />
 		    </td>
                     <td>
-		      <input type="number" step="0.25" min="0.0" class="nwo-std-5pc nwo-std-frminp col-val"  name="remit-row[{{ $loop->index }}][ritwiki]" id=""
+		      <input type="number" step="0.25" min="0.0" class="nwo-std-5pc nwo-std-frminp col-val col-rit"  name="remit-row[{{ $loop->index }}][ritwiki]" id=""
                         @if ($rl->ritwiki > 0)
 		          value="{{ $rl->ritwiki }}"
                         @else
@@ -248,7 +248,7 @@
 		     />
 		    </td>
                     <td>
-		      <input type="number" step="0.25" min="0.0" class="nwo-std-5pc nwo-std-frminp col-val"  name="remit-row[{{ $loop->index }}][pranami]" id=""
+		      <input type="number" step="0.25" min="0.0" class="nwo-std-5pc nwo-std-frminp col-val col-pra"  name="remit-row[{{ $loop->index }}][pranami]" id=""
                         @if ($rl->pranami > 0)
 		          value="{{ $rl->pranami }}"
                         @else
@@ -257,7 +257,7 @@
 		     />
 		    </td>
                     <td>
-		      <input type="number" step="0.25" min="0.0" class="nwo-std-5pc nwo-std-frminp col-val"  name="remit-row[{{ $loop->index }}][swastyayani-awasista]" id=""
+		      <input type="number" step="0.25" min="0.0" class="nwo-std-5pc nwo-std-frminp col-val col-swaw"  name="remit-row[{{ $loop->index }}][swastyayani-awasista]" id=""
                         @if ($rl->swastyayani_awasista > 0)
 		          value="{{ $rl->swastyayani_awasista }}"
                         @else
@@ -266,7 +266,7 @@
 		     />
 		    </td>
                     <td>
-		      <input type="number" step="0.25" min="0.0" class="nwo-std-5pc nwo-std-frminp col-val"  name="remit-row[{{ $loop->index }}][ananda-bazar]" id=""
+		      <input type="number" step="0.25" min="0.0" class="nwo-std-5pc nwo-std-frminp col-val col-ab"  name="remit-row[{{ $loop->index }}][ananda-bazar]" id=""
                         @if ($rl->ananda_bazar > 0)
 		          value="{{ $rl->ananda_bazar }}"
                         @else
@@ -275,7 +275,7 @@
 		     />
 		    </td>
                     <td>
-		      <input type="number" step="0.25" min="0.0" class="nwo-std-5pc nwo-std-frminp col-val"  name="remit-row[{{ $loop->index }}][parivrity]" id=""
+		      <input type="number" step="0.25" min="0.0" class="nwo-std-5pc nwo-std-frminp col-val col-pvt"  name="remit-row[{{ $loop->index }}][parivrity]" id=""
                         @if ($rl->parivrity > 0)
 		          value="{{ $rl->parivrity }}"
                         @else
@@ -284,7 +284,7 @@
 		     />
 		    </td>
                     <td>
-		      <input type="number" step="0.25" min="0.0" class="nwo-std-5pc nwo-std-frminp col-val"  name="remit-row[{{ $loop->index }}][misc]" id=""
+		      <input type="number" step="0.25" min="0.0" class="nwo-std-5pc nwo-std-frminp col-val col-msc"  name="remit-row[{{ $loop->index }}][misc]" id=""
                         @if ( $rl->misc  > 0)
 		          value="{{ $rl->misc }}"
                         @else
@@ -294,7 +294,7 @@
 		    </td>
 
                     <td>
-		      <input type="number" step="0.25" min="0.0" class="nwo-std-5pc nwo-std-frminp col-val"  name="remit-row[{{ $loop->index }}][utsav]" id=""
+		      <input type="number" step="0.25" min="0.0" class="nwo-std-5pc nwo-std-frminp col-val col-uts"  name="remit-row[{{ $loop->index }}][utsav]" id=""
                         @if ( $rl->utsav  > 0)
 		          value="{{ $rl->utsav }}"
                         @else
@@ -303,7 +303,7 @@
 		     />
 		    </td>
                     <td>
-		      <input type="number" step="0.25" min="0.0" class="nwo-std-5pc nwo-std-frminp col-val"  name="remit-row[{{ $loop->index }}][diksha-pranami]" id=""
+		      <input type="number" step="0.25" min="0.0" class="nwo-std-5pc nwo-std-frminp col-val col-dpr"  name="remit-row[{{ $loop->index }}][diksha-pranami]" id=""
                         @if ($rl->diksha_pranami > 0)
 		          value="{{ $rl->diksha_pranami }}"
                         @else
@@ -312,7 +312,7 @@
 		     />
 		    </td>
                     <td>
-		      <input type="number" step="0.25" min="0.0" class="nwo-std-5pc nwo-std-frminp col-val"  name="remit-row[{{ $loop->index }}][acharya-pranami]" id=""
+		      <input type="number" step="0.25" min="0.0" class="nwo-std-5pc nwo-std-frminp col-val col-apr"  name="remit-row[{{ $loop->index }}][acharya-pranami]" id=""
                         @if ($rl->acharya_pranami > 0)
 		          value="{{ $rl->acharya_pranami }}"
                         @else
@@ -347,16 +347,6 @@
               <!--<button type="button" id="check_total" class="btn btn-danger">Check Total</button>-->
               <input type="submit"  id="submit_remit" class="btn btn-success" value="Submit"> <br />
 	    </div>
-
-	    <br />
-	    <br />
-            <button type="button" id="" class="btn btn-primary">Save</button>
-            <button type="button" id="" class="btn btn-primary">Delete</button>
-            <button type="button" id="" class="btn btn-primary">Print</button>
-            <button type="button" id="" class="btn btn-primary">Search</button>
-            <button type="button" id="" class="btn btn-primary">New Voucher</button>
-            <button type="button" id="" class="btn btn-success">Post</button>
-            <button type="button" id="" class="btn btn-danger">Unpost</button>
           </form>
       </div>
   </div>
