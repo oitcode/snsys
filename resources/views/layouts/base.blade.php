@@ -154,8 +154,23 @@
                               DB <span class="caret"></span>
                           </a>
                           <ul class="dropdown-menu">
+                            <li><a href="/db/family/search">Family</a></li>
+                            <li><a href="/db/remittance/search">Remittance</a></li>
+                            <li><a href="/db/worker/msearch">Worker</a></li>
+                            <li><a href="">Find</a></li>
+                          </ul>
+                      </li>
+
+		      <!-- Report -->
+                      <li class="dropdown">
+                          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" v-pre>
+                              Report <span class="caret"></span>
+                          </a>
+                          <ul class="dropdown-menu">
                             <li><a href="">Family</a></li>
                             <li><a href="">Remittance</a></li>
+                            <li><a href="">Worker</a></li>
+                            <li><a href="">Find</a></li>
                           </ul>
                       </li>
 

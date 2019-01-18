@@ -20,7 +20,7 @@
 	  </p>
 
 	  <p>
-	    <table class="table table-striped table-bordered">
+	    <table class="table table-condensed table-striped table-bordered table-hover">
 	      <thead>
 	        <tr class="info">
                   <th>Serial number</th>
@@ -39,6 +39,7 @@
                     </td>
 		    <td>
 		      {{ $remittance->submitter->person->first_name }}
+		      {{ $remittance->submitter->person->middle_name }}
 		      {{ $remittance->submitter->person->last_name }}
 		    </td>
 		    <td>{{  $remittance->submitted_date  }}</td>
