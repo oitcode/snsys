@@ -573,9 +573,11 @@ class RemittanceController extends Controller
 	    $match = false;
 	    $ritwikId = -1;
 	    foreach ($ritwiks as $ritwik) {
-		$person = Person::all()
-		          ->where('person_id', $ritwik->person_id)
-			  ->first();
+		$person = Person::find($ritwik->person_id);
+			 // Note: Was a nasty performance bug #pb01
+			 // very slow time to run
+		     // ->where('person_id', $ritwik->person_id)
+			 // ->first();
 
 		if ($person->first_name == $ritwikName['first_name']
 		  &&
