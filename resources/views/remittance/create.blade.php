@@ -47,9 +47,12 @@
 		  </strong>
 	      </p>
 	      <p>
-	          <strong>
-		    Bank deposit date  => {{ $bvDepositDate }}
-		  </strong>
+	        <strong>
+		      Bank deposit date  =>
+			  <span id="nwo-bdd">
+			    {{ $bvDepositDate }}
+			  </span>
+		    </strong>
 	      </p>
 	      <hr />
 	  @endif

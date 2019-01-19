@@ -956,3 +956,19 @@ $( document ).ready(function() {
         curRow.find('.col-apr').val(prevRow.find('.col-apr').val());
     });
 });
+
+
+
+
+$( document ).ready(function() {
+    var bdd = $("#nwo-bdd");
+
+	bdd.click(function () {
+		var sd = $("#id_mi_sdate");
+		sd.val($.trim(bdd.text()));
+	});
+});
+
+
+
+
