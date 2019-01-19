@@ -1658,5 +1658,29 @@ class RemittanceController extends Controller
 	    return 'Sorry,  remittance ' . $request->input('serial-num') . ' not found!';
 	}
     }
+
+    
+	/* Serve ajax response with family's last remit data */
+    public function ajaxCreateFcServe(Request $request)
+	{
+	    //
+
+		//$fc = $request->input('family_code');
+
+		//$family = Family::where('family_code', $fc)->first();
+
+		//if (!$family) {
+		if (true) {
+		    return response()->json(
+			    [
+				    'msg' => 'Family record NOT found',
+				],
+				200
+			);
+		}
+
+
+	}
+
 }
 

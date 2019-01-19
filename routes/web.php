@@ -46,6 +46,9 @@ Route::get('/rmt/print/ind/{remittance_id}', 'RemittanceController@printRemittan
 /* Delete remittance */
 Route::get('/rmt/delete/{rmtId}', 'RemittanceController@deleteRemittance');
 
+/* Remittance create ajax */
+Route::post('/rmt/create/fcajax', 'RemittanceController@ajaxCreateFcServe');
+
 // Print to PDF
 Route::get('/rmt/print/pdf/lot/form', 'PrintController@printLotForm');
 Route::get('/rmt/print/pdf/single/form', 'PrintController@printSingleForm');
