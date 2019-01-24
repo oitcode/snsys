@@ -17,7 +17,7 @@ function addRemitRow(remLineBody)
     var newNameCol = $("<td></td>");
     var newNameInp = $("<input />", {
         "type": "text",
-        "class": "nwo-std-name nwo-std-10pc nwo-std-frminp nwo-std-frminp-lx",
+        "class": "nwo-std-name nwo-std-10pc nwo-std-frminp nwo-std-frminp-lx col-oblname",
         "name": "remit-row[" + rowCount + "][name]",
         "id": "",
     });
@@ -31,7 +31,7 @@ function addRemitRow(remLineBody)
     var newRitwikCol = $("<td></td>");
     var newRitwikInp = $("<input />", {
         "type": "text",
-        "class": "nwo-std-name nwo-std-10pc nwo-std-frminp nwo-std-frminp-lx",
+        "class": "nwo-std-name nwo-std-10pc nwo-std-frminp nwo-std-frminp-lx col-oblrtkname",
         "name": "remit-row[" + rowCount + "][ritwik-name]",
         "id": "",
 	"list": "id_ritwik_list",
@@ -346,7 +346,7 @@ $( document ).ready(function() {
         /* Add 5 additional remit rows */
         var i = 0;
         for (i = 0; i < 5; i++) {
-            addRemitRow(remLineBody);
+            //addRemitRow(remLineBody);
         }
     }
 });
@@ -970,17 +970,61 @@ $( document ).ready(function() {
 });
 
 
+/*
+|------------------------------------------------------------------------------
+| Fill in the remittance create form with ajax served data.
+|------------------------------------------------------------------------------
+|
+*/
+
+var ajaxDone = false;
 $( document ).ready(function() {
+
     var fc = $("#id_mi_fcode");
+
     // Form to submit
     var form = $("#ajx-frm");
 
+    var rlBody = $("#remit_row_body");
+
+
 	fc.click(function () {
-	$.ajaxSetup({
-          headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-          }
-	});
+		/*
+		| Do not repeat more than once.
+		|
+		*/
+	    if (ajaxDone == true) {
+	        return;
+	    }
+
+		/*
+		| If blank value do not do anything.
+		|
+		*/
+	    if (fc.val() == '') {
+			return;
+		}
+
+		/*
+		| If new family then just add some blank row.
+		| No need to do make any ajax calls. Just return!
+		|
+		*/
+	    if (fc.val() == 'new') {
+            for (i = 0; i < 5; i++) {
+                addRemitRow(rlBody);
+            }
+
+			return;
+		}
+
+		/* This was needed else was getting 419 status from web server */
+	    $.ajaxSetup({
+              headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+              }
+	    });
+
         $.ajax({
             // The URL for the request
             url: "/rmt/create/fcajax",
@@ -1003,26 +1047,98 @@ $( document ).ready(function() {
 	       // alert(json.msg);
 	       if (json.msg == 'found') {
                    // Put in address
-		   var inpAddr = $("#id_mi_saddress");
-		   inpAddr.val(json.family.address);
+		       var inpAddr = $("#id_mi_saddress");
+		       inpAddr.val(json.family.address);
 
-		   var inpSubmitter = $("#id_mi_sname");
-		   inpSubmitter.val(
-		       json.submitterPerson.first_name + " " + 
-		       json.submitterPerson.middle_name + " " +
-		       json.submitterPerson.last_name
-		   );
-
-		   $("body").append("</>Hello</p>");
-		   console.log(json);
+		       var inpSubmitter = $("#id_mi_sname");
+		       inpSubmitter.val(
+		           json.remittance.submitter.person.first_name + " " + 
+		           json.remittance.submitter.person.middle_name + " " +
+		           json.remittance.submitter.person.last_name
+		       );
 
 
-		   //alert(json.remittanceLines);
+		       /* Fill in all remittance lines. */
+               for(var i = 0; i < json.remittance.remittance_lines.length; i++) {
+                   addRemitRow(rlBody);
 
-	       } else {
-	           //alert('Sorry! No previous record.');
-	       }
+		           var curRow = rlBody.children("tr").last();
 
+		           var remittanceLine = json.remittance.remittance_lines[i];
+		           person = remittanceLine.oblate.person;
+				   ritwik = remittanceLine.oblate.worker.person;
+
+		           /* Fill in the values yo! */
+				   var personName = person.first_name + " ";
+				   if (person.middle_name != null) {
+				       personName += person.middle_name + " ";
+				   }
+				   personName += person.last_name;
+		           curRow.find(".col-oblname").first().val(personName);
+
+				   var ritwikName = ritwik.first_name + " ";
+				   if (ritwik.middle_name != null) {
+				       ritwikName += ritwik.middle_name + " ";
+				   }
+				   ritwikName += ritwik.last_name;
+		           curRow.find(".col-oblrtkname").first().val(ritwikName);
+
+		           curRow.find(".col-swas").first().val(
+		               remittanceLine.swastyayani
+                   );
+		           curRow.find(".col-ist").first().val(
+		               remittanceLine.istavrity
+                   );
+		           curRow.find(".col-acvt").first().val(
+		               remittanceLine.acharyavrity
+                   );
+		           curRow.find(".col-dks").first().val(
+		               remittanceLine.dakshina
+                   );
+		           curRow.find(".col-sng").first().val(
+		               remittanceLine.sangathani
+                   );
+		           curRow.find(".col-rit").first().val(
+		               remittanceLine.ritwiki
+                   );
+		           curRow.find(".col-pra").first().val(
+		               remittanceLine.pranami
+                   );
+		           curRow.find(".col-swaw").first().val(
+		               remittanceLine.swastyayani_awasista
+                   );
+		           curRow.find(".col-ab").first().val(
+		               remittanceLine.ananda_bazar
+                   );
+		           curRow.find(".col-pvt").first().val(
+		               remittanceLine.parivrity
+                   );
+		           curRow.find(".col-msc").first().val(
+		               remittanceLine.misc
+                   );
+		           curRow.find(".col-uts").first().val(
+		               remittanceLine.utsav
+                   );
+		           curRow.find(".col-dpr").first().val(
+		               remittanceLine.diksha_pranami
+                   );
+		           curRow.find(".col-apr").first().val(
+		               remittanceLine.acharya_pranami
+                   );
+
+		           curRow = curRow.next("tr");
+               }
+
+		       console.log(json);
+		       //alert(json.remittanceLines);
+	           } else {
+	               alert('Sorry! No previous record.');
+                   for (i = 0; i < 5; i++) {
+                       addRemitRow(rlBody);
+                   }
+		           return;
+	           }
+		       ajaxDone = true;
             })
             // Code to run if the request fails; the raw request and
             // status codes are passed to the function

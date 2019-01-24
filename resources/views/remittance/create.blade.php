@@ -182,9 +182,10 @@
               </thead>
               <tbody id="remit_row_body">
 		<!-- New way: Use 2D Array -->
+		<!--
 		<tr>
-                  <td class="nwo-std-10pc"><input type="text" class="nwo-std-name nwo-std-10pc nwo-std-frminp nwo-std-frminp-lx"  name="remit-row[0][name]" id="" /></td>
-                  <td class="nwo-std-10pc"><input type="text" class="nwo-std-name nwo-std-10pc nwo-std-frminp nwo-std-frminp-lx"  name="remit-row[0][ritwik-name]" id="" list="id_ritwik_list" /></td>
+                  <td class="nwo-std-10pc"><input type="text" class="nwo-std-name nwo-std-10pc nwo-std-frminp nwo-std-frminp-lx col-oblname"  name="remit-row[0][name]" id="" /></td>
+                  <td class="nwo-std-10pc"><input type="text" class="nwo-std-name nwo-std-10pc nwo-std-frminp nwo-std-frminp-lx col-oblrtkname"  name="remit-row[0][ritwik-name]" id="" list="id_ritwik_list" /></td>
 
                   <td><input type="number" min="1" step="1" class="nwo-std-5pc nwo-std-frminp col-val col-swas"  name="remit-row[0][swastyayani]" id="" /></td>
                   <td><input type="number" class="nwo-std-5pc nwo-std-frminp col-val col-ist"  name="remit-row[0][istavrity]" id="" /></td>
@@ -206,6 +207,7 @@
 		    <span class="nwo-rmc-rc">C</span>
 		  </td>
 		</tr>
+		-->
                 <!-- Additional rows go here -->
               </tbody>
             </table>

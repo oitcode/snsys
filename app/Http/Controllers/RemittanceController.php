@@ -1669,7 +1669,7 @@ class RemittanceController extends Controller
             return response()->json(['msg' => 'notfound'], 200);
         }
 	
-	$remittance = Remittance::where('family_id', $family->family_id)->first();
+	$remittance = Remittance::where('family_id', $family->family_id)->orderBy('created_time', 'desc')->first();
         if (!$remittance) {
             return response()->json(['msg' => 'notfound'], 200);
         }
@@ -1684,14 +1684,19 @@ class RemittanceController extends Controller
             return response()->json(['msg' => 'notfound'], 200);
         }
 
+    foreach ($remittanceLines as $remittanceLine) {
+	    $person = $remittanceLine->oblate->person;
+		$ritwik = $remittanceLine->oblate->worker->person;
+	}
+
         if ($family) {
             return response()->json(
                 [
                     'msg' => 'found',
-		    'family' => $family,
-		    'remittance' => $remittance,
-		    'submitterPerson' => $submitterPerson,
-		    'remittanceLines' => $remittanceLines,
+		            'family' => $family,
+		            'remittance' => $remittance,
+		            // 'submitterPerson' => $submitterPerson,
+		            // 'remittanceLines' => $remittanceLines,
             	],
             	    200
             );
