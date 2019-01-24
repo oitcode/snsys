@@ -1659,28 +1659,50 @@ class RemittanceController extends Controller
 	}
     }
 
-    
-	/* Serve ajax response with family's last remit data */
+    /* Serve ajax response with family's last remit data */
     public function ajaxCreateFcServe(Request $request)
-	{
-	    //
+    {
+        $fc = $request->input('family-code');
 
-		//$fc = $request->input('family_code');
+        $family = Family::where('family_code', $fc)->first();
+        if (!$family) {
+            return response()->json(['msg' => 'notfound'], 200);
+        }
+	
+	$remittance = Remittance::where('family_id', $family->family_id)->first();
+        if (!$remittance) {
+            return response()->json(['msg' => 'notfound'], 200);
+        }
 
-		//$family = Family::where('family_code', $fc)->first();
+	$submitterPerson = $remittance->submitter->person;
+        if (!$submitterPerson) {
+            return response()->json(['msg' => 'notfound'], 200);
+        }
 
-		//if (!$family) {
-		if (true) {
-		    return response()->json(
-			    [
-				    'msg' => 'Family record NOT found',
-				],
-				200
-			);
-		}
+	$remittanceLines = $remittance->remittance_lines;
+        if (!$remittanceLines) {
+            return response()->json(['msg' => 'notfound'], 200);
+        }
 
-
+        if ($family) {
+            return response()->json(
+                [
+                    'msg' => 'found',
+		    'family' => $family,
+		    'remittance' => $remittance,
+		    'submitterPerson' => $submitterPerson,
+		    'remittanceLines' => $remittanceLines,
+            	],
+            	    200
+            );
+        } else {
+            return response()->json(
+                [
+                    'msg' => 'notfound',
+            	],
+            	    200
+            );
 	}
-
+    }
 }
 

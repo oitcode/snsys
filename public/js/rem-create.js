@@ -972,42 +972,69 @@ $( document ).ready(function() {
 
 $( document ).ready(function() {
     var fc = $("#id_mi_fcode");
+    // Form to submit
+    var form = $("#ajx-frm");
 
 	fc.click(function () {
+	$.ajaxSetup({
+          headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          }
+	});
         $.ajax({
             // The URL for the request
             url: "/rmt/create/fcajax",
-         
-            // The data to send (will be converted to a query string)
-            data: {
-                id: 123
-                // family_code: fc.val();
-            },
+
+	    // From: https://stackoverflow.com/questions/1960240/jquery-ajax-submit-form
+	    // Serializes the form elements?
+            data: form.serialize(),
          
             // Whether this is a POST or GET request
             type: "POST",
          
             // The type of data we expect back
-             dataType : "json",
+            dataType : "json",
         })
             // Code to run if the request succeeds (is done);
             // The response is passed to the function
             .done(function( json ) {
                // $( "<h1>" ).text( json.title ).appendTo( "body" );
                // $( "<div class=\"content\">").html( json.html ).appendTo( "body" );
-			   alert(json.msg);
+	       // alert(json.msg);
+	       if (json.msg == 'found') {
+                   // Put in address
+		   var inpAddr = $("#id_mi_saddress");
+		   inpAddr.val(json.family.address);
+
+		   var inpSubmitter = $("#id_mi_sname");
+		   inpSubmitter.val(
+		       json.submitterPerson.first_name + " " + 
+		       json.submitterPerson.middle_name + " " +
+		       json.submitterPerson.last_name
+		   );
+
+		   $("body").append("</>Hello</p>");
+		   console.log(json);
+
+
+		   //alert(json.remittanceLines);
+
+	       } else {
+	           //alert('Sorry! No previous record.');
+	       }
+
             })
             // Code to run if the request fails; the raw request and
             // status codes are passed to the function
             .fail(function( xhr, status, errorThrown ) {
-              alert( "Sorry, there was a problem!" );
+              alert( "Sorry, yahoo there was a problem!" );
               console.log( "Error: " + errorThrown );
               console.log( "Status: " + status );
               console.dir( xhr );
             })
             // Code to run regardless of success or failure;
             .always(function( xhr, status ) {
-              alert( "The request is complete!" );
+              //alert( "The request is complete!" );
             });
     });
 });
