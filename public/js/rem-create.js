@@ -1035,22 +1035,33 @@ $( document ).ready(function() {
     	    return;
         }
 
-	/* Return if not ten digit family code */
-	if (fc.val().length != 10) {
+	    /* Return if not ten digit family code */
+	    if (fc.val().length != 10) {
             ajaxMsgDiv.empty();
-    
+        
             var newMsgPara = $('<p style="color: red;"></p>');
             newMsgPara.text("Family code should be 10 digits");
             newMsgPara.appendTo(ajaxMsgDiv);
 
-	    return;
-	}
+	        return;
+	    }
+
+		/* Return if not a valid family code */
+		if (! familyCodeIsValid(fc.val())) {
+            ajaxMsgDiv.empty();
+        
+            var newMsgPara = $('<p style="color: red;"></p>');
+            newMsgPara.text("Invalid family code. Check digit mismatch");
+            newMsgPara.appendTo(ajaxMsgDiv);
+
+		    return;
+		}
     
     	/**
-	 * This was needed else was getting 419 status from web server
-	 *
+	     * This was needed else was getting 419 status from web server
+	     *
          * https://stackoverflow.com/questions/46466167/laravel-5-5-ajax-call-419-unknown-status
-	 *
+	     *
          */
         $.ajaxSetup({
             headers: {
@@ -1169,48 +1180,76 @@ $( document ).ready(function() {
     	            curRow.find(".col-oblrtkname").first().val(ritwikName);
     
     	            /* All the numbers */
-    	            curRow.find(".col-swas").first().val(
-    	                remittanceLine.swastyayani
+					if (remittanceLine.swastyayani > 0) {
+    	                curRow.find(".col-swas").first().val(
+    	                    remittanceLine.swastyayani
                         );
-    	            curRow.find(".col-ist").first().val(
-    	                remittanceLine.istavrity
+					}
+					if (remittanceLine.istavrity > 0) {
+    	                curRow.find(".col-ist").first().val(
+    	                    remittanceLine.istavrity
                         );
-    	            curRow.find(".col-acvt").first().val(
-    	                remittanceLine.acharyavrity
+					}
+					if (remittanceLine.acharyavrity > 0) {
+    	                curRow.find(".col-acvt").first().val(
+    	                    remittanceLine.acharyavrity
                         );
-    	            curRow.find(".col-dks").first().val(
-    	                remittanceLine.dakshina
+					}
+					if (remittanceLine.dakshina > 0) {
+    	                curRow.find(".col-dks").first().val(
+    	                    remittanceLine.dakshina
                         );
-    	            curRow.find(".col-sng").first().val(
-    	                remittanceLine.sangathani
+					}
+					if (remittanceLine.sangathani > 0) {
+    	                curRow.find(".col-sng").first().val(
+    	                    remittanceLine.sangathani
                         );
-    	            curRow.find(".col-rit").first().val(
-    	                remittanceLine.ritwiki
+					}
+					if (remittanceLine.ritwiki > 0) {
+    	                curRow.find(".col-rit").first().val(
+    	                    remittanceLine.ritwiki
                         );
-    	            curRow.find(".col-pra").first().val(
-    	                remittanceLine.pranami
+					}
+					if (remittanceLine.pranami > 0) {
+    	                curRow.find(".col-pra").first().val(
+    	                    remittanceLine.pranami
                         );
-    	            curRow.find(".col-swaw").first().val(
-    	                remittanceLine.swastyayani_awasista
+					}
+					if (remittanceLine.swastyayani_awasista > 0) {
+    	                curRow.find(".col-swaw").first().val(
+    	                    remittanceLine.swastyayani_awasista
                         );
-    	            curRow.find(".col-ab").first().val(
-    	                remittanceLine.ananda_bazar
+					}
+					if (remittanceLine.ananda_bazar > 0) {
+    	                curRow.find(".col-ab").first().val(
+    	                    remittanceLine.ananda_bazar
                         );
-    	            curRow.find(".col-pvt").first().val(
-    	                remittanceLine.parivrity
+					}
+					if (remittanceLine.parivrity > 0) {
+    	                curRow.find(".col-pvt").first().val(
+    	                    remittanceLine.parivrity
                         );
-    	            curRow.find(".col-msc").first().val(
-    	                remittanceLine.misc
+					}
+					if (remittanceLine.misc > 0) {
+    	                curRow.find(".col-msc").first().val(
+    	                    remittanceLine.misc
                         );
-    	            curRow.find(".col-uts").first().val(
-    	                remittanceLine.utsav
+					}
+					if (remittanceLine.utsav > 0) {
+    	                curRow.find(".col-uts").first().val(
+    	                    remittanceLine.utsav
                         );
-    	            curRow.find(".col-dpr").first().val(
-    	                remittanceLine.diksha_pranami
+					}
+					if (remittanceLine.diksha_pranami > 0) {
+    	                curRow.find(".col-dpr").first().val(
+    	                    remittanceLine.diksha_pranami
                         );
-    	            curRow.find(".col-apr").first().val(
-    	                remittanceLine.acharya_pranami
+					}
+					if (remittanceLine.acharya_pranami > 0) {
+    	                curRow.find(".col-apr").first().val(
+    	                    remittanceLine.acharya_pranami
                         );
+					}
     
     	            curRow = curRow.next("tr");
                 }
@@ -1289,7 +1328,7 @@ function familyCodeCheckDigit(familyCode) {
 
     var checkDigit = -1;
 
-    if (familyCode.length != 9) {
+    if (familyCode.length != 10) {
         return -1;
     }
 
@@ -1320,5 +1359,18 @@ function familyCodeCheckDigit(familyCode) {
         checkDigit = 11 - wsRemainder;
     }
 
+	// console.log(familyCode + " " + checkDigit);
+
     return checkDigit;
+}
+
+/* Check if a family code is valid */
+/* TODO: There are many things to validate more ! */
+function familyCodeIsValid(familyCode)
+{
+	if (familyCode[9] == familyCodeCheckDigit(familyCode)) {
+	    return true;
+	} else {
+	    return false;
+	}
 }

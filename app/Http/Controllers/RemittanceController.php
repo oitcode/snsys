@@ -1662,32 +1662,39 @@ class RemittanceController extends Controller
     /* Serve ajax response with family's last remit data */
     public function ajaxCreateFcServe(Request $request)
     {
-        $fc = $request->input('family-code');
+        $tenDFamCode = $request->input('family-code');
 
-        $family = Family::where('family_code', $fc)->first();
+	    $famCodeParts = $this->breakFamilyCode($tenDFamCode);
+	    if ($famCodeParts === false) {
+	        /* Todo: Show error istead of dying. */
+	        die("Error: Could not extract family code parts");
+	    }
+	    $nineDFamCode = $famCodeParts['nineDFamCode'];
+
+        $family = Family::where('family_code', $nineDFamCode)->first();
         if (!$family) {
             return response()->json(['msg' => 'notfound'], 200);
         }
 	
-	$remittance = Remittance::where('family_id', $family->family_id)->orderBy('created_time', 'desc')->first();
-        if (!$remittance) {
-            return response()->json(['msg' => 'notfound'], 200);
-        }
+	    $remittance = Remittance::where('family_id', $family->family_id)->orderBy('created_time', 'desc')->first();
+            if (!$remittance) {
+                return response()->json(['msg' => 'notfound'], 200);
+            }
 
-	$submitterPerson = $remittance->submitter->person;
-        if (!$submitterPerson) {
-            return response()->json(['msg' => 'notfound'], 200);
-        }
+	    $submitterPerson = $remittance->submitter->person;
+            if (!$submitterPerson) {
+                return response()->json(['msg' => 'notfound'], 200);
+            }
 
-	$remittanceLines = $remittance->remittance_lines;
-        if (!$remittanceLines) {
-            return response()->json(['msg' => 'notfound'], 200);
-        }
+	    $remittanceLines = $remittance->remittance_lines;
+            if (!$remittanceLines) {
+                return response()->json(['msg' => 'notfound'], 200);
+            }
 
-    foreach ($remittanceLines as $remittanceLine) {
-	    $person = $remittanceLine->oblate->person;
-		$ritwik = $remittanceLine->oblate->worker->person;
-	}
+        foreach ($remittanceLines as $remittanceLine) {
+	        $person = $remittanceLine->oblate->person;
+	    	$ritwik = $remittanceLine->oblate->worker->person;
+	    }
 
         if ($family) {
             return response()->json(
@@ -1707,7 +1714,7 @@ class RemittanceController extends Controller
             	],
             	    200
             );
-	}
+	    }
     }
 }
 
