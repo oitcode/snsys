@@ -1716,5 +1716,110 @@ class RemittanceController extends Controller
             );
 	    }
     }
+
+    /* Serve ajax response for family's prev rmt */
+    public function ajaxCreatePrevServe(Request $request)
+	{
+		$rmtId = $request->input('rmtId');
+		$famId = $request->input('famId');
+
+        $family = Family::find($famId);
+        if (!$family) {
+            return response()->json(['msg' => 'notfound'], 200);
+        }
+
+		/* Fetch previous remittance */
+	    $remittance = Remittance::where('family_id', $famId)
+		    ->where('remittance_id', '<', $rmtId)
+		    ->orderBy('created_time', 'desc')
+			->first();
+
+        if (!$remittance) {
+            return response()->json(['msg' => 'notfound'], 200);
+        }
+
+		/* Just traverse all associated data.
+		 * Surprisingly these will be sent in json response.
+		 *
+		 * Is this a feature that can be relied upon?
+		 *
+		 */
+	    $submitterPerson = $remittance->submitter->person;
+        if (!$submitterPerson) {
+            return response()->json(['msg' => 'notfound'], 200);
+        }
+
+	    $remittanceLines = $remittance->remittance_lines;
+        if (!$remittanceLines) {
+            return response()->json(['msg' => 'notfound'], 200);
+        }
+
+        foreach ($remittanceLines as $remittanceLine) {
+	        $person = $remittanceLine->oblate->person;
+	    	$ritwik = $remittanceLine->oblate->worker->person;
+	    }
+
+	    return response()->json(
+		    [
+			    'msg' => 'found',
+		        'family' => $family,
+		        'remittance' => $remittance,
+			],
+			200
+		);
+	}
+
+    /* Serve ajax response for family's prev rmt */
+    public function ajaxCreateNextServe(Request $request)
+	{
+		$rmtId = $request->input('rmtId');
+		$famId = $request->input('famId');
+
+        $family = Family::find($famId);
+        if (!$family) {
+            return response()->json(['msg' => 'notfound'], 200);
+        }
+
+		/* Fetch next remittance */
+	    $remittance = Remittance::where('family_id', $famId)
+		    ->where('remittance_id', '>', $rmtId)
+		    ->orderBy('created_time', 'asc')
+			->first();
+
+        if (!$remittance) {
+            return response()->json(['msg' => 'notfound'], 200);
+        }
+
+		/* Just traverse all associated data.
+		 * Surprisingly these will be sent in json response.
+		 *
+		 * Is this a feature that can be relied upon?
+		 *
+		 */
+	    $submitterPerson = $remittance->submitter->person;
+        if (!$submitterPerson) {
+            return response()->json(['msg' => 'notfound'], 200);
+        }
+
+	    $remittanceLines = $remittance->remittance_lines;
+        if (!$remittanceLines) {
+            return response()->json(['msg' => 'notfound'], 200);
+        }
+
+        foreach ($remittanceLines as $remittanceLine) {
+	        $person = $remittanceLine->oblate->person;
+	    	$ritwik = $remittanceLine->oblate->worker->person;
+	    }
+
+	    return response()->json(
+		    [
+			    'msg' => 'found',
+		        'family' => $family,
+		        'remittance' => $remittance,
+			],
+			200
+		);
+	}
+
 }
 

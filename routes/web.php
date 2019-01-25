@@ -48,6 +48,9 @@ Route::get('/rmt/delete/{rmtId}', 'RemittanceController@deleteRemittance');
 
 /* Remittance create ajax */
 Route::post('/rmt/create/fcajax', 'RemittanceController@ajaxCreateFcServe');
+Route::get('/rmt/create/prevajax', 'RemittanceController@ajaxCreatePrevServe');
+Route::get('/rmt/create/nextajax', 'RemittanceController@ajaxCreateNextServe');
+
 
 // Print to PDF
 Route::get('/rmt/print/pdf/lot/form', 'PrintController@printLotForm');
@@ -98,3 +101,5 @@ Route::post('/db/remittance/search/process', 'RemittanceController@rmtInpProcess
 /* Ajax */
 Route::get('/ajax/page', 'AjaxController@ajaxPage');
 Route::post('/ajax/page/process', 'AjaxController@ajaFoo');
+
+

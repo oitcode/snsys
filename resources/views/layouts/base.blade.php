@@ -116,7 +116,7 @@
                           </a>
 
                           <ul class="dropdown-menu">
-                              <li><a href="{{ url('/rmt/r/familyinp') }}">Create</a></li>
+                              <li><a href="{{ url('/rmt/create') }}">Create</a></li>
                               <li><a href="{{ url('/rmt/search') }}">Search</a></li>
                           </ul>
                       </li>
@@ -169,7 +169,7 @@
                           </a>
 
                           <ul class="dropdown-menu">
-                            <li><a href="{{ url('/rmt/create') }}">Old Create</a></li>
+                            <li><a href="{{ url('/rmt/r/familyinp') }}">Old Create</a></li>
                             <li><a href="{{ url('/info/latest') }}">Latest Info</a></li>
                             <li><a href="{{ url('/sdeo/faminp') }}">Match</a></li>
                           </ul>

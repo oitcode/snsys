@@ -1,5 +1,10 @@
 /* Javascript code for remittance creation. */
 
+
+/* Some global variables. */
+var curDispRmtId = -1;
+var curDispfamId = -1;
+
 /* Add a new remittance line row */
 function addRemitRow(remLineBody)
 {
@@ -847,7 +852,7 @@ $( document ).ready(function() {
 	    feErrDiv.toggle(true);
 	    console.log("Form Issue true");
             e.preventDefault();
-	    $("html, body").animate({ scrollTop: 0 }, "slow");
+	    $("html, body").animate({ scrollTop: 999 }, "slow");
 	} else {
 	    /* Submit the form if there are not issues. */
 	    $(this).closest("form")[0].submit();
@@ -1098,24 +1103,27 @@ $( document ).ready(function() {
          * The response is passed to the function
          */
         .done(function( json ) {
-	    /**
-	     *---------------------
-	     * Old remittance found
-	     *---------------------
-	     *
-	     */
+	        /**
+	         *---------------------
+	         * Old remittance found
+	         *---------------------
+	         *
+	         */
             if (json.msg == 'found') {
+                curDispRmtId = json.remittance.remittance_id;
+                curDispFamId = json.remittance.family_id;
+				console.log("curDispRmtId: " + curDispRmtId);
     	        ajaxMsgDiv.empty();
     
     	        /* Put in family code */
-		fcVal = json.family.family_code;
+		        fcVal = json.family.family_code;
 
-		/* Check digit */
-		if (fcVal <= 470026154) {
-		    fcVal += json.family.fcode_check_digit;
-		} else {
-		    fcVal += 'N';
-		}
+		        /* Check digit */
+		        if (fcVal <= 470026154) {
+		            fcVal += json.family.fcode_check_digit;
+		        } else {
+		            fcVal += 'N';
+		        }
 
     	        fc.val(fcVal);
     	        fc.prop('readonly', true);
@@ -1373,4 +1381,276 @@ function familyCodeIsValid(familyCode)
 	} else {
 	    return false;
 	}
+}
+
+/**
+|------------------------------------------------------------------------------
+| Previous and next remittances.
+|------------------------------------------------------------------------------
+|
+|*/
+
+$( document ).ready(function() {
+    var prevRmtBtn = $("#id_prev_rmt");
+	prevRmtBtn.click(function () {
+        if (curDispRmtId > 1 ) {
+    	    /**
+	         * This was needed else was getting 419 status from web server
+             */
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+    
+            /*
+            | Make the ajax requrest.
+            */
+            $.ajax({
+                url: "/rmt/create/prevajax",
+                data: {
+				    rmtId: curDispRmtId,
+					famId: curDispFamId
+				},
+                type: "GET",
+                dataType : "json",
+            })
+                /**
+                 * The response is passed to the function
+                 */
+                .done(function( json ) {
+				    fillRmt(json);
+                })
+        } else {
+	        alert("Hello:(");
+		}
+	});
+
+    var nextRmtBtn = $("#id_next_rmt");
+	nextRmtBtn.click(function () {
+        if (curDispRmtId > 1 ) {
+    	    /**
+	         * This was needed else was getting 419 status from web server
+             */
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+    
+            /*
+            | Make the ajax requrest.
+            */
+            $.ajax({
+                url: "/rmt/create/nextajax",
+                data: {
+				    rmtId: curDispRmtId,
+					famId: curDispFamId
+				},
+                type: "GET",
+                dataType : "json",
+            })
+                /**
+                 * The response is passed to the function
+                 */
+                .done(function( json ) {
+				    fillRmt(json);
+                })
+        } else {
+	        alert("Hello:(");
+		}
+	});
+});
+
+
+/**
+ * Fill in the form with old remittance record.
+ */
+function fillRmt(json)
+{
+    var fc = $("#id_mi_fcode");
+    var rlBody = $("#remit_row_body");
+    var ajaxMsgDiv = $("#ajax_msg_div");
+
+	if (json.msg == 'found') {
+		curDispRmtId = json.remittance.remittance_id;
+        curDispFamId = json.remittance.family_id;
+
+		console.log("curDispRmtId: " + curDispRmtId);
+
+		ajaxMsgDiv.empty();
+
+		/* Put in family code */
+		fcVal = json.family.family_code;
+
+		/* Check digit */
+		if (fcVal <= 470026154) {
+			fcVal += json.family.fcode_check_digit;
+		} else {
+			fcVal += 'N';
+		}
+
+		fc.prop('readonly', false);
+		fc.val(fcVal);
+		fc.prop('readonly', true);
+
+		/* Put in address */
+		var inpAddr = $("#id_mi_saddress");
+		inpAddr.val(json.family.address);
+
+		/* Put in submitter name */
+		submitter = json.remittance.submitter.person;
+		var submitterName = submitter.first_name + " ";
+		if (submitter.middle_name != null) {
+			submitterName += submitter.middle_name + " ";
+		}
+		submitterName += submitter.last_name + " ";
+		var inpSubmitter = $("#id_mi_sname");
+		inpSubmitter.val(submitterName);
+
+
+		/*
+		   |----------------------------------
+		   | Fill in all the remittance lines.
+		   |----------------------------------
+		   |
+		 */
+
+		/* Clear all remittance lines if any */
+		rlBody.empty();
+
+		/* For each remittance line of previous record. */
+		for(var i = 0; i < json.remittance.remittance_lines.length; i++) {
+			/* Add a new remit row */
+			addRemitRow(rlBody);
+
+			var curRow = rlBody.children("tr").last();
+			var remittanceLine = json.remittance.remittance_lines[i];
+			person = remittanceLine.oblate.person;
+			ritwik = remittanceLine.oblate.worker.person;
+
+			/*
+			   |-----------------------
+			   | Fill in the values yo!
+			   |-----------------------
+			   |
+			 */
+
+
+			/* Oblate Name */
+			var personName = person.first_name + " ";
+			if (person.middle_name != null) {
+				personName += person.middle_name + " ";
+			}
+			personName += person.last_name;
+			curRow.find(".col-oblname").first().val(personName);
+
+			/* Ritwik Name */
+			var ritwikName = ritwik.first_name + " ";
+			if (ritwik.middle_name != null) {
+				ritwikName += ritwik.middle_name + " ";
+			}
+			ritwikName += ritwik.last_name;
+			curRow.find(".col-oblrtkname").first().val(ritwikName);
+
+			/* All the numbers */
+			if (remittanceLine.swastyayani > 0) {
+				curRow.find(".col-swas").first().val(
+						remittanceLine.swastyayani
+						);
+			}
+			if (remittanceLine.istavrity > 0) {
+				curRow.find(".col-ist").first().val(
+						remittanceLine.istavrity
+						);
+			}
+			if (remittanceLine.acharyavrity > 0) {
+				curRow.find(".col-acvt").first().val(
+						remittanceLine.acharyavrity
+						);
+			}
+			if (remittanceLine.dakshina > 0) {
+				curRow.find(".col-dks").first().val(
+						remittanceLine.dakshina
+						);
+			}
+			if (remittanceLine.sangathani > 0) {
+				curRow.find(".col-sng").first().val(
+						remittanceLine.sangathani
+						);
+			}
+			if (remittanceLine.ritwiki > 0) {
+				curRow.find(".col-rit").first().val(
+						remittanceLine.ritwiki
+						);
+			}
+			if (remittanceLine.pranami > 0) {
+				curRow.find(".col-pra").first().val(
+						remittanceLine.pranami
+						);
+			}
+			if (remittanceLine.swastyayani_awasista > 0) {
+				curRow.find(".col-swaw").first().val(
+						remittanceLine.swastyayani_awasista
+						);
+			}
+			if (remittanceLine.ananda_bazar > 0) {
+				curRow.find(".col-ab").first().val(
+						remittanceLine.ananda_bazar
+						);
+			}
+			if (remittanceLine.parivrity > 0) {
+				curRow.find(".col-pvt").first().val(
+						remittanceLine.parivrity
+						);
+			}
+			if (remittanceLine.misc > 0) {
+				curRow.find(".col-msc").first().val(
+						remittanceLine.misc
+						);
+			}
+			if (remittanceLine.utsav > 0) {
+				curRow.find(".col-uts").first().val(
+						remittanceLine.utsav
+						);
+			}
+			if (remittanceLine.diksha_pranami > 0) {
+				curRow.find(".col-dpr").first().val(
+						remittanceLine.diksha_pranami
+						);
+			}
+			if (remittanceLine.acharya_pranami > 0) {
+				curRow.find(".col-apr").first().val(
+						remittanceLine.acharya_pranami
+						);
+			}
+
+			curRow = curRow.next("tr");
+		}
+
+		//console.log(json);
+		//alert(json.remittanceLines);
+	} else {
+		/*
+		 *---------------------------
+		 * Previous record NOT found.
+		 *---------------------------
+		 *
+		 * Create a paragraph to display error msg and
+		 * put the paragraph inside the div.
+		 */
+		ajaxMsgDiv.empty();
+
+		var newMsgPara = $('<p style="color: red;"></p>');
+		newMsgPara.text("Sorry no records!");
+		newMsgPara.appendTo(ajaxMsgDiv);
+
+		/* Return if no previoius record found.
+		 * No need to tell that ajaxDone is true.
+		 */
+		return;
+	}
+
+	/* Set the flag. */
+	ajaxDone = true;
 }
