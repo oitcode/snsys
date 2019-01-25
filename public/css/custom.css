@@ -79,3 +79,8 @@ input[type="number"] {
 .nwo-rmc-rd:hover {
   cursor: pointer;
 }
+
+.nwo-pd-0 {
+  padding: 0;
+  padding-bottom: 0 !important;
+}

@@ -172,7 +172,6 @@
                             <li><a href="{{ url('/rmt/create') }}">Old Create</a></li>
                             <li><a href="{{ url('/info/latest') }}">Latest Info</a></li>
                             <li><a href="{{ url('/sdeo/faminp') }}">Match</a></li>
-                            <li><a href="/ajax/page">Ajax</a></li>
                           </ul>
                       </li>
 
@@ -249,11 +248,13 @@
         </nav>
 
 	<!-- Display Lot information if any -->
+	{{--
         @if (session('lot'))
             <div class="alert alert-danger hidden-print">
                 Lot num: {{ session('lot') }}
             </div>
         @endif
+	--}}
 
         @yield('content')
     </div>

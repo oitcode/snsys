@@ -35,7 +35,13 @@
             </div>
 	    <div>
 	      <p>
-	        <a href="/rmt/print/pdf/s/p/{{ session('serialNum') }}" target="_blank" class="btn btn-primary">
+		@if (session('lot'))
+		  <a href="/rmt/create" class="btn btn-success btn-sm">
+		    Next
+		  </a>
+		  &nbsp;&nbsp;&nbsp;&nbsp;
+                @endif
+	        <a href="/rmt/print/pdf/s/p/{{ session('serialNum') }}" target="_blank" class="btn btn-primary btn-sm">
 	          Print
 	        </a>
 	      </p>

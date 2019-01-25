@@ -346,9 +346,19 @@ $( document ).ready(function() {
         /* Add 5 additional remit rows */
         var i = 0;
         for (i = 0; i < 5; i++) {
-            //addRemitRow(remLineBody);
+            addRemitRow(remLineBody);
         }
     }
+});
+
+/**
+ * ----------------------------------------------------------------------------
+ * Remove FE validation error message display div.
+ * ----------------------------------------------------------------------------
+ */
+$( document ).ready(function() {
+    var feErrDiv = $("#id_err_div");
+    feErrDiv.toggle(false);
 });
 
 /**
@@ -833,6 +843,8 @@ $( document ).ready(function() {
 
 	/* If any issues with form do not submit */
 	if (formIssue == true) {
+            var feErrDiv = $("#id_err_div");
+	    feErrDiv.toggle(true);
 	    console.log("Form Issue true");
             e.preventDefault();
 	    $("html, body").animate({ scrollTop: 0 }, "slow");
@@ -971,188 +983,342 @@ $( document ).ready(function() {
 
 
 /*
-|------------------------------------------------------------------------------
+|==============================================================================
 | Fill in the remittance create form with ajax served data.
-|------------------------------------------------------------------------------
+|==============================================================================
 |
 */
 
 var ajaxDone = false;
 $( document ).ready(function() {
-
-    var fc = $("#id_mi_fcode");
-
-    // Form to submit
+    /* Form to submit */
     var form = $("#ajx-frm");
 
+    /* Different places in form */
+    var fc = $("#id_mi_fcode");
     var rlBody = $("#remit_row_body");
+    var ajaxMsgDiv = $("#ajax_msg_div");
 
 
-	fc.click(function () {
-		/*
-		| Do not repeat more than once.
-		|
-		*/
-	    if (ajaxDone == true) {
-	        return;
-	    }
+    fc.focusout(function () {
+    	/*
+    	| Do not repeat more than once.
+    	|
+    	*/
+        if (ajaxDone == true) {
+            return;
+        }
+    
+    	/*
+    	| If blank value do not do anything.
+    	|
+    	*/
+        if (fc.val() == '') {
+    		return;
+    	}
+    
+    	/*
+    	| If new family then just add some blank row.
+    	| No need to do make any ajax calls. Just return!
+    	|
+    	*/
+        if (fc.val() == 'new') {
+    	    /* Clear lines and messages. */
+    	    ajaxMsgDiv.empty();
+    
+	    /* Make family code input readonly */
+            fc.prop('readonly', true);
+    
+    	    /* Set the flag. Although we did not do ajax literally. */
+    	    ajaxDone = true;
+    
+    	    return;
+        }
 
-		/*
-		| If blank value do not do anything.
-		|
-		*/
-	    if (fc.val() == '') {
-			return;
-		}
+	/* Return if not ten digit family code */
+	if (fc.val().length != 10) {
+            ajaxMsgDiv.empty();
+    
+            var newMsgPara = $('<p style="color: red;"></p>');
+            newMsgPara.text("Family code should be 10 digits");
+            newMsgPara.appendTo(ajaxMsgDiv);
 
-		/*
-		| If new family then just add some blank row.
-		| No need to do make any ajax calls. Just return!
-		|
-		*/
-	    if (fc.val() == 'new') {
-            for (i = 0; i < 5; i++) {
-                addRemitRow(rlBody);
-            }
-
-			return;
-		}
-
-		/* This was needed else was getting 419 status from web server */
-	    $.ajaxSetup({
-              headers: {
+	    return;
+	}
+    
+    	/**
+	 * This was needed else was getting 419 status from web server
+	 *
+         * https://stackoverflow.com/questions/46466167/laravel-5-5-ajax-call-419-unknown-status
+	 *
+         */
+        $.ajaxSetup({
+            headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-              }
-	    });
-
+            }
+        });
+    
+        /*
+        |--------------------------------------------
+        | Make the ajax requrest.
+        |--------------------------------------------
+        |
+        |
+        */
         $.ajax({
-            // The URL for the request
             url: "/rmt/create/fcajax",
-
-	    // From: https://stackoverflow.com/questions/1960240/jquery-ajax-submit-form
-	    // Serializes the form elements?
+        
+            /**
+	     * Serializes the form elements?
+             * From: https://stackoverflow.com/questions/1960240/jquery-ajax-submit-form
+	     *
+	     */
             data: form.serialize(),
-         
-            // Whether this is a POST or GET request
+        
             type: "POST",
-         
-            // The type of data we expect back
             dataType : "json",
         })
-            // Code to run if the request succeeds (is done);
-            // The response is passed to the function
-            .done(function( json ) {
-               // $( "<h1>" ).text( json.title ).appendTo( "body" );
-               // $( "<div class=\"content\">").html( json.html ).appendTo( "body" );
-	       // alert(json.msg);
-	       if (json.msg == 'found') {
-                   // Put in address
-		       var inpAddr = $("#id_mi_saddress");
-		       inpAddr.val(json.family.address);
 
-		       var inpSubmitter = $("#id_mi_sname");
-		       inpSubmitter.val(
-		           json.remittance.submitter.person.first_name + " " + 
-		           json.remittance.submitter.person.middle_name + " " +
-		           json.remittance.submitter.person.last_name
-		       );
+        /**
+         *-----------------------------------------------
+         * Code to run if the request succeeds (is done);
+         *-----------------------------------------------
+         *
+         * The response is passed to the function
+         */
+        .done(function( json ) {
+	    /**
+	     *---------------------
+	     * Old remittance found
+	     *---------------------
+	     *
+	     */
+            if (json.msg == 'found') {
+    	        ajaxMsgDiv.empty();
+    
+    	        /* Put in family code */
+		fcVal = json.family.family_code;
 
+		/* Check digit */
+		if (fcVal <= 470026154) {
+		    fcVal += json.family.fcode_check_digit;
+		} else {
+		    fcVal += 'N';
+		}
 
-		       /* Fill in all remittance lines. */
-               for(var i = 0; i < json.remittance.remittance_lines.length; i++) {
-                   addRemitRow(rlBody);
+    	        fc.val(fcVal);
+    	        fc.prop('readonly', true);
+    
+               /* Put in address */
+    	        var inpAddr = $("#id_mi_saddress");
+    	        inpAddr.val(json.family.address);
+    
+    	        /* Put in submitter name */
+    	        submitter = json.remittance.submitter.person;
+    	        var submitterName = submitter.first_name + " ";
+    	        if (submitter.middle_name != null) {
+    	            submitterName += submitter.middle_name + " ";
+    	        }
+    	        submitterName += submitter.last_name + " ";
+    	        var inpSubmitter = $("#id_mi_sname");
+    	        inpSubmitter.val(submitterName);
+    
+    
+		/*
+		|----------------------------------
+		| Fill in all the remittance lines.
+		|----------------------------------
+		|
+		*/
 
-		           var curRow = rlBody.children("tr").last();
+    	        /* Clear all remittance lines if any */
+    	        rlBody.empty();
+    
+		/* For each remittance line of previous record. */
+                for(var i = 0; i < json.remittance.remittance_lines.length; i++) {
+		    /* Add a new remit row */
+                    addRemitRow(rlBody);
+    
+    	            var curRow = rlBody.children("tr").last();
+    	            var remittanceLine = json.remittance.remittance_lines[i];
+    	            person = remittanceLine.oblate.person;
+    	            ritwik = remittanceLine.oblate.worker.person;
+    
+    	            /*
+    	            |-----------------------
+    	            | Fill in the values yo!
+    	            |-----------------------
+    	            |
+    	            */
+    
+    
+    	            /* Oblate Name */
+    	            var personName = person.first_name + " ";
+    	            if (person.middle_name != null) {
+    	                personName += person.middle_name + " ";
+    	            }
+    	            personName += person.last_name;
+    	            curRow.find(".col-oblname").first().val(personName);
+    
+    	            /* Ritwik Name */
+    	            var ritwikName = ritwik.first_name + " ";
+    	            if (ritwik.middle_name != null) {
+    	                ritwikName += ritwik.middle_name + " ";
+    	            }
+    	            ritwikName += ritwik.last_name;
+    	            curRow.find(".col-oblrtkname").first().val(ritwikName);
+    
+    	            /* All the numbers */
+    	            curRow.find(".col-swas").first().val(
+    	                remittanceLine.swastyayani
+                        );
+    	            curRow.find(".col-ist").first().val(
+    	                remittanceLine.istavrity
+                        );
+    	            curRow.find(".col-acvt").first().val(
+    	                remittanceLine.acharyavrity
+                        );
+    	            curRow.find(".col-dks").first().val(
+    	                remittanceLine.dakshina
+                        );
+    	            curRow.find(".col-sng").first().val(
+    	                remittanceLine.sangathani
+                        );
+    	            curRow.find(".col-rit").first().val(
+    	                remittanceLine.ritwiki
+                        );
+    	            curRow.find(".col-pra").first().val(
+    	                remittanceLine.pranami
+                        );
+    	            curRow.find(".col-swaw").first().val(
+    	                remittanceLine.swastyayani_awasista
+                        );
+    	            curRow.find(".col-ab").first().val(
+    	                remittanceLine.ananda_bazar
+                        );
+    	            curRow.find(".col-pvt").first().val(
+    	                remittanceLine.parivrity
+                        );
+    	            curRow.find(".col-msc").first().val(
+    	                remittanceLine.misc
+                        );
+    	            curRow.find(".col-uts").first().val(
+    	                remittanceLine.utsav
+                        );
+    	            curRow.find(".col-dpr").first().val(
+    	                remittanceLine.diksha_pranami
+                        );
+    	            curRow.find(".col-apr").first().val(
+    	                remittanceLine.acharya_pranami
+                        );
+    
+    	            curRow = curRow.next("tr");
+                }
 
-		           var remittanceLine = json.remittance.remittance_lines[i];
-		           person = remittanceLine.oblate.person;
-				   ritwik = remittanceLine.oblate.worker.person;
-
-		           /* Fill in the values yo! */
-				   var personName = person.first_name + " ";
-				   if (person.middle_name != null) {
-				       personName += person.middle_name + " ";
-				   }
-				   personName += person.last_name;
-		           curRow.find(".col-oblname").first().val(personName);
-
-				   var ritwikName = ritwik.first_name + " ";
-				   if (ritwik.middle_name != null) {
-				       ritwikName += ritwik.middle_name + " ";
-				   }
-				   ritwikName += ritwik.last_name;
-		           curRow.find(".col-oblrtkname").first().val(ritwikName);
-
-		           curRow.find(".col-swas").first().val(
-		               remittanceLine.swastyayani
-                   );
-		           curRow.find(".col-ist").first().val(
-		               remittanceLine.istavrity
-                   );
-		           curRow.find(".col-acvt").first().val(
-		               remittanceLine.acharyavrity
-                   );
-		           curRow.find(".col-dks").first().val(
-		               remittanceLine.dakshina
-                   );
-		           curRow.find(".col-sng").first().val(
-		               remittanceLine.sangathani
-                   );
-		           curRow.find(".col-rit").first().val(
-		               remittanceLine.ritwiki
-                   );
-		           curRow.find(".col-pra").first().val(
-		               remittanceLine.pranami
-                   );
-		           curRow.find(".col-swaw").first().val(
-		               remittanceLine.swastyayani_awasista
-                   );
-		           curRow.find(".col-ab").first().val(
-		               remittanceLine.ananda_bazar
-                   );
-		           curRow.find(".col-pvt").first().val(
-		               remittanceLine.parivrity
-                   );
-		           curRow.find(".col-msc").first().val(
-		               remittanceLine.misc
-                   );
-		           curRow.find(".col-uts").first().val(
-		               remittanceLine.utsav
-                   );
-		           curRow.find(".col-dpr").first().val(
-		               remittanceLine.diksha_pranami
-                   );
-		           curRow.find(".col-apr").first().val(
-		               remittanceLine.acharya_pranami
-                   );
-
-		           curRow = curRow.next("tr");
-               }
-
-		       console.log(json);
-		       //alert(json.remittanceLines);
-	           } else {
-	               alert('Sorry! No previous record.');
-                   for (i = 0; i < 5; i++) {
-                       addRemitRow(rlBody);
-                   }
-		           return;
-	           }
-		       ajaxDone = true;
-            })
-            // Code to run if the request fails; the raw request and
-            // status codes are passed to the function
-            .fail(function( xhr, status, errorThrown ) {
-              alert( "Sorry, yahoo there was a problem!" );
-              console.log( "Error: " + errorThrown );
-              console.log( "Status: " + status );
-              console.dir( xhr );
-            })
-            // Code to run regardless of success or failure;
-            .always(function( xhr, status ) {
-              //alert( "The request is complete!" );
-            });
+    	        //console.log(json);
+    	        //alert(json.remittanceLines);
+            } else {
+                /*
+		 *---------------------------
+		 * Previous record NOT found.
+		 *---------------------------
+		 *
+                 * Create a paragraph to display error msg and
+                 * put the paragraph inside the div.
+                 */
+                ajaxMsgDiv.empty();
+    
+                var newMsgPara = $('<p style="color: red;"></p>');
+                newMsgPara.text("Sorry no records!");
+                newMsgPara.appendTo(ajaxMsgDiv);
+    
+    	    /* Return if no previoius record found.
+    	     * No need to tell that ajaxDone is true.
+    	     */
+    	    return;
+            }
+    
+            /* Set the flag. */
+            ajaxDone = true;
+        })
+    
+        /**
+         *-----------------------------------
+         * Ajax request FAIL
+         *-----------------------------------
+         *
+         * Code to run if the request fails; the raw request and
+         * status codes are passed to the function
+         */
+    
+        .fail(function( xhr, status, errorThrown ) {
+          alert( "Sorry, there was a problem!" );
+          console.log( "Error: " + errorThrown );
+          console.log( "Status: " + status );
+          console.dir( xhr );
+        })
+    
+    
+        /**
+         *-----------------------------------
+         * Ajax PASS or FAIL. Any case.
+         *-----------------------------------
+         *
+         * Code to run regardless of success or failure;
+         */
+        .always(function( xhr, status ) {
+          //alert( "The request is complete!" );
+        });
     });
 });
 
 
+/*
+|==============================================================================
+| Calculate family code check digit.
+|==============================================================================
+|
+*/
+
+function familyCodeCheckDigit(familyCode) {
+    /**
+     * Below algorithm to compute the check digit 
+     * for a family code has been taken from 
+     * Satsang Deoghar cobol code.
+     */
+
+    var checkDigit = -1;
+
+    if (familyCode.length != 9) {
+        return -1;
+    }
+
+    /* Pay careful attention:
+     *
+     * 1. First two digits are ignored.
+     * 2. wsMship starts from rightside
+     *    so, wsMship2 is familyCode[8].
+     */
+    wsMship1 = familyCode[9-1];
+    wsMship2 = familyCode[9-2];
+    wsMship3 = familyCode[9-3];
+    wsMship4 = familyCode[9-4];
+    wsMship5 = familyCode[9-5];
+    wsMship6 = familyCode[9-6];
+    wsMship7 = familyCode[9-7];
+
+    wsDgtTot = wsMship1 * 2 + wsMship2 * 3 +
+               wsMship3 * 4 + wsMship4 * 5 +
+               wsMship5 * 6 + wsMship6 * 7 +
+               wsMship7 * 8;
+
+    wsRemainder = wsDgtTot % 11;
+
+    if (wsRemainder == 0 || wsRemainder == 1) {
+        checkDigit = 0;
+    } else {
+        checkDigit = 11 - wsRemainder;
+    }
+
+    return checkDigit;
+}

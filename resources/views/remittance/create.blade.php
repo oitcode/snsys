@@ -35,27 +35,6 @@
 	     <ul id="total_err_list" class="nwo-std-padding">
 	     </ul>
 	 </div>
-	 <hr />
-
-
-          @if (session('lot'))
-	      <p>
-	          <strong>
-		    Lot Remaining Amount => NC {{ $remainingBal }}
-		    &nbsp;&nbsp;&nbsp;&nbsp;
-                    ( IC {{ $remainingBal / 1.6 }} )
-		  </strong>
-	      </p>
-	      <p>
-	        <strong>
-		      Bank deposit date  =>
-			  <span id="nwo-bdd">
-			    {{ $bvDepositDate }}
-			  </span>
-		    </strong>
-	      </p>
-	      <hr />
-	  @endif
 
 
 	  <!-- Form -->
@@ -76,14 +55,47 @@
 	      @endforeach
 	    </datalist>
 
-	    <!-- Currency info -->
-            <h4>Currency</h4>
-            <div>
-              <input type="radio" id="currency-nc" name="currency" value="nc">
-              <label for="currency-nc">NRs</label>
-              <input type="radio" id="currency-ic" name="currency" value="ic">
-              <label for="contactChoice2">IRs</label>
-            </div>
+	    <div class="row">
+	      <!-- Currency info -->
+	      <div class="col-sm-8">
+                <h4>Currency</h4>
+                <div>
+                  <input type="radio" id="currency-nc" name="currency" value="nc">
+                  <label for="currency-nc">NRs</label>
+                  <input type="radio" id="currency-ic" name="currency" value="ic">
+                  <label for="contactChoice2">IRs</label>
+                </div>
+	      </div>
+
+	      <!-- Lot info -->
+	      <div class="col-sm-4 bg-info-rm nwo-pd-0">
+                @if (session('lot'))
+	          <table class="table table-condensed table-bordered">
+		    <thead>
+		      <tr class="info">
+		        <th>Lot Num</th>
+		        <th>Remaining Amount</th>
+		        <th>Bank Date</th>
+		      </tr>
+		    </thead>
+		    <tbody>
+		      <tr class="info">
+		        <td>{{ session('lot') }}</td>
+		        <td>
+			  NC {{ $remainingBal }}
+                          ( IC {{ $remainingBal / 1.6 }} )
+			</td>
+		        <td>
+	              	  <span id="nwo-bdd">
+			    {{ $bvDepositDate }}
+			  </span>
+			</td>
+		      </tr>
+		    </tbody>
+	          </table>
+	        @endif
+	      </div>
+	    </div>
 	    <hr />
 
             <!-- Bank Voucher Info -->
@@ -112,6 +124,9 @@
 
             <!-- Main Remittance Info -->
             <h4>Main info</h4>
+	    <!-- Ajax messages will be put here -->
+	    <div id="ajax_msg_div">
+	    </div>
             <table class="nwo-form-table">
               <thead>
                 <tr>
