@@ -31,11 +31,19 @@
 	        <h3>Create</h3>
 	      </div>
 
-	      <!-- Ajax messages will be put here -->
+		  <!-- AJAX -->
 	      <div class="col-sm-4">
+	        <!-- Ajax messages will be put here -->
 	        <div id="ajax_msg_div">
 	        </div>
+	        <!-- Ajax progress bar will be displayed here -->
+	        <div id="ajax_pbar_div">
+			  <p style="color: orange;">
+			    Loading ... please wait
+			  </p>
+	        </div>
 	      </div>
+
 
 	      <!-- Lot info -->
 	      <div class="col-sm-4 bg-info-rm nwo-pd-0">

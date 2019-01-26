@@ -2,8 +2,19 @@
 
 
 /* Some global variables. */
-var curDispRmtId = -1;
-var curDispfamId = -1;
+var ajaxLoadingDiv;
+
+var curDispRmtId;
+var curDispfamId;
+
+
+$( document ).ready(function() {
+    ajaxLoadingDiv = $("#ajax_pbar_div");
+    curDispRmtId = -1;
+    curDispfamId = -1;
+
+	ajaxLoadingDiv.toggle(false);
+});
 
 /* Add a new remittance line row */
 function addRemitRow(remLineBody)
@@ -1061,6 +1072,10 @@ $( document ).ready(function() {
 
 		    return;
 		}
+
+		/* Show loading div */
+
+		ajaxLoadingDiv.toggle(true);
     
     	/**
 	     * This was needed else was getting 419 status from web server
@@ -1282,11 +1297,15 @@ $( document ).ready(function() {
     	    /* Return if no previoius record found.
     	     * No need to tell that ajaxDone is true.
     	     */
+	        ajaxLoadingDiv.toggle(false);
     	    return;
             }
     
             /* Set the flag. */
             ajaxDone = true;
+
+			/* Hide ajax progress bar */
+	        ajaxLoadingDiv.toggle(false);
         })
     
         /**
@@ -1394,6 +1413,7 @@ $( document ).ready(function() {
     var prevRmtBtn = $("#id_prev_rmt");
 	prevRmtBtn.click(function () {
         if (curDispRmtId > 1 ) {
+	        ajaxLoadingDiv.toggle(true);
     	    /**
 	         * This was needed else was getting 419 status from web server
              */
@@ -1420,6 +1440,7 @@ $( document ).ready(function() {
                  */
                 .done(function( json ) {
 				    fillRmt(json);
+	                ajaxLoadingDiv.toggle(false);
                 })
         } else {
 	        alert("Hello:(");
@@ -1429,6 +1450,7 @@ $( document ).ready(function() {
     var nextRmtBtn = $("#id_next_rmt");
 	nextRmtBtn.click(function () {
         if (curDispRmtId > 1 ) {
+	        ajaxLoadingDiv.toggle(true);
     	    /**
 	         * This was needed else was getting 419 status from web server
              */
@@ -1455,6 +1477,7 @@ $( document ).ready(function() {
                  */
                 .done(function( json ) {
 				    fillRmt(json);
+	                ajaxLoadingDiv.toggle(false);
                 })
         } else {
 	        alert("Hello:(");
