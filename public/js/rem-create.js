@@ -856,6 +856,12 @@ $( document ).ready(function() {
 	    }
 	}
 
+    var fc = $("#id_mi_fcode");
+	if (fc.val() != "new" && ! familyCodeIsValid(fc.val())) {
+	    formIssue = true;
+        totalErrList.append("<li>Err: Check digit: Fail</li>");
+	}
+
 
 	/* If any issues with form do not submit */
 	if (formIssue == true) {
@@ -1042,6 +1048,9 @@ $( document ).ready(function() {
     	    /* Clear lines and messages. */
     	    ajaxMsgDiv.empty();
     
+			fc.css("background-color", "transparent");
+			fc.parent().css("background-color", "#ccc");
+
 	    /* Make family code input readonly */
             fc.prop('readonly', true);
     
@@ -1139,6 +1148,9 @@ $( document ).ready(function() {
 		        } else {
 		            fcVal += 'N';
 		        }
+
+				fc.css("background-color", "transparent");
+				fc.parent().css("background-color", "#ddd");
 
     	        fc.val(fcVal);
     	        fc.prop('readonly', true);
@@ -1677,3 +1689,21 @@ function fillRmt(json)
 	/* Set the flag. */
 	ajaxDone = true;
 }
+
+$( document ).ready(function() {
+	/* Focus the family code */
+	$('#id_mi_fcode').focus();
+});
+
+$( document ).ready(function() {
+	var rmtSubmitterName = $('#id_mi_sname');
+
+	rmtSubmitterName.click(function () {
+	    var firstOblate = $("#remit_row_body")
+		                  .children().first()  // First tr
+						  .children().first()  // First td
+						  .children().first(); // First input
+
+        firstOblate.val(rmtSubmitterName.val());
+	});
+});

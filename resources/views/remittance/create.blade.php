@@ -75,6 +75,7 @@
 	      </div>
 	    </div> <!-- .Top Bar -->
 
+
 	    <!-- Form -->
         <form action="{{ url('/rmt/create/store') }}" method="post" id="ajx-frm">
 	      {{ csrf_field() }}
@@ -92,7 +93,6 @@
 		  >
 	        @endforeach
 	      </datalist>
-
 
           <!-- Bank Voucher Info -->
           @if (! session('lot'))
@@ -117,11 +117,8 @@
             </table>
           @endif
 
-			<div class="row">
-			  <div class="col-sm-8">
             <!-- Main Remittance Info -->
             <h4>Main info</h4>
-
 			<!-- Toolbar -->
 			<div class="bg-alert" style="background-color: #eee; margin-bottom: 10px; padding: 5px; font-size: 10px;">
 			  <span id="id_prev_rmt">Previous</span>
@@ -130,50 +127,74 @@
 			  &nbsp;&nbsp;&nbsp;&nbsp;
 			</div>
 
-            <table class="nwo-form-table">
-              <thead>
-                <tr>
-                  <th>Date</th>
-                  <th>Family code</th>
-                  <th>Person name</th>
-                  <th>Person address</th>
-                  <th>Submit date</th>
-                  <th>Total</th>
-		  {{--
-                  <th>Delivered by</th>
-		  --}}
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td> 
-                    <span style="font-size: 12px;"><strong style="font-size: 11px;"><?php echo date('Y-m-d') . "&nbsp;&nbsp;&nbsp;&nbsp;";  ?></strong></span>
-                  </td>
-                  <td><input type="text" class="nwo-std-frminp" name="family-code" id="id_mi_fcode" value="{{ old('family-code') }}"/></td>
-                  <td><input type="text" class="nwo-std-name nwo-std-frminp nwo-std-frminp-lx" name="submitter-name" id="id_mi_sname" value="{{ old('submitter-name') }}"/></td>
-                  <td><input type="text" class="nwo-std-upper nwo-std-frminp nwo-std-frminp-lx" name="submitter-address" id="id_mi_saddress" value="{{ old('submitter-address') }}"/></td>
-                  <td><input type="text" class="nwo-std-frminp" name="submitted-date" id="id_mi_sdate" value="{{ old('submitted-date') }}"/></td>
-                  <td><input type="number" step="1" min="1" class="nwo-std-frminp" name="submitted-total" id="id_mi_total" value="{{ old('submitted-total') }}"/></td>
-		  {{--
-                  <td><input type="text" class="nwo-std-frminp nwo-std-frminp-lx" name="delivered-by" id="id_mi_dname" value="{{ old('delivered-by') }}"/></td>
-		  --}}
-                </tr>
-              </tbody>
-            </table>
+			<div class="row">
+			  <div class="col-sm-6">
+                <table class="table table-striped table-bordered table-condensed pwo-form-table">
+                  <thead>
+                    <tr>
+                      <th>Family code</th>
+                      <th>Person name</th>
+		      {{--
+                      <th>Delivered by</th>
+		      --}}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><input type="text" class="nwo-std-frminp" name="family-code" id="id_mi_fcode" value="{{ old('family-code') }}"/></td>
+                      <td><input type="text" class="nwo-std-name nwo-std-frminp nwo-std-frminp-lx" name="submitter-name" id="id_mi_sname" value="{{ old('submitter-name') }}"/></td>
+		      {{--
+                      <td><input type="text" class="nwo-std-frminp nwo-std-frminp-lx" name="delivered-by" id="id_mi_dname" value="{{ old('delivered-by') }}"/></td>
+		      --}}
+                    </tr>
+				    <tr>
+					  <td class=""><strong>Address</strong></td>
+					  <td>
+                        <input type="text" class="nwo-std-upper nwo-std-frminp nwo-std-frminp-lx" name="submitter-address" id="id_mi_saddress" value="{{ old('submitter-address') }}"/>
+					  </td>
+				    </tr>
+                  </tbody>
+                </table>
 			  </div>
 			  <div class="col-sm-4">
+					  <table class="table table-condensed table-bordered">
+					    <thead>
+						  <tr>
+						    <th>Submit Date</th>
+						    <th>Total</th>
+						  </tr>
+					    </thead>
+					    <tbody>
+						  <tr>
+						    <td>
+                              <input type="text" class="nwo-std-frminp" name="submitted-date" id="id_mi_sdate" value="{{ old('submitted-date') }}"/>
+							</td>
+						    <td>
+                              <input type="number" step="1" min="1" class="nwo-std-frminp" name="submitted-total" id="id_mi_total" value="{{ old('submitted-total') }}"/>
+							</td>
+						  </tr>
+					    </tbody>
+					    <tfoot>
+					    <t/foot>
+					  </table>
+			  </div>
+			  <div class="col-sm-2">
 	            <!-- Currency info -->
-	            <div>
-                        <h4>Currency</h4>
-                        <div>
-                          <input type="radio" id="currency-nc" name="currency" value="nc">
-                          <label for="currency-nc">NRs</label>
-                          <input type="radio" id="currency-ic" name="currency" value="ic">
-                          <label for="contactChoice2">IRs</label>
-                        </div>
+	            <div class="">
+                  <h4>Currency</h4>
+                  <div>
+                    <input type="radio" id="currency-nc" name="currency" value="nc">
+                    <label for="currency-nc">NRs</label>
+                    <input type="radio" id="currency-ic" name="currency" value="ic">
+                    <label for="contactChoice2">IRs</label>
+                  </div>
 	            </div>
 			  </div>
 			</div>
+
+
+
+
 
 
             <!-- Remittance Lines -->
@@ -186,6 +207,10 @@
 			  <span id="id_clear_nums">Clear</span>
 			  &nbsp;&nbsp;&nbsp;&nbsp;
 			  <span class="" id="add_person">+Person</span>
+			  &nbsp;&nbsp;&nbsp;&nbsp;
+			  <span class="" id="">Fetch</span>
+			  &nbsp;&nbsp;&nbsp;&nbsp;
+			  <span class="" id="">!Reset</span>
 			  &nbsp;&nbsp;&nbsp;&nbsp;
 			  <a href="">Other</a>
 			</div>

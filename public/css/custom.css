@@ -56,7 +56,7 @@ input[type="text"] {
   /*border: 1px solid blue !important;*/
   margin: 0 !important;
   color: blue !important;
-  background-color: #fed;
+  //background-color: #fed;
   width: 100%;
 }
 /*
@@ -83,4 +83,27 @@ input[type="number"] {
 .nwo-pd-0 {
   padding: 0;
   padding-bottom: 0 !important;
+}
+
+.pwo-form-table {
+    border-collapse: collapse !important;
+}
+.pwo-form-table tr
+/*.pwo-form-table input*/
+{
+    padding: 0 !important;
+	margin: 0 !important;
+}
+.pwo-form-table td
+/*.pwo-form-table input*/
+{
+    padding: 0 !important;
+	margin: 0 !important;
+}
+.pwo-form-table input
+{
+    padding: 0 !important;
+	margin: 0 !important;
+	height: 100% !important;
+	font-size: 20px;
 }
