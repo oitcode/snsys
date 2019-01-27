@@ -103,3 +103,7 @@ Route::get('/ajax/page', 'AjaxController@ajaxPage');
 Route::post('/ajax/page/process', 'AjaxController@ajaFoo');
 
 
+/* Account */
+Route::get('/account/je', 'AccountController@journalEntry');
+Route::get('/account/addacc', 'AccountController@addAccount');
+

@@ -172,46 +172,10 @@
                             <li><a href="{{ url('/rmt/r/familyinp') }}">Old Create</a></li>
                             <li><a href="{{ url('/info/latest') }}">Latest Info</a></li>
                             <li><a href="{{ url('/sdeo/faminp') }}">Match</a></li>
+                            <li><a href="{{ url('/account/je') }}">Journal</a></li>
+                            <li><a href="{{ url('/account/addacc') }}">+Account</a></li>
                           </ul>
                       </li>
-
-		      {{-- DO NOT SHOW WOKER, OBLATE AND SANGH
-                      <!-- Worker -->
-                      <li class="dropdown">
-                          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" v-pre>
-                              Worker <span class="caret"></span>
-                          </a>
-
-                          <ul class="dropdown-menu">
-                              <li><a href="">Create</a></li>
-                              <li><a href="">Search</a></li>
-                          </ul>
-                      </li>
-
-                      <!-- Oblate -->
-                      <li class="dropdown">
-                          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" v-pre>
-                              Oblate <span class="caret"></span>
-                          </a>
-
-                          <ul class="dropdown-menu">
-                              <li><a href="">Create</a></li>
-                              <li><a href="">Search</a></li>
-                          </ul>
-                      </li>
-
-                      <!-- Sangh -->
-                      <li class="dropdown">
-                          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" v-pre>
-                              Sangh <span class="caret"></span>
-                          </a>
-
-                          <ul class="dropdown-menu">
-                              <li><a href="{{ url('/sangh/family') }}">Family</a></li>
-                          </ul>
-                      </li>
-		    --}}
-
                     </ul>
 
                     <!-- Right Side Of Navbar -->
