@@ -1195,7 +1195,7 @@ class RemittanceController extends Controller
 	$validatedData = $request->validate([
 	    'family-code' => 'nullable|integer',
 	    /* Todo: Validate it is in correct name format*/
-	    //'submitter-name' => 'nullable|alpha'
+	    'submitter-name' => 'nullable|alpha',
 	    'serial-num' => 'nullable|integer',
 	    'submit-date' => 'nullable|date',
 	    /* Todo: Validate it is in correct name format*/
@@ -1214,6 +1214,7 @@ class RemittanceController extends Controller
 	$familyCode = $request->input('family-code');
 	$lotNumber = $request->input('lot-num');
 	$serialNum = $request->input('serial-num');
+	$submitterName = $request->input('submitter-name');
 
 	/* Todo: Switch between different cases nicely! */
 	if ($lotNumber) {
@@ -1224,6 +1225,8 @@ class RemittanceController extends Controller
 	    $remittances = Remittance::where('remittance_id', $serialNum)->get();
             return view('remittance.search-result')
 	        ->with('remittances', $remittances);
+	} else if ($submitterName) {
+	    die ("Search by name coming soon ...<br />");
 	}
 
 	if (! $familyCode) {
