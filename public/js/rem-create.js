@@ -859,7 +859,7 @@ $( document ).ready(function() {
     var fc = $("#id_mi_fcode");
 	if (fc.val() != "new" && ! familyCodeIsValid(fc.val())) {
 	    formIssue = true;
-        totalErrList.append("<li>Err: Check digit: Fail</li>");
+        totalErrList.append("<li>Family code: Invalid</li>");
 	}
 
 
@@ -1031,13 +1031,20 @@ $( document ).ready(function() {
             return;
         }
     
-    	/*
-    	| If blank value do not do anything.
-    	|
-    	*/
-        if (fc.val() == '') {
-    		return;
-    	}
+	/*
+	| Do not do anything if not a valid family code.
+	| However show this validation msg in screen to user.
+	|
+	*/
+        if (! familyCodeIsValid(fc.val())) {
+           ajaxMsgDiv.empty();
+           var newMsgPara = $('<p style="color: red;"></p>');
+           newMsgPara.text("Invalid family code");
+           newMsgPara.appendTo(ajaxMsgDiv);
+
+	   return;
+	}
+
     
     	/*
     	| If new family then just add some blank row.
@@ -1060,37 +1067,14 @@ $( document ).ready(function() {
     	    return;
         }
 
-	    /* Return if not ten digit family code */
-	    if (fc.val().length != 10) {
-            ajaxMsgDiv.empty();
-        
-            var newMsgPara = $('<p style="color: red;"></p>');
-            newMsgPara.text("Family code should be 10 digits");
-            newMsgPara.appendTo(ajaxMsgDiv);
-
-	        return;
-	    }
-
-		/* Return if not a valid family code */
-		if (! familyCodeIsValid(fc.val())) {
-            ajaxMsgDiv.empty();
-        
-            var newMsgPara = $('<p style="color: red;"></p>');
-            newMsgPara.text("Invalid family code. Check digit mismatch");
-            newMsgPara.appendTo(ajaxMsgDiv);
-
-		    return;
-		}
-
-		/* Show loading div */
-
-		ajaxLoadingDiv.toggle(true);
+        /* Show loading div */
+        ajaxLoadingDiv.toggle(true);
     
-    	/**
-	     * This was needed else was getting 419 status from web server
-	     *
+        /**
+         * This was needed else was getting 419 status from web server
+         *
          * https://stackoverflow.com/questions/46466167/laravel-5-5-ajax-call-419-unknown-status
-	     *
+         *
          */
         $.ajaxSetup({
             headers: {
@@ -1407,11 +1391,36 @@ function familyCodeCheckDigit(familyCode) {
 /* TODO: There are many things to validate more ! */
 function familyCodeIsValid(familyCode)
 {
-	if (familyCode[9] == familyCodeCheckDigit(familyCode)) {
-	    return true;
-	} else {
-	    return false;
+	var isValid = false;
+
+        var tenDFcPattern = new RegExp('^4700[0-9]{5,5}[0-9N]$');
+
+	/*
+	| True if these.
+	|
+	*/
+
+	/* New */
+	if (familyCode == 'new') {
+	    isValid = true;
+	} else if (tenDFcPattern.test(familyCode)) {
+	    var nineDFamCode = familyCode.slice(0, 9);
+	    /* Deoghhar given family code */
+	    if (nineDFamCode <= 470026154) {
+	        if (familyCode[9] != 'N'
+		    &&
+		    familyCode[9] == familyCodeCheckDigit(familyCode)) {
+		    isValid = true;
+	        }   
+	    } else {
+	        /* Satsang Nepal given family code */
+	        if (familyCode[9] == 'N') {
+		    isValid = true;
+		}
+	    }
 	}
+
+	return isValid;
 }
 
 /**
