@@ -40,14 +40,6 @@
                 <input type="text" class="form-control" id="serial-num" name="serial-num" placeholder="Serial num">
               </div>
               <div class="form-group">
-                <label for="submit-date">Submit date</label><br />
-                <input type="text" class="form-control" id="submit-date" name="submit-date" placeholder="Submit Date">
-              </div>
-              <div class="form-group">
-                <label for="submit-date">Delivered by</label><br />
-                <input type="text" class="form-control" id="delivered-by" name="delivered-by" placeholder="Delivered by">
-              </div>
-              <div class="form-group">
                 <label for="lot-num">Lot number</label><br />
                 <input type="text" class="form-control" id="lot-num" name="lot-num" placeholder="Lot Number">
               </div>

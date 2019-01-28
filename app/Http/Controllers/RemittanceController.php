@@ -1226,7 +1226,13 @@ class RemittanceController extends Controller
             return view('remittance.search-result')
 	        ->with('remittances', $remittances);
 	} else if ($submitterName) {
-	    die ("Search by name coming soon ...<br />");
+	    $remittances = Remittance::join('oblate', 'oblate.oblate_id', '=', 'remittance.submitter_id')
+	        ->join('person', 'oblate.person_id', '=', 'person.person_id')
+		->where('person.first_name', $submitterName)
+	        ->get();
+
+            return view('remittance.search-result')
+	        ->with('remittances', $remittances);
 	}
 
 	if (! $familyCode) {
