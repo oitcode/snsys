@@ -1176,8 +1176,7 @@ class RemittanceController extends Controller
 	$lot = RemittanceLot::where('lot_code', $lotNumber)->first();
 
 	if (!$lot) {
-	    /* Todo: redirect back with error message */
-	    die("Lot: $lotNumber not found");;
+	    return -1;
 	}
 
 	$remittances = $lot->remittances;
@@ -1218,13 +1217,23 @@ class RemittanceController extends Controller
 
 	/* Todo: Switch between different cases nicely! */
 	if ($lotNumber) {
-	    $remittances = $this->searchByLot($lotNumber);
             $searchBy = 'lot';
 	    $searchLotNum = $lotNumber;
-            return view('remittance.search-result')
-	        ->with('searchBy', $searchBy)
-	        ->with('searchLotNum', $searchLotNum)
-	        ->with('remittances', $remittances);
+
+	    $remittances = $this->searchByLot($lotNumber);
+	    if ($remittances === -1) {
+                return view('remittance.search-result')
+	            ->with('searchBy', $searchBy)
+	            ->with('searchLotNum', $searchLotNum)
+	            ->with('status', 'lot_not_found')
+	            ->with('remittances', null);
+	    } else {
+                return view('remittance.search-result')
+	            ->with('searchBy', $searchBy)
+	            ->with('searchLotNum', $searchLotNum)
+	            ->with('status', 'success')
+	            ->with('remittances', $remittances);
+	    }
 	} else if ($serialNum) {
 	    $remittances = Remittance::where('remittance_id', $serialNum)->get();
             $searchBy = 'serial';
@@ -1246,16 +1255,22 @@ class RemittanceController extends Controller
 	        ->with('searchBy', $searchBy)
 	        ->with('searchName', $searchName);
 	} else if ($familyCode) {
+            $searchBy = 'family';
+	    $searchFamilyCode = $familyCode;
+
 	    $families = \App\Family::all()->where('family_code', $familyCode);
 	    if (! count($families)) {
-	        echo 'Input Error: Family does not exist in database ' . '<br />';
-	        die();
-	        /* Todo: Redirect to some page where the error message is shown */
+                return view('remittance.search-result')
+	            ->with('searchBy', $searchBy)
+	            ->with('searchFamilyCode', $searchFamilyCode)
+	            ->with('status', 'family_not_found')
+	            ->with('remittances', null);
 	    } else if (count($families) != 1){
-	        echo 'Input Error: Something wrong!' . '<br />';
-	        die();
-	        /* Todo: Redirect to some page where the error message is shown */
-	        
+                return view('remittance.search-result')
+	            ->with('searchBy', $searchBy)
+	            ->with('searchFamilyCode', $searchFamilyCode)
+	            ->with('status', 'family_some_issue')
+	            ->with('remittances', null);
 	    } else {
 	        foreach ($families as $family) {
 	            $family_id = $family->family_id;
@@ -1264,12 +1279,11 @@ class RemittanceController extends Controller
                 $remittances = $family->remittances;
 	    }
 
-            $searchBy = 'family';
-	    $searchFamilyCode = $familyCode;
 
             return view('remittance.search-result')
 	        ->with('searchBy', $searchBy)
 	        ->with('searchFamilyCode', $searchFamilyCode)
+		->with('status', 'success')
 	        ->with('remittances', $remittances);
 	} else {
 	    /* Show few last remittances if no search preference */
