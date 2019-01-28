@@ -3,8 +3,12 @@
 @section('content')
 <div class="container-fluid">
   <div class="panel panel-info">
+      <!--
       <div class="panel-heading"><h3><strong>Search</strong></h3></div>
+      -->
       <div class="panel-body">
+        <h3><strong>Search</strong></h3>
+	<hr />
           @if (session('status'))
               <div class="alert alert-success">
                   {{ session('status') }}
@@ -28,12 +32,12 @@
 	      {{ csrf_field() }}
 
               <div class="form-group">
-                <label for="family-code">Family code</label><br />
-                <input type="text" class="form-control" id="family-code" name="family-code" placeholder="Family code">
-              </div>
-              <div class="form-group">
                 <label for="family-code">Name</label><br />
                 <input type="text" class="form-control" id="submitter-name" name="submitter-name" placeholder="Name">
+              </div>
+              <div class="form-group">
+                <label for="family-code">Family code</label><br />
+                <input type="text" class="form-control" id="family-code" name="family-code" placeholder="Family code">
               </div>
               <div class="form-group">
                 <label for="serial-num">Serial num</label><br />

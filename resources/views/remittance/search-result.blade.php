@@ -3,8 +3,12 @@
 @section('content')
 <div class="container-fluid">
   <div class="panel panel-info">
+      <!--
       <div class="panel-heading"><h3><strong>Search Result</strong></h3></div>
+      -->
       <div class="panel-body">
+        <h3><strong>Search Result</strong></h3>
+	<hr />
           @if (session('status'))
               <div class="alert alert-success">
                   {{ session('status') }}
@@ -19,8 +23,26 @@
 	    @endif
 	  </p>
 
+	  <!-- Show info regarding search query -->
+	  <div>
+	    <br />
+	    @if ($searchBy == 'name')
+	      <strong>Name: {{ $searchName }}</strong>
+	    @elseif ($searchBy == 'family')
+	      <strong>Family Code: {{ $searchFamilyCode }}</strong>
+	    @elseif ($searchBy == 'lot')
+	      <strong>Lot: {{ $searchLotNum }}</strong>
+	    @elseif ($searchBy == 'serial')
+	      <strong>Serial num: {{ $searchSerialNum }}</strong>
+	    @elseif ($searchBy == 'none')
+	      <strong>Recent 10</strong>
+	    @endif
+	  </div>
+	  <hr />
+
+	  <!-- Display results -->
 	  <p>
-	    <table class="table table-condensed table-striped table-bordered table-hover">
+	    <table class="table table-condensed table-bordered table-hover">
 	      <thead>
 	        <tr class="info">
                   <th>Serial number</th>

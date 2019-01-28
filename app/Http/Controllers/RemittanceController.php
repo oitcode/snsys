@@ -1219,11 +1219,19 @@ class RemittanceController extends Controller
 	/* Todo: Switch between different cases nicely! */
 	if ($lotNumber) {
 	    $remittances = $this->searchByLot($lotNumber);
+            $searchBy = 'lot';
+	    $searchLotNum = $lotNumber;
             return view('remittance.search-result')
+	        ->with('searchBy', $searchBy)
+	        ->with('searchLotNum', $searchLotNum)
 	        ->with('remittances', $remittances);
 	} else if ($serialNum) {
 	    $remittances = Remittance::where('remittance_id', $serialNum)->get();
+            $searchBy = 'serial';
+	    $searchSerialNum = $serialNum;
             return view('remittance.search-result')
+	        ->with('searchBy', $searchBy)
+	        ->with('searchSerialNum', $searchSerialNum)
 	        ->with('remittances', $remittances);
 	} else if ($submitterName) {
 	    $remittances = Remittance::join('oblate', 'oblate.oblate_id', '=', 'remittance.submitter_id')
@@ -1231,39 +1239,47 @@ class RemittanceController extends Controller
 		->where('person.first_name', $submitterName)
 	        ->get();
 
+            $searchBy = 'name';
+	    $searchName = $submitterName;
             return view('remittance.search-result')
-	        ->with('remittances', $remittances);
-	}
-
-	if (! $familyCode) {
-	    /* Todo */
-	    die('Whops! Give family code');
-            $remittances = \App\Remittance::order_by('created_time', 'desc')->take(10);
-            return view('remittance.search-result')
-	        ->with('remittances', $remittances);
-	}
-
-	$families = \App\Family::all()->where('family_code', $familyCode);
-	if (! count($families)) {
-	    echo 'Input Error: Family does not exist in database ' . '<br />';
-	    die();
-	    /* Todo: Redirect to some page where the error message is shown */
-	} else if (count($families) != 1){
-	    echo 'Input Error: Something wrong!' . '<br />';
-	    die();
-	    /* Todo: Redirect to some page where the error message is shown */
-	    
-	} else {
-	    foreach ($families as $family) {
-	        $family_id = $family->family_id;
+	        ->with('remittances', $remittances)
+	        ->with('searchBy', $searchBy)
+	        ->with('searchName', $searchName);
+	} else if ($familyCode) {
+	    $families = \App\Family::all()->where('family_code', $familyCode);
+	    if (! count($families)) {
+	        echo 'Input Error: Family does not exist in database ' . '<br />';
+	        die();
+	        /* Todo: Redirect to some page where the error message is shown */
+	    } else if (count($families) != 1){
+	        echo 'Input Error: Something wrong!' . '<br />';
+	        die();
+	        /* Todo: Redirect to some page where the error message is shown */
+	        
+	    } else {
+	        foreach ($families as $family) {
+	            $family_id = $family->family_id;
+	        }
+	        $family = \App\Family::find($family_id);
+                $remittances = $family->remittances;
 	    }
-	    $family = \App\Family::find($family_id);
-            $remittances = $family->remittances;
-	}
 
-        return view('remittance.search-result')
-	    ->with('familyCode', $familyCode)
-	    ->with('remittances', $remittances);
+            $searchBy = 'family';
+	    $searchFamilyCode = $familyCode;
+
+            return view('remittance.search-result')
+	        ->with('searchBy', $searchBy)
+	        ->with('searchFamilyCode', $searchFamilyCode)
+	        ->with('remittances', $remittances);
+	} else {
+	    /* Show few last remittances if no search preference */
+            $remittances = \App\Remittance::orderBy('created_time', 'desc')
+	        ->take(10)->get();
+            $searchBy = 'none';
+            return view('remittance.search-result')
+	        ->with('searchBy', $searchBy)
+	        ->with('remittances', $remittances);
+	}
     }
 
     /**
