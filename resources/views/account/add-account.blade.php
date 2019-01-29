@@ -50,12 +50,9 @@
 
 
 	    <!-- Form -->
-        <form action="" method="post" id="">
+        <form action="/account/addacc/process" method="post" id="">
 	      {{ csrf_field() }}
-
-
-
-            <!-- Main Remittance Info -->
+            <!-- Main Info -->
             <h4>Main info</h4>
 			<!-- Toolbar -->
 			<div class="bg-alert" style="background-color: #eee; margin-bottom: 10px; padding: 5px; font-size: 10px;">
@@ -80,7 +77,7 @@
 					    <input
 						    type="text"
 						    class="nwo-std-frminp"
-						    name=""
+						    name="account_name"
 						    id=""
 						    value=""
 						/>
@@ -89,7 +86,7 @@
 					    <input
 						    type="text"
 							class="nwo-std-frminp"
-							name=""
+							name="remarks"
 							id=""
 							value=""
 						/>
@@ -103,7 +100,7 @@
 			</div>
 
             <br />
-            <input type="submit"  id="submit_remit" class="btn btn-success btn-sm" value="Submit"> <br />
+            <input type="submit"  id="" class="btn btn-success btn-sm" value="Submit"> <br />
           </form>
       </div>
 

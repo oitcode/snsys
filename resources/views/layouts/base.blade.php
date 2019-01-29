@@ -172,8 +172,10 @@
                             <li><a href="{{ url('/rmt/r/familyinp') }}">Old Create</a></li>
                             <li><a href="{{ url('/info/latest') }}">Latest Info</a></li>
                             <li><a href="{{ url('/sdeo/faminp') }}">Match</a></li>
-                            <li><a href="{{ url('/account/je') }}">Journal</a></li>
+                            <li><a href="{{ url('/account/je') }}">Journal Entry</a></li>
+                            <li><a href="{{ url('') }}">Journal View</a></li>
                             <li><a href="{{ url('/account/addacc') }}">+Account</a></li>
+                            <li><a href="{{ url('/account/chartofacc') }}">Chart</a></li>
                           </ul>
                       </li>
                     </ul>

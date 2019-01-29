@@ -152,58 +152,6 @@
 			  </div>
 			</div>
 
-
-
-
-
-
-            <!-- Remittance Lines -->
-            <h4>Breakdown</h4>
-
-			<!-- Toolbar -->
-			<div class="bg-alert" style="background-color: #eee; margin-bottom: 10px; padding: 5px; font-size: 10px;">
-			  <a href="">Convert</a>
-			  &nbsp;&nbsp;&nbsp;&nbsp;
-			  <span id="id_clear_nums">Clear</span>
-			  &nbsp;&nbsp;&nbsp;&nbsp;
-			  <span class="" id="add_person">+Person</span>
-			  &nbsp;&nbsp;&nbsp;&nbsp;
-			  <span class="" id="">Fetch</span>
-			  &nbsp;&nbsp;&nbsp;&nbsp;
-			  <span class="" id="">!Reset</span>
-			  &nbsp;&nbsp;&nbsp;&nbsp;
-			  <a href="">Other</a>
-			</div>
-
-
-            <table class="nwo-form-table">
-              <thead>
-                <tr>
-                  <th class="nwo-std-10pc nwo-std-smf">Person</th>
-                  <th class="nwo-std-10pc nwo-std-smf">Ritwik Name</th>
-
-                  <th class="nwo-std-5pc nwo-std-smf">Swst</th>
-                  <th class="nwo-std-5pc nwo-std-smf">Ist</th>
-                  <th class="nwo-std-5pc nwo-std-smf">Acvt</th>
-                  <th class="nwo-std-5pc nwo-std-smf">Dks</th>
-                  <th class="nwo-std-5pc nwo-std-smf">Sng</th>
-                  <th class="nwo-std-5pc nwo-std-smf">Rit</th>
-                  <th class="nwo-std-5pc nwo-std-smf">Pra</th>
-                  <th class="nwo-std-5pc nwo-std-smf">Swaw</th>
-                  <th class="nwo-std-5pc nwo-std-smf">AB</th>
-                  <th class="nwo-std-5pc nwo-std-smf">Pvt</th>
-                  <th class="nwo-std-5pc nwo-std-smf">Msc</th>
-
-                  <th class="nwo-std-5pc nwo-std-smf">Uts</th>
-                  <th class="nwo-std-5pc nwo-std-smf">Dpr</th>
-                  <th class="nwo-std-5pc nwo-std-smf">Apr</th>
-
-                  <th class="nwo-std-5pc nwo-std-smf" style="background-color: aliceblue; color: #888;">---</th>
-                </tr>
-              </thead>
-              <tbody id="remit_row_body">
-              </tbody>
-            </table>
             <br />
             <input type="submit"  id="submit_remit" class="btn btn-success btn-sm" value="Submit"> <br />
           </form>

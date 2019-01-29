@@ -25,6 +25,9 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        /* Gate to authorize user for account creation. */
+		Gate::define('create-account', function ($user) {
+		    return $user->role == 'm';
+		});
     }
 }

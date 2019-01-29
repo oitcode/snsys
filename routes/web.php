@@ -106,4 +106,6 @@ Route::post('/ajax/page/process', 'AjaxController@ajaFoo');
 /* Account */
 Route::get('/account/je', 'AccountController@journalEntry');
 Route::get('/account/addacc', 'AccountController@addAccount');
+Route::get('/account/chartofacc', 'AccountController@listAccounts');
+Route::post('/account/addacc/process', 'AccountController@addAccountProcess');
 
