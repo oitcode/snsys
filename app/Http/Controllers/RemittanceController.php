@@ -1192,7 +1192,7 @@ class RemittanceController extends Controller
     public function searchProcess(Request $request)
     {
 	$validatedData = $request->validate([
-	    'family-code' => 'nullable|integer',
+	    'family-code' => 'nullable|alphanum',
 	    /* Todo: Validate it is in correct name format*/
 	    'submitter-name' => 'nullable|alpha',
 	    'serial-num' => 'nullable|integer',
@@ -1258,7 +1258,24 @@ class RemittanceController extends Controller
             $searchBy = 'family';
 	    $searchFamilyCode = $familyCode;
 
-	    $families = \App\Family::all()->where('family_code', $familyCode);
+	    /* Validate family code */
+	    if (!$this->familyCodeIsValid($familyCode)) {
+                return view('remittance.search-result')
+	            ->with('searchBy', $searchBy)
+	            ->with('searchFamilyCode', $searchFamilyCode)
+	            ->with('status', 'family_code_invalid')
+	            ->with('remittances', null);
+	    }
+
+	    $famCodeParts = $this->breakFamilyCode($familyCode);
+	    if ($famCodeParts === false) {
+	        /* Todo: Show error istead of dying. */
+	        die("Error: Could not extract family code parts");
+	    }
+	    $nineDFamCode = $famCodeParts['nineDFamCode'];
+
+
+	    $families = \App\Family::all()->where('family_code', $nineDFamCode);
 	    if (! count($families)) {
                 return view('remittance.search-result')
 	            ->with('searchBy', $searchBy)
@@ -1276,6 +1293,14 @@ class RemittanceController extends Controller
 	            $family_id = $family->family_id;
 	        }
 	        $family = \App\Family::find($family_id);
+
+
+		// if ($searchFamilyCode -} length == 9 )
+		if ($family->fcode_check_digit === null) {
+		   // do styh
+		} else {
+		   // do styh
+		}
                 $remittances = $family->remittances;
 	    }
 
@@ -1810,55 +1835,127 @@ class RemittanceController extends Controller
 
     /* Serve ajax response for family's prev rmt */
     public function ajaxCreateNextServe(Request $request)
-	{
-		$rmtId = $request->input('rmtId');
-		$famId = $request->input('famId');
+    {
+    	$rmtId = $request->input('rmtId');
+    	$famId = $request->input('famId');
+    
+    $family = Family::find($famId);
+    if (!$family) {
+        return response()->json(['msg' => 'notfound'], 200);
+    }
+    
+    	/* Fetch next remittance */
+        $remittance = Remittance::where('family_id', $famId)
+    	    ->where('remittance_id', '>', $rmtId)
+    	    ->orderBy('created_time', 'asc')
+    		->first();
+    
+    if (!$remittance) {
+        return response()->json(['msg' => 'notfound'], 200);
+    }
+    
+    	/* Just traverse all associated data.
+    	 * Surprisingly these will be sent in json response.
+    	 *
+    	 * Is this a feature that can be relied upon?
+    	 *
+    	 */
+        $submitterPerson = $remittance->submitter->person;
+    if (!$submitterPerson) {
+        return response()->json(['msg' => 'notfound'], 200);
+    }
+    
+        $remittanceLines = $remittance->remittance_lines;
+    if (!$remittanceLines) {
+        return response()->json(['msg' => 'notfound'], 200);
+    }
+    
+    foreach ($remittanceLines as $remittanceLine) {
+            $person = $remittanceLine->oblate->person;
+        	$ritwik = $remittanceLine->oblate->worker->person;
+        }
+    
+        return response()->json(
+    	    [
+    		    'msg' => 'found',
+    	        'family' => $family,
+    	        'remittance' => $remittance,
+    		],
+    		200
+    	);
+    }
 
-        $family = Family::find($famId);
-        if (!$family) {
-            return response()->json(['msg' => 'notfound'], 200);
+    /* Validate if a family code is valid */
+    public function familyCodeIsValid($familyCode)
+    {
+        $isValid = false;
+    
+        $tenDFamCodePattern = '/^4700[0-9]{5,5}[0-9N]$/';
+    
+        if (preg_match($tenDFamCodePattern, $familyCode)) {
+            $famCodeParts = $this->breakFamilyCode($familyCode);
+            $nineDFamCode = $famCodeParts['nineDFamCode'];
+            
+            if ($nineDFamCode <= 470026154) {
+                if ($familyCode[9] != 'N' &&
+                    $familyCode[9] == $this->familyCodeCheckDigit($nineDFamCode)) {
+            	$isValid = true;
+                }
+            } else {
+                if ($familyCode[9] == 'N') {
+            	    $isValid = true;
+                }
+            }
         }
 
-		/* Fetch next remittance */
-	    $remittance = Remittance::where('family_id', $famId)
-		    ->where('remittance_id', '>', $rmtId)
-		    ->orderBy('created_time', 'asc')
-			->first();
+        return $isValid;
+    }
 
-        if (!$remittance) {
-            return response()->json(['msg' => 'notfound'], 200);
-        }
-
-		/* Just traverse all associated data.
-		 * Surprisingly these will be sent in json response.
-		 *
-		 * Is this a feature that can be relied upon?
-		 *
-		 */
-	    $submitterPerson = $remittance->submitter->person;
-        if (!$submitterPerson) {
-            return response()->json(['msg' => 'notfound'], 200);
-        }
-
-	    $remittanceLines = $remittance->remittance_lines;
-        if (!$remittanceLines) {
-            return response()->json(['msg' => 'notfound'], 200);
-        }
-
-        foreach ($remittanceLines as $remittanceLine) {
-	        $person = $remittanceLine->oblate->person;
-	    	$ritwik = $remittanceLine->oblate->worker->person;
-	    }
-
-	    return response()->json(
-		    [
-			    'msg' => 'found',
-		        'family' => $family,
-		        'remittance' => $remittance,
-			],
-			200
-		);
+    /* Calculate check digit of a family code */
+    public function familyCodeCheckDigit($familyCode)
+    {
+	/* See that the family code is of correct pattern */
+	$nineDFamCodePattern = '/^4700[0-9]{5,5}$/';
+        if (! preg_match($nineDFamCodePattern, $familyCode)) {
+	    return -1;
 	}
 
+        /**
+         * Below algorithm to compute the check digit 
+         * for a family code has been taken from 
+         * Satsang Deoghar cobol code.
+         */
+
+        $checkDigit = -1;
+
+        /* Pay careful attention:
+         *
+         * 1. First two digits are ignored.
+         * 2. wsMship starts from rightside
+         *    so, wsMship2 is familyCode[8].
+         */
+        $wsMship1 = $familyCode[9-1];
+        $wsMship2 = $familyCode[9-2];
+        $wsMship3 = $familyCode[9-3];
+        $wsMship4 = $familyCode[9-4];
+        $wsMship5 = $familyCode[9-5];
+        $wsMship6 = $familyCode[9-6];
+        $wsMship7 = $familyCode[9-7];
+
+        $wsDgtTot = $wsMship1 * 2 + $wsMship2 * 3 +
+                   $wsMship3 * 4 + $wsMship4 * 5 +
+                   $wsMship5 * 6 + $wsMship6 * 7 +
+                   $wsMship7 * 8;
+
+        $wsRemainder = $wsDgtTot % 11;
+
+        if ($wsRemainder == 0 || $wsRemainder == 1) {
+            $checkDigit = 0;
+        } else {
+            $checkDigit = 11 - $wsRemainder;
+        }
+
+        return $checkDigit;
+    }
 }
 

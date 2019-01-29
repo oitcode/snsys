@@ -34,6 +34,10 @@
 	        <p style="color: red;">
 		  Family {{ $searchFamilyCode}} does not exist.
 	        </p>
+	      @elseif ($status == 'family_code_invalid')
+	        <p style="color: red;">
+		  Invalid family code {{ $searchFamilyCode}}
+	        </p>
 	      @endif
 	    @elseif ($searchBy == 'lot')
 	      <strong>Lot: {{ $searchLotNum }}</strong>
