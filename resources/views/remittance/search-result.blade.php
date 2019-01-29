@@ -4,10 +4,10 @@
 <div class="container-fluid">
   <div class="panel panel-info">
       <!--
-      <div class="panel-heading"><h3><strong>Search Result</strong></h3></div>
+      <div class="panel-heading"><h3><strong>Remittance Search Result</strong></h3></div>
       -->
       <div class="panel-body">
-        <h3><strong>Search Result</strong></h3>
+        <h3 style="font-size: 16px;"><strong>Remit Search Result</strong></h3>
 	<hr />
           @if (session('status'))
               <div class="alert alert-success">

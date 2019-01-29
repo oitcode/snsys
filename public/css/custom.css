@@ -107,3 +107,7 @@ input[type="number"] {
 	height: 100% !important;
 	font-size: 20px;
 }
+
+.nwo-sm-num {
+  font-size: 11px;
+}

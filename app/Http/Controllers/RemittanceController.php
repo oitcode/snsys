@@ -234,13 +234,23 @@ class RemittanceController extends Controller
 
 	$len = count($keywords);
 
-	$names['first_name'] = $keywords[0];
-	$names['last_name'] = $keywords[$len-1];
+	$names['first_name'] = null;
 	$names['middle_name'] = null;
+	$names['last_name'] = null;
 
-	if ($len > 2) {
-	    $middleNames = array_slice($keywords, 1, $len-2);
-	    $names['middle_name'] = implode(' ', $middleNames);
+	/* Has at least one name part */
+	if ($len >= 1) {
+	    $names['first_name'] = $keywords[0];
+	}
+	/* Has at least two name part */
+	if ($len >= 2) {
+	    $names['last_name'] = $keywords[$len-1];
+            /* Has middle names too */
+	    if ($len > 2) {
+	        $middleNames = array_slice($keywords, 1, $len-2);
+	        $names['middle_name'] = implode(' ', $middleNames);
+	    }
+
 	}
 
 	return $names;
@@ -1194,7 +1204,7 @@ class RemittanceController extends Controller
 	$validatedData = $request->validate([
 	    'family-code' => 'nullable|alphanum',
 	    /* Todo: Validate it is in correct name format*/
-	    'submitter-name' => 'nullable|alpha',
+	    //'submitter-name' => 'nullable|alpha',
 	    'serial-num' => 'nullable|integer',
 	    'submit-date' => 'nullable|date',
 	    /* Todo: Validate it is in correct name format*/
@@ -1216,37 +1226,26 @@ class RemittanceController extends Controller
 	$submitterName = $request->input('submitter-name');
 
 	/* Todo: Switch between different cases nicely! */
-	if ($lotNumber) {
-            $searchBy = 'lot';
-	    $searchLotNum = $lotNumber;
+        if ($submitterName) {
+	    $submitterNameParts = $this->extractNames($submitterName);
 
-	    $remittances = $this->searchByLot($lotNumber);
-	    if ($remittances === -1) {
-                return view('remittance.search-result')
-	            ->with('searchBy', $searchBy)
-	            ->with('searchLotNum', $searchLotNum)
-	            ->with('status', 'lot_not_found')
-	            ->with('remittances', null);
-	    } else {
-                return view('remittance.search-result')
-	            ->with('searchBy', $searchBy)
-	            ->with('searchLotNum', $searchLotNum)
-	            ->with('status', 'success')
-	            ->with('remittances', $remittances);
-	    }
-	} else if ($serialNum) {
-	    $remittances = Remittance::where('remittance_id', $serialNum)->get();
-            $searchBy = 'serial';
-	    $searchSerialNum = $serialNum;
-            return view('remittance.search-result')
-	        ->with('searchBy', $searchBy)
-	        ->with('searchSerialNum', $searchSerialNum)
-	        ->with('remittances', $remittances);
-	} else if ($submitterName) {
 	    $remittances = Remittance::join('oblate', 'oblate.oblate_id', '=', 'remittance.submitter_id')
 	        ->join('person', 'oblate.person_id', '=', 'person.person_id')
-		->where('person.first_name', $submitterName)
-	        ->get();
+		->where(
+		    'person.first_name',
+		    'like',
+		    $submitterNameParts['first_name'] . '%'
+		    );
+
+	    if ($submitterNameParts['last_name'] != null) {
+	        $remittances = $remittances->where(
+		    'person.last_name',
+		    'like',
+		    $submitterNameParts['last_name'] . '%'
+		    );
+	    }
+
+	    $remittances = $remittances->get();
 
             $searchBy = 'name';
 	    $searchName = $submitterName;
@@ -1294,13 +1293,6 @@ class RemittanceController extends Controller
 	        }
 	        $family = \App\Family::find($family_id);
 
-
-		// if ($searchFamilyCode -} length == 9 )
-		if ($family->fcode_check_digit === null) {
-		   // do styh
-		} else {
-		   // do styh
-		}
                 $remittances = $family->remittances;
 	    }
 
@@ -1310,6 +1302,33 @@ class RemittanceController extends Controller
 	        ->with('searchFamilyCode', $searchFamilyCode)
 		->with('status', 'success')
 	        ->with('remittances', $remittances);
+	} else if ($serialNum) {
+	    $remittances = Remittance::where('remittance_id', $serialNum)->get();
+            $searchBy = 'serial';
+	    $searchSerialNum = $serialNum;
+            return view('remittance.search-result')
+	        ->with('searchBy', $searchBy)
+	        ->with('searchSerialNum', $searchSerialNum)
+	        ->with('remittances', $remittances);
+	} else if ($lotNumber) {
+            $searchBy = 'lot';
+	    $searchLotNum = $lotNumber;
+
+	    $remittances = $this->searchByLot($lotNumber);
+
+	    if ($remittances === -1) {
+                return view('remittance.search-result')
+	            ->with('searchBy', $searchBy)
+	            ->with('searchLotNum', $searchLotNum)
+	            ->with('status', 'lot_not_found')
+	            ->with('remittances', null);
+	    } else {
+                return view('remittance.search-result')
+	            ->with('searchBy', $searchBy)
+	            ->with('searchLotNum', $searchLotNum)
+	            ->with('status', 'success')
+	            ->with('remittances', $remittances);
+	    }
 	} else {
 	    /* Show few last remittances if no search preference */
             $remittances = \App\Remittance::orderBy('created_time', 'desc')
