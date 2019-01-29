@@ -39,7 +39,7 @@
 
 
 		<!-- If there are no journal entries -->
-	    @if (count($jentries) === 0)
+	    @if (count($jEntries) === 0)
 		  <div>
 	        <span class="">
 	          &#x26D4; No journal entry found
@@ -49,11 +49,32 @@
 
 		<!-- Display the journal entries -->
 		<div>
-		  @foreach ($jentries as $jentry)
-		    {{ $jentry->particulars }}
-			<!-- TODO: WAS_RIGHT_HERE -->
-            <br/>
-		  @endforeach
+		  <table class="table table-condensed table-striped table-bordered">
+		    <thead>
+			  <tr class="info">
+			    <th>SN</th>
+			    <th>Particulars</th>
+			    <th>Debit Acc</th>
+			    <th>Amount</th>
+			    <th>Credit Acc</th>
+			    <th>Amount</th>
+			  </tr>
+		    </thead>
+		    <tbody>
+		      @foreach ($jEntries as $jEntry)
+			    <tr>
+				  <td>{{ $jEntry->journal_entry_id }}</td>
+				  <td>{{ $jEntry->particulars }}</td>
+				  <td>{{ $jEntry->dr_account->name }}</td>
+				  <td>{{ $jEntry->dr_amount }}</td>
+				  <td>{{ $jEntry->cr_account->name }}</td>
+				  <td>{{ $jEntry->cr_amount }}</td>
+			    </tr>
+		      @endforeach
+		    </tbody>
+		    <tfoot>
+		    </tfoot>
+		  </table>
 		</div>
 
       </div>

@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Gate;
 
 /* Models */
 use App\Account;
+use App\JournalEntry;
 
 class AccountController extends Controller
 {
@@ -24,6 +25,46 @@ class AccountController extends Controller
 	public function journalEntry()
 	{
 	    return view('account.journal-entry');
+	}
+
+	public function journalEntryProcess(Request $request)
+	{
+	    /* Validate data */
+	    $validatedData = $request->validate([
+	        'dr_account' => 'required|exists:account,name',
+	        'cr_account' => 'required|exists:account,name',
+	    ]);
+
+
+
+	    /* Save journal entry to the db */
+
+		$newJe = new JournalEntry;
+
+		$newJe->particulars = $request->input('particulars');
+
+		$newJe->dr_account_id = $this->getAccountIdByName($request->input('dr_account'));
+		$newJe->dr_amount = $request->input('dr_amount');
+
+		$newJe->cr_account_id = $this->getAccountIdByName($request->input('cr_account'));
+		$newJe->cr_amount = $request->input('cr_amount');
+
+	    $newJe->creator_id = $request->user()->id;
+
+		/* Todo: How to confirm it was saved in database? */
+		$newJe->save();
+
+	    $request->session()->flash('status', 'Success: Journal entry created!');
+
+		return redirect('/');
+	}
+
+	public function journalEntryList()
+	{
+	    $jEntries = JournalEntry::all();
+
+		return view('account.journal-list')
+		    ->with('jEntries', $jEntries);
 	}
 
 	public function addAccount()
@@ -67,5 +108,19 @@ class AccountController extends Controller
 
 	    return view('account.list-accounts')
 		    ->with('accounts', $accounts);
+	}
+
+	public function getAccountIdByName($accName)
+	{
+	    $accounts = Account::where('name', $accName);
+
+		/* If more then one account with same name */
+		if (count($accounts->get()) > 1) {
+		    die("Whoops ! Something o wrong.");
+		}
+
+		$account = $accounts->first();
+
+		return $account->account_id;
 	}
 }

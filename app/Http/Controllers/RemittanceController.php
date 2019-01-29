@@ -18,6 +18,8 @@ use App\Remittance;
 use App\RemittanceLot;
 use App\RemittanceLine;
 
+use App\JournalEntry;
+
 class RemittanceController extends Controller
 {
     /**
@@ -1149,6 +1151,21 @@ class RemittanceController extends Controller
 	$request->session()->flash('status', 'Success: Remittance created!');
 	$request->session()->flash('serialNum', $remittance->remittance_id);
 	$request->session()->flash('familyCode', $remittance->family->family_code);
+
+        /* Update accounting system */
+        $newJe = new JournalEntry;
+        
+        $newJe->particulars = 'Capital Acc Dr To Donator Acc Cr';
+		/* Need to know the id's somehow programmatically */
+        $newJe->dr_account_id = 2;
+        $newJe->dr_amount = 555;
+		/* Need to know the id's somehow programmatically */
+        $newJe->cr_account_id = 3;
+        $newJe->cr_amount = 555;
+        
+        $newJe->creator_id = $request->user()->id;
+        
+        $newJe->save();
 
         return redirect('/rmt/create/success');
     }

@@ -50,7 +50,7 @@
 
 
 	    <!-- Form -->
-        <form action="" method="post" id="">
+        <form action="/account/je/process" method="post" id="">
 	      {{ csrf_field() }}
 
 
@@ -59,9 +59,9 @@
             <h4>Main info</h4>
 			<!-- Toolbar -->
 			<div class="bg-alert" style="background-color: #eee; margin-bottom: 10px; padding: 5px; font-size: 10px;">
-			  <span id="id_prev_rmt">Previous</span>
+			  <span id="">+More</span>
 			  &nbsp;&nbsp;&nbsp;&nbsp;
-			  <span id="id_next_rmt">Next</span>
+			  <span id="">Other</span>
 			  &nbsp;&nbsp;&nbsp;&nbsp;
 			</div>
 
@@ -84,7 +84,7 @@
 					    <input
 						    type="text"
 						    class="nwo-std-frminp"
-						    name=""
+						    name="particulars"
 						    id=""
 						    value=""
 						/>
@@ -93,7 +93,7 @@
 					    <input
 						    type="text"
 							class="nwo-std-frminp"
-							name=""
+							name="lf_num"
 							id=""
 							value=""
 						/>
@@ -102,7 +102,7 @@
 					    <input
 						    type="text"
 							class="nwo-std-frminp"
-							name=""
+							name="dr_account"
 							id=""
 							value=""
 						/>
@@ -111,7 +111,7 @@
 					    <input
 						    type="text"
 							class="nwo-std-frminp"
-							name=""
+							name="dr_amount"
 							id=""
 							value=""
 						/>
@@ -120,7 +120,7 @@
 					    <input
 						    type="text"
 							class="nwo-std-frminp"
-							name=""
+							name="cr_account"
 							id=""
 							value=""
 						/>
@@ -129,7 +129,7 @@
 					    <input
 						    type="text"
 							class="nwo-std-frminp"
-							name=""
+							name="cr_amount"
 							id=""
 							value=""
 						/>
@@ -153,7 +153,7 @@
 			</div>
 
             <br />
-            <input type="submit"  id="submit_remit" class="btn btn-success btn-sm" value="Submit"> <br />
+            <input type="submit"  id="" class="btn btn-success btn-sm" value="Submit"> <br />
           </form>
       </div>
 

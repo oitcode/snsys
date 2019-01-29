@@ -105,7 +105,11 @@ Route::post('/ajax/page/process', 'AjaxController@ajaFoo');
 
 /* Account */
 Route::get('/account/je', 'AccountController@journalEntry');
+Route::post('/account/je/process', 'AccountController@journalEntryProcess');
+Route::get('/account/j/list/', 'AccountController@journalEntryList');
+
 Route::get('/account/addacc', 'AccountController@addAccount');
-Route::get('/account/chartofacc', 'AccountController@listAccounts');
 Route::post('/account/addacc/process', 'AccountController@addAccountProcess');
+Route::get('/account/chartofacc', 'AccountController@listAccounts');
+
 
