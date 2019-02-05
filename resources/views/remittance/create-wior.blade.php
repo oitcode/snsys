@@ -221,7 +221,7 @@
 		     />
 		    </td>
                     <td>
-		      <input type="number" step="0.25" min="0.0" class="nwo-std-5pc nwo-std-frminp col-dks"  name="remit-row[{{ $loop->index }}][dakshina]" id=""
+		      <input type="number" step="0.25" min="0.0" class="nwo-std-5pc nwo-std-frminp col-val col-dks"  name="remit-row[{{ $loop->index }}][dakshina]" id=""
                         @if ($rl->dakshina > 0)
 		          value="{{ $rl->dakshina }}"
                         @else
