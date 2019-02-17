@@ -353,17 +353,10 @@ $( document ).ready(function() {
 $( document ).ready(function() {
     var remLineBody = $("#remit_row_body");
 
-    /* TODO: Some more sensible way to know that 5
-    |        more rows are not needed.
-    */
-    var icConvertBtn = $('#id_convert_to_ic');
-
-    if (! icConvertBtn.length) {
-        /* Add 5 additional remit rows */
-        var i = 0;
-        for (i = 0; i < 5; i++) {
-            addRemitRow(remLineBody);
-        }
+    /* Add 5 additional remit rows */
+    var i = 0;
+    for (i = 0; i < 5; i++) {
+        addRemitRow(remLineBody);
     }
 });
 
@@ -904,7 +897,7 @@ $( document ).ready(function() {
     /**
      * Convert numbers to IC
      */
-    var icConvertBtn = $('#id_convert_to_ic');
+    var icConvertBtn = $('#id_convert');
 
     if (icConvertBtn) {
         icConvertBtn.click(function(e) {

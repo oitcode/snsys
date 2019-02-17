@@ -202,17 +202,17 @@
 
 			<!-- Toolbar -->
 			<div class="bg-alert" style="background-color: #eee; margin-bottom: 10px; padding: 5px; font-size: 10px;">
-			  <a href="">Convert</a>
+			  <button id="id_convert" style="border: none;">Convert</button>
 			  &nbsp;&nbsp;&nbsp;&nbsp;
-			  <span id="id_clear_nums">Clear</span>
+			  <span id="id_clear_nums" style="">Clear</span>
 			  &nbsp;&nbsp;&nbsp;&nbsp;
-			  <span class="" id="add_person">+Person</span>
+			  <span class="" id="add_person" style="">+Person</span>
 			  &nbsp;&nbsp;&nbsp;&nbsp;
-			  <span class="" id="">Fetch</span>
+			  <span class="" id="" style="">Fetch</span>
 			  &nbsp;&nbsp;&nbsp;&nbsp;
-			  <span class="" id="">!Reset</span>
+			  <span class="" id="" style="">!Reset</span>
 			  &nbsp;&nbsp;&nbsp;&nbsp;
-			  <a href="">Other</a>
+			  <span class="" id="" style="">Other</span>
 			</div>
 
 
