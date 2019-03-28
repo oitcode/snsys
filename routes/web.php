@@ -103,3 +103,8 @@ Route::get('/ajax/page', 'AjaxController@ajaxPage');
 Route::post('/ajax/page/process', 'AjaxController@ajaFoo');
 
 
+/* Reporting */
+Route::get('/report/familyinp', 'ReportController@familyInput');
+Route::post('/report/familyinp/process', 'ReportController@familyInputProcess');
+Route::get('/report/workerlist', 'ReportController@displayWorkerList');
+Route::get('/report/worker/{workerId}', 'ReportController@getWorkerRecord');

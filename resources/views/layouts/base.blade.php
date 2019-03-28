@@ -157,6 +157,8 @@
                             <li><a href="/db/family/search">Family</a></li>
                             <li><a href="/db/remittance/search">Remittance</a></li>
                             <li><a href="/db/worker/msearch">Worker</a></li>
+                            <li><a href="/report/familyinp">Worker Record</a></li>
+                            <li><a href="/report/workerlist">Worker List</a></li>
                             <li><a href="">Find</a></li>
                           </ul>
                       </li>
