@@ -14,7 +14,9 @@
 	  <hr />
 
 	  <p>
-	    Record as on: {{ $record['todayDate'] }}
+	    <strong>
+	      Record date: {{ $record['todayDate'] }}
+	    </strong>
 	  </p>
 
 	  <hr />
@@ -25,6 +27,8 @@
 	        <th>Worker Id</th>
 	        <th>Family Code</th>
 	        <th>Name</th>
+	        <th>Address</th>
+	        <th>Ritwik's Name</th>
 	        <th>Worker Type</th>
 	      </tr>
 	    </thead>
@@ -37,6 +41,12 @@
 	          {{ $record['person']->middle_name }}
 	          {{ $record['person']->last_name }}
                 </td>
+	        <td>{{ $record['family']->address }}</td>
+	        <td>
+		  {{ $record['oblate']->worker->person->first_name }}
+		  {{ $record['oblate']->worker->person->middle_name }}
+		  {{ $record['oblate']->worker->person->last_name }}
+		</td>
 	        <td>{{ $record['worker']->type }}</td>
 	      </tr>
 	    </tbody>
@@ -45,6 +55,7 @@
 	  <hr />
 
 
+	  <h4>Oblation</h4>
 	  @if (count($record['remittanceLines']) == 0)
 	    <p>
 	      No records !!!
@@ -57,25 +68,67 @@
 	        <th>Date</th>
 	        <th>Istavrity</th>
 	        <th>Swastyayani</th>
-	        <th>Pranami</th>
+	      </tr>
+	    </thead>
+	    <tbody>
+	      @foreach ($record['remittanceLines'] as $remittanceLine)
+		@if (
+		  ($remittanceLine->istavrity != null && $remittanceLine->istavrity > 0)
+		  ||
+		  ($remittanceLine->swastyayani != null && $remittanceLine->swastyayani > 0)
+		)
+                  <tr>
+		    <td>
+		      <a href="/rmt/{{ $remittanceLine->remittance->remittance_id }}">
+		        {{ $remittanceLine->remittance->remittance_lot->deposit_date }}
+		      </a>
+		    </td>
+		    <td>{{ $remittanceLine->istavrity }}</td>
+		    <td>{{ $remittanceLine->swastyayani }}</td>
+                  </tr>
+		@endif
+	      @endforeach
+	    </tbody>
+	  </table>
+
+	  <hr />
+	  <h4>Worker Deposit</h4>
+
+	  @if (count($record['remittanceLines']) == 0)
+	    <p>
+	      No records !!!
+	    </p>
+	  @endif
+
+	  <table class="table table-condensed table-striped table-bordered">
+	    <thead>
+	      <tr>
+	        <th>Date</th>
+	        <th>Utsav</th>
 	        <th>Diksha Pranami</th>
 	        <th>Acharya Pranami</th>
 	      </tr>
 	    </thead>
 	    <tbody>
 	      @foreach ($record['remittanceLines'] as $remittanceLine)
-                <tr>
-		  <td>
-		    <a href="/rmt/{{ $remittanceLine->remittance->remittance_id }}">
-		      {{ $remittanceLine->remittance->remittance_lot->deposit_date }}
-		    </a>
-		  </td>
-		  <td>{{ $remittanceLine->istavrity }}</td>
-		  <td>{{ $remittanceLine->swastyayani }}</td>
-		  <td>{{ $remittanceLine->pranami }}</td>
-		  <td>{{ $remittanceLine->diksha_pranami }}</td>
-		  <td>{{ $remittanceLine->acharya_pranami }}</td>
-                </tr>
+		@if (
+		  ($remittanceLine->utsav != null && $remittanceLine->utsav > 0)
+		  ||
+		  ($remittanceLine->diksha_pranami != null && $remittanceLine->diksha_pranami > 0)
+		  ||
+		  ($remittanceLine->acharya_pranami != null && $remittanceLine->acharya_pranami > 0)
+		)
+                  <tr>
+		    <td>
+		      <a href="/rmt/{{ $remittanceLine->remittance->remittance_id }}">
+		        {{ $remittanceLine->remittance->remittance_lot->deposit_date }}
+		      </a>
+		    </td>
+		    <td>{{ $remittanceLine->utsav }}</td>
+		    <td>{{ $remittanceLine->diksha_pranami }}</td>
+		    <td>{{ $remittanceLine->acharya_pranami }}</td>
+                  </tr>
+		@endif
 	      @endforeach
 	    </tbody>
 	  </table>
