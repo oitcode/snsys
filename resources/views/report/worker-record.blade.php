@@ -55,39 +55,23 @@
 	  <hr />
 
 
-	  <h4>Oblation</h4>
-	  @if (count($record['remittanceLines']) == 0)
-	    <p>
-	      No records !!!
-	    </p>
-	  @endif
-
+	  <h4>Istavrity and Swastyayani</h4>
 	  <table class="table table-condensed table-striped table-bordered">
 	    <thead>
 	      <tr>
-	        <th>Date</th>
 	        <th>Istavrity</th>
+	        <th>Num of times</th>
 	        <th>Swastyayani</th>
+	        <th>Num of times</th>
 	      </tr>
 	    </thead>
 	    <tbody>
-	      @foreach ($record['remittanceLines'] as $remittanceLine)
-		@if (
-		  ($remittanceLine->istavrity != null && $remittanceLine->istavrity > 0)
-		  ||
-		  ($remittanceLine->swastyayani != null && $remittanceLine->swastyayani > 0)
-		)
-                  <tr>
-		    <td>
-		      <a href="/rmt/{{ $remittanceLine->remittance->remittance_id }}">
-		        {{ $remittanceLine->remittance->remittance_lot->deposit_date }}
-		      </a>
-		    </td>
-		    <td>{{ $remittanceLine->istavrity }}</td>
-		    <td>{{ $remittanceLine->swastyayani }}</td>
-                  </tr>
-		@endif
-	      @endforeach
+        <tr>
+          <td>{{ $record['istavrityTotal'] }}</td>
+          <td></td>
+          <td>{{ $record['swastyayaniTotal'] }}</td>
+          <td></td>
+        </tr>
 	    </tbody>
 	  </table>
 

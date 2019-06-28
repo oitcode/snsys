@@ -136,7 +136,41 @@ class ReportController extends Controller
 	$remittanceLines = RemittanceLine::where('oblate_id', $oblate->oblate_id)->get();
 	$record['remittanceLines'] = $remittanceLines;
 
+
+  // Put istavrity total
+  $istavrityTotal = $this->getTotalIstavritySum($remittanceLines);
+  $swastyayaniTotal = $this->getTotalSwastyayaniSum($remittanceLines);
+
+  $record['istavrityTotal'] = $istavrityTotal;
+  $record['swastyayaniTotal'] = $swastyayaniTotal;
+
 	return view('report.worker-record')
 	    ->with('record', $record);
+    }
+
+    /* Get sum of all istavrity. */
+    public function getTotalIstavritySum($remittanceLines)
+    {
+        $total = 0;
+
+        foreach ($remittanceLines as $remittanceLine) {
+            $total += $remittanceLine->istavrity;   
+        }
+
+        return $total;
+    }
+
+    /* Get sum of all swastyayani. */
+    public function getTotalSwastyayaniSum($remittanceLines)
+    {
+        $total = 0;
+
+        foreach ($remittanceLines as $remittanceLine) {
+            if ($remittanceLine->swastyayani != null) {
+                $total += $remittanceLine->swastyayani;   
+            }
+        }
+
+        return $total;
     }
 }
