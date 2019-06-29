@@ -50,6 +50,8 @@
                 <tr>
                   <td>
                     <a href="/db/edit/person/{{ $oblate->person->person_id }}">Edit</a>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <a href="/report/nonworker/{{ $oblate->oblate_id }}">Record</a>
                   </td>
                   <td>
 		    <a href="">

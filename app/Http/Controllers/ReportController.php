@@ -23,166 +23,208 @@ use App\RemittanceLine;
 
 class ReportController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * Only for authenticated users.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
+  /**
+   * Create a new controller instance.
+   *
+   * Only for authenticated users.
+   *
+   * @return void
+   */
+  public function __construct()
+  {
+    $this->middleware('auth');
+  }
+
+  /* Display family code form */
+  public function familyInput()
+  {
+    return view('report.family-inp');
+  }
+
+  /* Process the family code */
+  public function familyInputProcess(Request $request)
+  {
+    /* Todo: validate */
+
+
+    $famCode = $request->input('family-code');
+
+    if (! $this->familyCodeExists($famCode)) {
+      die('Invalid family code ...');
     }
 
-    /* Display family code form */
-    public function familyInput()
-    {
-        return view('report.family-inp');
+    if (! $this->workerInFamily($famCode)) {
+      die('No worker in family...');
     }
 
-    /* Process the family code */
-    public function familyInputProcess(Request $request)
-    {
-	/* Todo: validate */
+    // $workerId = $this->getWorkerIdFromFamCode($famCode);
+    $workerId = 20;
 
+    $worker = Worker::find($workerId);
+    $workerOblate = $worker->person->oblate;
+    echo "Oblate Id: $workerOblate->oblate_id <br/>";
 
-        $famCode = $request->input('family-code');
-
-	if (! $this->familyCodeExists($famCode)) {
-	   die('Invalid family code ...');
-	}
-
-        if (! $this->workerInFamily($famCode)) {
-	   die('No worker in family...');
-	}
-
-	// $workerId = $this->getWorkerIdFromFamCode($famCode);
-	$workerId = 20;
-
-	$worker = Worker::find($workerId);
-	$workerOblate = $worker->person->oblate;
-	echo "Oblate Id: $workerOblate->oblate_id <br/>";
-
-	$remittanceLines = RemittanceLine::where('oblate_id', $workerOblate->oblate_id)->get();
-	if (! $remittanceLines) {
-	    echo "No remittance found <br />";
-	}
-
-	echo $remittanceLines; 
-        return view('report.worker-record')
-	    ->with('remittanceLines', $remittanceLines);
+    $remittanceLines = RemittanceLine::where('oblate_id', $workerOblate->oblate_id)->get();
+    if (! $remittanceLines) {
+      echo "No remittance found <br />";
     }
 
-    /* Display worker list */
-    public function displayWorkerList()
-    {
-        $workers = Worker::all();
+    echo $remittanceLines; 
+    return view('report.worker-record')
+      ->with('remittanceLines', $remittanceLines);
+  }
 
-	/* Ignore dummy ritwiks */
-        $workers = $workers->except(1);
-        $workers = $workers->except(2);
-        $workers = $workers->except(3);
+  /* Display worker list */
+  public function displayWorkerList()
+  {
+    $workers = Worker::all();
 
-	return view('report.display-workers')
-	    ->with('workers', $workers);
+    /* Ignore dummy ritwiks */
+    $workers = $workers->except(1);
+    $workers = $workers->except(2);
+    $workers = $workers->except(3);
+
+    return view('report.display-workers')
+      ->with('workers', $workers);
+  }
+
+  /* Check if a given family code exists in DB */
+  public function familyCodeExists($famCode)
+  {
+    /* Todo */
+    return true;
+  }
+
+  /* Check if a given family code has a worker */
+  public function workerInFamily($famCode)
+  {
+    /* Todo */
+    return true;
+  }
+
+  /* Get record of a non worker */
+  public function getNonWorkerRecord($oblateId)
+  {
+    // Array to hold records
+    $record = [];
+
+    // Put the  oblate in array
+    $oblate = Oblate::find($oblateId);
+    if (! $oblate) {
+      die('Oblate not found ...');
+    }
+    $record['oblate'] = $oblate;
+
+
+    // Put the person in array
+    $person = $oblate->person;
+    $record['person'] = $person;
+
+    // Put the family in array
+    $family = $oblate->family;
+    $record['family'] = $family;
+
+    // Put todays date in array
+    $todayDate = date('Y-m-d');
+    $record['todayDate'] = $todayDate;
+
+    // Put all remittance records in array
+    $remittanceLines = RemittanceLine::where('oblate_id', $oblate->oblate_id)->get();
+    $record['remittanceLines'] = $remittanceLines;
+
+
+    // Put istavrity total
+    $istavrityInfo = $this->getTotalIstavritySum($remittanceLines);
+    $swastyayaniInfo = $this->getTotalSwastyayaniSum($remittanceLines);
+
+    $record['istavrityInfo'] = $istavrityInfo;
+    $record['swastyayaniInfo'] = $swastyayaniInfo;
+
+    return view('report.non-worker-record')
+      ->with('record', $record);
+  }
+
+  /* Get record of a worker */
+  public function getWorkerRecord($workerId)
+  {
+    // Array to hold records
+    $record = [];
+
+    // Put the worker in array
+    $worker = Worker::find($workerId);
+    if (! $worker) {
+      die('Woker not found ...');
+    }
+    $record['worker'] = $worker;
+
+
+    // Put the oblate (worker is also an oblate!) in array
+    $oblate = $worker->person->oblate;
+    $record['oblate'] = $oblate;
+
+    // Put the person in array
+    $person = $oblate->person;
+    $record['person'] = $person;
+
+    // Put the family in array
+    $family = $oblate->family;
+    $record['family'] = $family;
+
+    // Put todays date in array
+    $todayDate = date('Y-m-d');
+    $record['todayDate'] = $todayDate;
+
+    // Put all remittance records in array
+    $remittanceLines = RemittanceLine::where('oblate_id', $oblate->oblate_id)->get();
+    $record['remittanceLines'] = $remittanceLines;
+
+
+    // Put istavrity total
+    $istavrityInfo = $this->getTotalIstavritySum($remittanceLines);
+    $swastyayaniInfo = $this->getTotalSwastyayaniSum($remittanceLines);
+
+    $record['istavrityInfo'] = $istavrityInfo;
+    $record['swastyayaniInfo'] = $swastyayaniInfo;
+
+    return view('report.worker-record')
+      ->with('record', $record);
+  }
+
+  /* Get sum of all istavrity. */
+  public function getTotalIstavritySum($remittanceLines)
+  {
+    $total = 0;
+    $numOfTimesDeposited = 0;
+
+    foreach ($remittanceLines as $remittanceLine) {
+      if ($remittanceLine->istavrity != null && $remittanceLine->istavrity > 0) {
+        $total += $remittanceLine->istavrity;   
+        $numOfTimesDeposited++;
+      }
     }
 
-    /* Check if a given family code exists in DB */
-    public function familyCodeExists($famCode)
-    {
-	/* Todo */
-        return true;
+    $istavrityInfo['total'] = $total;
+    $istavrityInfo['numOfTimesDeposited'] = $numOfTimesDeposited;
+
+    return $istavrityInfo;
+  }
+
+  /* Get sum of all swastyayani. */
+  public function getTotalSwastyayaniSum($remittanceLines)
+  {
+    $total = 0;
+    $numOfTimesDeposited = 0;
+
+    foreach ($remittanceLines as $remittanceLine) {
+      if ($remittanceLine->swastyayani != null && $remittanceLine->swastyayani > 0) {
+        $total += $remittanceLine->swastyayani;   
+        $numOfTimesDeposited++;
+      }
     }
 
-    /* Check if a given family code has a worker */
-    public function workerInFamily($famCode)
-    {
-	/* Todo */
-        return true;
-    }
+    $swastyayaniInfo['total'] = $total;
+    $swastyayaniInfo['numOfTimesDeposited'] = $numOfTimesDeposited;
 
-    /* Get record of a worker */
-    public function getWorkerRecord($workerId)
-    {
-        // Array to hold records
-	$record = [];
-
-	// Put the worker in array
-	$worker = Worker::find($workerId);
-	if (! $worker) {
-	    die('Woker not found ...');
-	}
-	$record['worker'] = $worker;
-
-
-	// Put the oblate (worker is also an oblate!) in array
-	$oblate = $worker->person->oblate;
-	$record['oblate'] = $oblate;
-
-	// Put the person in array
-	$person = $oblate->person;
-	$record['person'] = $person;
-
-	// Put the family in array
-	$family = $oblate->family;
-	$record['family'] = $family;
-
-	// Put todays date in array
-	$todayDate = date('Y-m-d');
-	$record['todayDate'] = $todayDate;
-
-	// Put all remittance records in array
-	$remittanceLines = RemittanceLine::where('oblate_id', $oblate->oblate_id)->get();
-	$record['remittanceLines'] = $remittanceLines;
-
-
-  // Put istavrity total
-  $istavrityInfo = $this->getTotalIstavritySum($remittanceLines);
-  $swastyayaniInfo = $this->getTotalSwastyayaniSum($remittanceLines);
-
-  $record['istavrityInfo'] = $istavrityInfo;
-  $record['swastyayaniInfo'] = $swastyayaniInfo;
-
-	return view('report.worker-record')
-	    ->with('record', $record);
-    }
-
-    /* Get sum of all istavrity. */
-    public function getTotalIstavritySum($remittanceLines)
-    {
-        $total = 0;
-        $numOfTimesDeposited = 0;
-
-        foreach ($remittanceLines as $remittanceLine) {
-            if ($remittanceLine->istavrity != null && $remittanceLine->istavrity > 0) {
-                $total += $remittanceLine->istavrity;   
-                $numOfTimesDeposited++;
-            }
-        }
-
-        $istavrityInfo['total'] = $total;
-        $istavrityInfo['numOfTimesDeposited'] = $numOfTimesDeposited;
-
-        return $istavrityInfo;
-    }
-
-    /* Get sum of all swastyayani. */
-    public function getTotalSwastyayaniSum($remittanceLines)
-    {
-        $total = 0;
-        $numOfTimesDeposited = 0;
-
-        foreach ($remittanceLines as $remittanceLine) {
-            if ($remittanceLine->swastyayani != null && $remittanceLine->swastyayani > 0) {
-                $total += $remittanceLine->swastyayani;   
-                $numOfTimesDeposited++;
-            }
-        }
-
-        $swastyayaniInfo['total'] = $total;
-        $swastyayaniInfo['numOfTimesDeposited'] = $numOfTimesDeposited;
-
-        return $swastyayaniInfo;
-    }
+    return $swastyayaniInfo;
+  }
 }

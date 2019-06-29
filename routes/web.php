@@ -108,3 +108,4 @@ Route::get('/report/familyinp', 'ReportController@familyInput');
 Route::post('/report/familyinp/process', 'ReportController@familyInputProcess');
 Route::get('/report/workerlist', 'ReportController@displayWorkerList');
 Route::get('/report/worker/{workerId}', 'ReportController@getWorkerRecord');
+Route::get('/report/nonworker/{oblateId}', 'ReportController@getNonWorkerRecord');
