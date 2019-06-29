@@ -3,7 +3,7 @@
 @section('content')
 <div class="container-fluid">
   <div class="panel panel-info">
-      <div class="panel-heading"><h3><strong>Worker Record Display</strong></h3></div>
+      <div class="panel-heading hidden-print"><h3><strong>Worker Record Display</strong></h3></div>
       <div class="panel-body">
           @if (session('status'))
               <div class="alert alert-success">
@@ -67,10 +67,10 @@
 	    </thead>
 	    <tbody>
         <tr>
-          <td>{{ $record['istavrityTotal'] }}</td>
-          <td></td>
-          <td>{{ $record['swastyayaniTotal'] }}</td>
-          <td></td>
+          <td>{{ $record['istavrityInfo']['total'] }}</td>
+          <td>{{ $record['istavrityInfo']['numOfTimesDeposited'] }}</td>
+          <td>{{ $record['swastyayaniInfo']['total'] }}</td>
+          <td>{{ $record['swastyayaniInfo']['numOfTimesDeposited'] }}</td>
         </tr>
 	    </tbody>
 	  </table>
@@ -84,38 +84,87 @@
 	    </p>
 	  @endif
 
-	  <table class="table table-condensed table-striped table-bordered">
-	    <thead>
-	      <tr>
-	        <th>Date</th>
-	        <th>Utsav</th>
-	        <th>Diksha Pranami</th>
-	        <th>Acharya Pranami</th>
-	      </tr>
-	    </thead>
-	    <tbody>
-	      @foreach ($record['remittanceLines'] as $remittanceLine)
-		@if (
-		  ($remittanceLine->utsav != null && $remittanceLine->utsav > 0)
-		  ||
-		  ($remittanceLine->diksha_pranami != null && $remittanceLine->diksha_pranami > 0)
-		  ||
-		  ($remittanceLine->acharya_pranami != null && $remittanceLine->acharya_pranami > 0)
-		)
-                  <tr>
-		    <td>
-		      <a href="/rmt/{{ $remittanceLine->remittance->remittance_id }}">
-		        {{ $remittanceLine->remittance->remittance_lot->deposit_date }}
-		      </a>
-		    </td>
-		    <td>{{ $remittanceLine->utsav }}</td>
-		    <td>{{ $remittanceLine->diksha_pranami }}</td>
-		    <td>{{ $remittanceLine->acharya_pranami }}</td>
-                  </tr>
-		@endif
-	      @endforeach
-	    </tbody>
-	  </table>
+    <div class="row">
+      <!-- Utsav -->
+      <div class="col-md-4">
+	      <table class="table table-condensed table-striped table-bordered">
+	        <thead>
+	          <tr>
+	            <th>Date</th>
+	            <th>Utsav</th>
+	          </tr>
+	        </thead>
+	        <tbody>
+	          @foreach ($record['remittanceLines'] as $remittanceLine)
+		    @if (
+		      ($remittanceLine->utsav != null && $remittanceLine->utsav > 0)
+		    )
+                      <tr>
+		        <td>
+		          {{ $remittanceLine->remittance->remittance_lot->deposit_date }}
+		        </td>
+		        <td>{{ $remittanceLine->utsav }}</td>
+                      </tr>
+		    @endif
+	          @endforeach
+	        </tbody>
+	      </table>
+      </div>
+
+    <!-- Diksha Pranami -->
+      <div class="col-md-4">
+	      <table class="table table-condensed table-striped table-bordered">
+	        <thead>
+	          <tr>
+	            <th>Date</th>
+	            <th>Diksha Pranami</th>
+	          </tr>
+	        </thead>
+	        <tbody>
+	          @foreach ($record['remittanceLines'] as $remittanceLine)
+		    @if (
+		      ($remittanceLine->diksha_pranami != null && $remittanceLine->diksha_pranami > 0)
+		    )
+                      <tr>
+		        <td>
+		          {{ $remittanceLine->remittance->remittance_lot->deposit_date }}
+		        </td>
+		        <td>{{ $remittanceLine->diksha_pranami }}</td>
+                      </tr>
+		    @endif
+	          @endforeach
+	        </tbody>
+	      </table>
+      </div>
+      <div class="col-md-4">
+	      <table class="table table-condensed table-striped table-bordered">
+	        <thead>
+	          <tr>
+	            <th>Date</th>
+	            <th>Acharya Pranami</th>
+	          </tr>
+	        </thead>
+	        <tbody>
+	          @foreach ($record['remittanceLines'] as $remittanceLine)
+		    @if (
+		      ($remittanceLine->acharya_pranami != null && $remittanceLine->acharya_pranami > 0)
+		    )
+                      <tr>
+		        <td>
+		          {{ $remittanceLine->remittance->remittance_lot->deposit_date }}
+		        </td>
+		        <td>{{ $remittanceLine->acharya_pranami }}</td>
+                      </tr>
+		    @endif
+	          @endforeach
+	        </tbody>
+	      </table>
+      </div>
+    </div>
+
+
+
+
 
       </div>
   </div>

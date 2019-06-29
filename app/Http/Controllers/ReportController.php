@@ -138,11 +138,11 @@ class ReportController extends Controller
 
 
   // Put istavrity total
-  $istavrityTotal = $this->getTotalIstavritySum($remittanceLines);
-  $swastyayaniTotal = $this->getTotalSwastyayaniSum($remittanceLines);
+  $istavrityInfo = $this->getTotalIstavritySum($remittanceLines);
+  $swastyayaniInfo = $this->getTotalSwastyayaniSum($remittanceLines);
 
-  $record['istavrityTotal'] = $istavrityTotal;
-  $record['swastyayaniTotal'] = $swastyayaniTotal;
+  $record['istavrityInfo'] = $istavrityInfo;
+  $record['swastyayaniInfo'] = $swastyayaniInfo;
 
 	return view('report.worker-record')
 	    ->with('record', $record);
@@ -152,25 +152,37 @@ class ReportController extends Controller
     public function getTotalIstavritySum($remittanceLines)
     {
         $total = 0;
+        $numOfTimesDeposited = 0;
 
         foreach ($remittanceLines as $remittanceLine) {
-            $total += $remittanceLine->istavrity;   
+            if ($remittanceLine->istavrity != null && $remittanceLine->istavrity > 0) {
+                $total += $remittanceLine->istavrity;   
+                $numOfTimesDeposited++;
+            }
         }
 
-        return $total;
+        $istavrityInfo['total'] = $total;
+        $istavrityInfo['numOfTimesDeposited'] = $numOfTimesDeposited;
+
+        return $istavrityInfo;
     }
 
     /* Get sum of all swastyayani. */
     public function getTotalSwastyayaniSum($remittanceLines)
     {
         $total = 0;
+        $numOfTimesDeposited = 0;
 
         foreach ($remittanceLines as $remittanceLine) {
-            if ($remittanceLine->swastyayani != null) {
+            if ($remittanceLine->swastyayani != null && $remittanceLine->swastyayani > 0) {
                 $total += $remittanceLine->swastyayani;   
+                $numOfTimesDeposited++;
             }
         }
 
-        return $total;
+        $swastyayaniInfo['total'] = $total;
+        $swastyayaniInfo['numOfTimesDeposited'] = $numOfTimesDeposited;
+
+        return $swastyayaniInfo;
     }
 }
