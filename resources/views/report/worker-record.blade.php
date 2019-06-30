@@ -111,55 +111,59 @@
 	      </table>
       </div>
 
-    <!-- Diksha Pranami -->
-      <div class="col-md-4">
-	      <table class="table table-condensed table-striped table-bordered">
-	        <thead>
-	          <tr>
-	            <th>Date</th>
-	            <th>Diksha Pranami</th>
-	          </tr>
-	        </thead>
-	        <tbody>
-	          @foreach ($record['remittanceLines'] as $remittanceLine)
-		    @if (
-		      ($remittanceLine->diksha_pranami != null && $remittanceLine->diksha_pranami > 0)
-		    )
-                      <tr>
-		        <td>
-		          {{ $remittanceLine->remittance->remittance_lot->deposit_date }}
-		        </td>
-		        <td>{{ $remittanceLine->diksha_pranami }}</td>
-                      </tr>
-		    @endif
-	          @endforeach
-	        </tbody>
-	      </table>
-      </div>
-      <div class="col-md-4">
-	      <table class="table table-condensed table-striped table-bordered">
-	        <thead>
-	          <tr>
-	            <th>Date</th>
-	            <th>Acharya Pranami</th>
-	          </tr>
-	        </thead>
-	        <tbody>
-	          @foreach ($record['remittanceLines'] as $remittanceLine)
-		    @if (
-		      ($remittanceLine->acharya_pranami != null && $remittanceLine->acharya_pranami > 0)
-		    )
-                      <tr>
-		        <td>
-		          {{ $remittanceLine->remittance->remittance_lot->deposit_date }}
-		        </td>
-		        <td>{{ $remittanceLine->acharya_pranami }}</td>
-                      </tr>
-		    @endif
-	          @endforeach
-	        </tbody>
-	      </table>
-      </div>
+      @if ($record['worker']->type == 'R' )
+        <!-- Diksha Pranami -->
+        <div class="col-md-4">
+                <table class="table table-condensed table-striped table-bordered">
+                  <thead>
+                    <tr>
+                      <th>Date</th>
+                      <th>Diksha Pranami</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @foreach ($record['remittanceLines'] as $remittanceLine)
+          	    @if (
+          	      ($remittanceLine->diksha_pranami != null && $remittanceLine->diksha_pranami > 0)
+          	    )
+                        <tr>
+          	        <td>
+          	          {{ $remittanceLine->remittance->remittance_lot->deposit_date }}
+          	        </td>
+          	        <td>{{ $remittanceLine->diksha_pranami }}</td>
+                        </tr>
+          	    @endif
+                    @endforeach
+                  </tbody>
+                </table>
+        </div>
+
+        <!-- Acharya Pranami -->
+        <div class="col-md-4">
+                <table class="table table-condensed table-striped table-bordered">
+                  <thead>
+                    <tr>
+                      <th>Date</th>
+                      <th>Acharya Pranami</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @foreach ($record['remittanceLines'] as $remittanceLine)
+          	    @if (
+          	      ($remittanceLine->acharya_pranami != null && $remittanceLine->acharya_pranami > 0)
+          	    )
+                        <tr>
+          	        <td>
+          	          {{ $remittanceLine->remittance->remittance_lot->deposit_date }}
+          	        </td>
+          	        <td>{{ $remittanceLine->acharya_pranami }}</td>
+                        </tr>
+          	    @endif
+                    @endforeach
+                  </tbody>
+                </table>
+        </div>
+      @endif
     </div>
 
 
